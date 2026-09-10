@@ -1,0 +1,1 @@
+Tool use lets an LLM extend its reasoning by calling external functions mid-generation. Key lesson: a tool's docstring is the interface contract — vague documentation causes far more wrong or missing arguments than the underlying model's raw capability would predict.

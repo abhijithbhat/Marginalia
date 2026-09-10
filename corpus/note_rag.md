@@ -1,0 +1,1 @@
+Retrieval-augmented generation grounds output in retrieved documents rather than parametric memory alone. The retrieval step alone isn't enough — you also need a verification pass checking whether generated claims are actually supported by what was retrieved, or the model will assert things the source never said. This is the exact lesson RegBrain was built around.

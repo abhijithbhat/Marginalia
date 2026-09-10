@@ -1,0 +1,1 @@
+An LLM agent is a loop: the model reasons about a goal, optionally calls a tool, observes the result, and repeats until done. Most of the interesting engineering isn't in the model — it's in what you let the agent touch, and where a human or a deterministic check sits before anything irreversible happens.

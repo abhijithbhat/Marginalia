@@ -1,0 +1,29 @@
+name: Run Marginalia Digest
+on:
+  schedule:
+    - cron: "0 6 * * *"   # once daily at 06:00 UTC — 5-min minimum
+                           # granularity applies if you want it more often
+  workflow_dispatch: {}    # lets you trigger it manually from GitHub's UI
+jobs:
+  run-digest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install 'strands-agents[openai]' strands-agents-tools python-dotenv feedparser sentence-transformers qdrant-client
+      - run: python digest_pipeline.py
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          QDRANT_URL: ${{ secrets.QDRANT_URL }}
+          QDRANT_API_KEY: ${{ secrets.QDRANT_API_KEY }}
+      - name: Commit updated digest and state
+        run: |
+          git config user.name "marginalia-bot"
+          git config user.email "actions@github.com"
+          git add digest.json last_run.json seen_ids.json
+          git diff --cached --quiet || git commit -m "Automated digest run"
+          git push

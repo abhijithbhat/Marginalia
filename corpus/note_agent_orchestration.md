@@ -1,0 +1,1 @@
+Orchestrating multiple pipeline steps works best when each step's responsibility is narrow and handoffs are explicit — fetch, score, verify, summarize — rather than one large prompt trying to do everything in a single model call.

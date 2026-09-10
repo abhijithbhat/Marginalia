@@ -1,0 +1,16 @@
+{
+  "keywords": [
+    "multi-agent systems",
+    "tool use",
+    "function calling",
+    "language model agents",
+    "LLM agents",
+    "LLM-based agents",
+    "retrieval augmented generation",
+    "RAG",
+    "agent orchestration",
+    "model context protocol",
+    "MCP"
+  ],
+  "recency_window_days": 30
+}
