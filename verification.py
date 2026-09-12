@@ -7,11 +7,16 @@ This is NOT an agent tool — it is a deterministic verification gate called
 directly by orchestration code.
 """
 
+import hashlib
+import os
 from pathlib import Path
+import re
 from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, PointStruct, VectorParams
 from sentence_transformers import SentenceTransformer
+from strands import Agent
+from strands.models.openai import OpenAIModel
 
 # Load embedding model once at module import time
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
@@ -49,15 +54,17 @@ def build_corpus_index(
     note_files = sorted(list(corpus_dir.glob("*.md")))
     points: list[PointStruct] = []
 
-    for idx, file_path in enumerate(note_files, 1):
+    for file_path in note_files:
         content = file_path.read_text(encoding="utf-8").strip()
         vector = embedding_model.encode(content).tolist()
+        source_filename = file_path.name
+        point_id = int(hashlib.sha256(source_filename.encode()).hexdigest()[:16], 16)
         points.append(
             PointStruct(
-                id=idx,
+                id=point_id,
                 vector=vector,
                 payload={
-                    "source": file_path.name,
+                    "source": source_filename,
                     "text": content,
                 },
             )
@@ -119,6 +126,66 @@ def verify_claim(
         "supporting_excerpt": payload.get("text") if is_verified else None,
         "matched_source": payload.get("source") if is_verified else None,
     }
+
+
+def skeptic_review(
+    claim_text: str,
+    supporting_excerpt: str,
+    groq_api_key: str | None = None,
+) -> dict:
+    """Evaluate a claimed connection against its supporting excerpt using an adversarial Skeptic Agent.
+
+    Args:
+        claim_text: The claimed connection.
+        supporting_excerpt: The ground-truth excerpt from the researcher's note corpus.
+        groq_api_key: Optional Groq API key (defaults to GROQ_API_KEY environment variable).
+
+    Returns:
+        dict: {"has_objection": bool, "objection_text": str or None}
+    """
+    api_key = groq_api_key or os.getenv("GROQ_API_KEY")
+    if not api_key:
+        return {"has_objection": False, "objection_text": None}
+
+    model = OpenAIModel(
+        client_args={
+            "api_key": api_key,
+            "base_url": "https://api.groq.com/openai/v1",
+        },
+        model_id="openai/gpt-oss-120b",
+        params={"max_tokens": 1024},
+    )
+
+    system_prompt = (
+        "You are a skeptical reviewer. Given a claimed connection and the specific excerpt "
+        "it's supposedly grounded in, find the single strongest reason the claim overstates "
+        "or misreads that connection. If there genuinely isn't a good objection, say exactly "
+        "'NO OBJECTION' and nothing else. Otherwise, state the objection in one sentence — "
+        "nothing else, no preamble."
+    )
+
+    agent = Agent(
+        model=model,
+        system_prompt=system_prompt,
+    )
+
+    prompt = f"Claim: {claim_text}\n\nSupporting excerpt: {supporting_excerpt}"
+
+    try:
+        response = agent(prompt)
+        raw_text = str(response).strip()
+    except Exception:
+        return {"has_objection": False, "objection_text": None}
+
+    # Strip thinking tags if generated
+    cleaned = re.sub(r"<think>.*?</think>", "", raw_text, flags=re.DOTALL).strip()
+    cleaned = cleaned.strip('"\'').strip()
+
+    norm = cleaned.rstrip(".").strip().upper()
+    if norm == "NO OBJECTION":
+        return {"has_objection": False, "objection_text": None}
+    else:
+        return {"has_objection": True, "objection_text": cleaned}
 
 
 if __name__ == "__main__":

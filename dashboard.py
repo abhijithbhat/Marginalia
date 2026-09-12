@@ -6,6 +6,7 @@ and expanding the persistent note corpus and Qdrant vector index upon approval.
 """
 
 from datetime import datetime, timezone
+import hashlib
 import json
 import logging
 import os
@@ -143,29 +144,22 @@ def index_approved_paper(paper: dict) -> Path:
         try:
             vector = embedding_model.encode(content).tolist()
 
-            # Find next incremental integer ID
-            points, _ = qdrant_client.scroll(
-                collection_name=COLLECTION_NAME,
-                limit=500,
-                with_payload=False,
-                with_vectors=False,
-            )
-            existing_ids = [p.id for p in points if isinstance(p.id, int)]
-            next_id = (max(existing_ids) + 1) if existing_ids else 1
+            source_filename = file_path.name
+            point_id = int(hashlib.sha256(source_filename.encode()).hexdigest()[:16], 16)
 
             point = PointStruct(
-                id=next_id,
+                id=point_id,
                 vector=vector,
                 payload={
-                    "source": file_path.name,
+                    "source": source_filename,
                     "text": content,
                 },
             )
             qdrant_client.upsert(collection_name=COLLECTION_NAME, points=[point])
             logger.info(
                 "Upserted vector point id=%d for %s into %s",
-                next_id,
-                file_path.name,
+                point_id,
+                source_filename,
                 COLLECTION_NAME,
             )
         except Exception as e:

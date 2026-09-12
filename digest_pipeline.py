@@ -22,7 +22,7 @@ from strands.types.exceptions import MaxTokensReachedException
 
 from scoring import load_profile, score_relevance
 from tools.fetch_papers import fetch_new_papers
-from verification import verify_claim
+from verification import skeptic_review, verify_claim
 
 logger = logging.getLogger(__name__)
 
@@ -228,7 +228,7 @@ def run_digest(since_date: str) -> list[dict]:
         f"{candidates_text}\n\n"
         f"Established research themes:\n"
         f"{themes_readable}\n\n"
-        f"For each paper with a genuine connection to one of these themes, write one concise sentence explaining it. "
+        f"For each paper with a genuine connection to one of these themes, write one concise sentence explaining how the paper addresses or examines that specific theme (e.g., 'Examines [topic], relating directly to our note on [theme] that [key principle]'). Be conservative and precise: do not claim the note validates the paper's empirical results. "
         f"Output ONLY a JSON array starting with '[' and ending with ']'. "
         f"Do NOT write any thinking, notes, or explanations outside the JSON:\n"
         f'[{{"arxiv_id": "...", "connection_claim": "..."}}, ...]'
@@ -290,6 +290,27 @@ def run_digest(since_date: str) -> list[dict]:
             threshold=0.5,
         )
 
+        # Adversarial verification tier (only runs on claims that passed verify_claim)
+        if verified.get("verified"):
+            skeptic = skeptic_review(
+                claim_text=claim_text,
+                supporting_excerpt=verified.get("supporting_excerpt") or "",
+                groq_api_key=groq_api_key,
+            )
+            best_score = verified.get("best_match_score", 0.0)
+            if best_score >= 0.6 and not skeptic.get("has_objection"):
+                confidence_tier = "strongly_verified"
+                skeptic_objection = None
+            elif best_score >= 0.5:
+                confidence_tier = "verified_flagged"
+                skeptic_objection = skeptic.get("objection_text")
+            else:
+                confidence_tier = "rejected"
+                skeptic_objection = None
+        else:
+            confidence_tier = "rejected"
+            skeptic_objection = None
+
         # Filter gate: total_score >= 0.3 AND keyword_score > 0
         if score["total_score"] >= 0.3 and score["keyword_score"] > 0:
             candidates_survived.append(
@@ -298,6 +319,8 @@ def run_digest(since_date: str) -> list[dict]:
                     "score": score,
                     "claim": claim_text,
                     "claim_verified": verified,
+                    "confidence_tier": confidence_tier,
+                    "skeptic_objection": skeptic_objection,
                 }
             )
 
@@ -373,10 +396,13 @@ if __name__ == "__main__":
         print(f"     \"{paper.get('claim')}\"")
 
         verified_info = paper.get("claim_verified", {})
+        tier = paper.get("confidence_tier", "rejected").upper()
         status = "VERIFIED (PASS)" if verified_info.get("verified") else "REJECTED (FAIL)"
-        print(f"   Claim Verification Status: {status}")
+        print(f"   Claim Verification Status: {status} | Tier: {tier}")
         print(f"     - Match Score: {verified_info.get('best_match_score')}")
         print(f"     - Matched Note Source: {verified_info.get('matched_source')}")
+        if paper.get("skeptic_objection"):
+            print(f"     - Skeptic Objection: \"{paper.get('skeptic_objection')}\"")
         if verified_info.get("supporting_excerpt"):
             print(f"     - Supporting Excerpt: \"{verified_info.get('supporting_excerpt')}\"")
         else:
