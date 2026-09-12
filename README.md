@@ -55,6 +55,13 @@ The entire workflow executes automatically on schedule via GitHub Actions ([.git
 
 ## Architecture
 
+![Marginalia System Architecture](docs/architecture.png)
+
+*Marginalia pipeline architecture: 🟦 Blue = AI Agent Reasoning · 🟩 Green = Deterministic Code · 🟧 Amber = Human Review · ⬛ Gray = Trigger / State Storage.*
+
+<details>
+<summary><b>📐 View Mermaid Diagram Source</b></summary>
+
 ```mermaid
 flowchart TD
     A[GitHub Actions<br/>daily schedule + manual trigger] --> B
@@ -78,7 +85,7 @@ flowchart TD
     class A,G neutral
 ```
 
-*Marginalia pipeline architecture: 🟦 Blue = AI Agent Reasoning · 🟩 Green = Deterministic Code · 🟧 Amber = Human Review · ⬛ Gray = Trigger / State Storage.*
+</details>
 
 ---
 
