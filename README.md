@@ -59,34 +59,6 @@ The entire workflow executes automatically on schedule via GitHub Actions ([.git
 
 *Marginalia pipeline architecture: 🟦 Blue = AI Agent Reasoning · 🟩 Green = Deterministic Code · 🟧 Amber = Human Review · ⬛ Gray = Trigger / State Storage.*
 
-<details>
-<summary><b>📐 View Mermaid Diagram Source</b></summary>
-
-```mermaid
-flowchart TD
-    A[GitHub Actions<br/>daily schedule + manual trigger] --> B
-    B[Deterministic Fetch<br/>fetch_papers.py — arXiv API] --> C[Agent Reasoning<br/>Strands Agent — Groq gpt-oss-120b]
-    C --> D[Scorer<br/>scoring.py — keyword + recency]
-    D --> E[Verifier<br/>verification.py — Qdrant Cloud]
-    E --> F[Skeptic Review<br/>adversarial second agent check]
-    F --> G[(digest.json<br/>3 tiers: Strongly / Flagged / Rejected)]
-    G --> H[Dashboard<br/>dashboard.py — human approve/skip]
-    H -. approved papers grow the corpus .-> E
-    B -. wraps same fetch logic .-> I[MCP Server<br/>standalone, reusable over stdio]
-
-    classDef autonomous fill:#2563eb,color:#fff,stroke:#1d4ed8,stroke-width:2px
-    classDef deterministic fill:#059669,color:#fff,stroke:#047857,stroke-width:2px
-    classDef human fill:#d97706,color:#fff,stroke:#b45309,stroke-width:2px
-    classDef neutral fill:#475569,color:#fff,stroke:#334155,stroke-width:2px
-
-    class C,F,I autonomous
-    class B,D,E deterministic
-    class H human
-    class A,G neutral
-```
-
-</details>
-
 ---
 
 ## Running It Yourself
