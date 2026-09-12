@@ -61,6 +61,13 @@ The entire workflow executes automatically on schedule via GitHub Actions ([.git
 
 ---
 
+## Review Dashboard Preview
+
+![Marginalia Review Dashboard](docs/dashboard_preview.png)
+*Marginalia local review dashboard: Real-time candidate filtering, deterministic score breakdowns, transparent claim verification badges, and active-learning corpus expansion.*
+
+---
+
 ## Running It Yourself
 
 ### 1. Clone & Setup Environment
