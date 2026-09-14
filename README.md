@@ -115,7 +115,7 @@ python evals/test_precision_recall.py
 
 ## Demo Video
 
-[![Watch Marginalia Demo Video](https://img.shields.io/badge/Demo_Video-Watch_Walkthrough-blue?style=for-the-badge&logo=youtube)](https://youtu.be/placeholder-demo-video)
+[![Watch Marginalia Demo Video](https://img.shields.io/badge/Demo_Video-Watch_Walkthrough-blue?style=for-the-badge&logo=youtube)](https://youtu.be/tn_5qqsvhok)
 
 ---
 
