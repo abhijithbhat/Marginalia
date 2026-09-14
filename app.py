@@ -15,8 +15,6 @@ try:
         """Registers with Hugging Face ZeroGPU runtime supervisor."""
         return True
 
-    # Invoke once at import time so ZeroGPU supervisor detects it
-    zero_gpu_marker()
     print("[ZeroGPU] @spaces.GPU marker registered successfully.")
 except ImportError:
     print("[ZeroGPU] spaces package not installed; skipping GPU registration.")
