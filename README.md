@@ -2,6 +2,11 @@
 
 > An autonomous, self-verifying research thought-partner that continuously surfaces relevant arXiv papers, rigorously grounds claims against your personal note corpus, and expands its memory through your review decisions.
 
+[![Live Dashboard](https://img.shields.io/badge/Render-Live%20Dashboard-46E3B7?style=flat-square&logo=render&logoColor=white)](https://marginalia-dashboard.onrender.com)
+[![GitHub Actions](https://img.shields.io/badge/CI%2FCD-Automated%20Digest-2088FF?style=flat-square&logo=githubactions&logoColor=white)](https://github.com/abhijithbhat/Marginalia/actions)
+
+🌐 **Live Dashboard**: [https://marginalia-dashboard.onrender.com](https://marginalia-dashboard.onrender.com)
+
 ---
 
 ## The Problem
@@ -62,6 +67,8 @@ The entire workflow executes automatically on schedule via GitHub Actions ([.git
 ---
 
 ## The Review Interface
+
+🌐 **Live Deployment**: [https://marginalia-dashboard.onrender.com](https://marginalia-dashboard.onrender.com)
 
 ![Marginalia Review Dashboard](https://raw.githubusercontent.com/abhijithbhat/Marginalia/main/docs/dashboard_preview.png)
 *Marginalia local review dashboard: Real-time candidate filtering, deterministic score breakdowns, transparent claim verification badges, and active-learning corpus expansion.*
