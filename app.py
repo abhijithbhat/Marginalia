@@ -4,21 +4,21 @@ Serves the Marginalia Flask review dashboard within a Hugging Face Gradio ZeroGP
 Mounts the complete Flask WSGI application into FastAPI/Gradio and satisfies ZeroGPU supervisor.
 """
 
-import os
-import gradio as gr
-from a2wsgi import WSGIMiddleware
-from dashboard import app as flask_app
-
-# Try importing spaces for Hugging Face ZeroGPU runtime
+# CRITICAL: `import spaces` MUST be the very first import before torch, sentence_transformers, or dashboard
 try:
     import spaces
     has_spaces = True
 except ImportError:
     has_spaces = False
 
+import os
+import gradio as gr
+from a2wsgi import WSGIMiddleware
+from dashboard import app as flask_app
+
 PORT = int(os.environ.get("PORT", 7860))
 
-# ZeroGPU worker function
+# ZeroGPU worker function registered with Gradio graph
 if has_spaces:
     @spaces.GPU
     def zero_gpu_worker(prompt: str) -> str:
