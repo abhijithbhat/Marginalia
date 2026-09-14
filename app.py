@@ -34,9 +34,6 @@ else:
     def zero_gpu_worker(prompt: str) -> str:
         return f"CPU: {prompt[:30]}"
 
-# Generate the full interactive dashboard HTML
-dashboard_content = get_rendered_dashboard_html()
-
 with gr.Blocks(
     title="Marginalia — Autonomous Research Digest Review Dashboard",
     css=".gradio-container { max-width: 100% !important; padding: 0 !important; }"
@@ -48,8 +45,8 @@ with gr.Blocks(
         dummy_btn = gr.Button("GPU Check", visible=False)
         dummy_btn.click(zero_gpu_worker, inputs=dummy_input, outputs=dummy_output)
 
-    # Render complete dashboard UI directly into the Gradio DOM (no iframes!)
-    gr.HTML(dashboard_content)
+    # Render complete dashboard UI dynamically directly into the Gradio DOM (no iframes!)
+    gr.HTML(get_rendered_dashboard_html)
 
 
 # Handle AJAX review decision posts directly on FastAPI

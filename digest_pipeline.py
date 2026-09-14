@@ -372,9 +372,12 @@ if __name__ == "__main__":
 
     # Write full result list to digest.json at project root (pretty-printed)
     digest_file = Path(__file__).resolve().parent / "digest.json"
-    with open(digest_file, "w", encoding="utf-8") as f:
-        json.dump(results, f, indent=2)
-    print(f"Digest saved to {digest_file.name}")
+    if results:
+        with open(digest_file, "w", encoding="utf-8") as f:
+            json.dump(results, f, indent=2)
+        print(f"Digest saved to {digest_file.name}")
+    else:
+        print(f"No new papers surfaced in this run. Preserving existing {digest_file.name}")
 
     print("\n" + "=" * 80)
     print(f"DIGEST PIPELINE RESULTS ({len(results)} paper(s) surfaced)")
