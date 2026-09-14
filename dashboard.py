@@ -1059,9 +1059,8 @@ DASHBOARD_HTML = """
 """
 
 
-@app.route("/", methods=["GET"])
-def index():
-    """Render the dashboard page with all digest papers and existing decisions."""
+def get_rendered_dashboard_html() -> str:
+    """Render the dashboard page HTML string."""
     papers = load_digest()
     decisions = load_decisions()
 
@@ -1092,13 +1091,20 @@ def index():
         except Exception:
             pass
 
-    return render_template_string(
-        DASHBOARD_HTML,
-        papers=papers,
-        decisions=decisions,
-        stats=stats,
-        qdrant_points=qdrant_points,
-    )
+    with app.app_context():
+        return render_template_string(
+            DASHBOARD_HTML,
+            papers=papers,
+            decisions=decisions,
+            stats=stats,
+            qdrant_points=qdrant_points,
+        )
+
+
+@app.route("/", methods=["GET"])
+def index():
+    """Render the dashboard page with all digest papers and existing decisions."""
+    return get_rendered_dashboard_html()
 
 
 @app.route("/decide", methods=["POST"])
