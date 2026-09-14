@@ -31,11 +31,7 @@ else:
 # Convert Flask WSGI app to ASGI
 wsgi_app = WSGIMiddleware(flask_app)
 
-with gr.Blocks(
-    title="Marginalia — Autonomous Research Digest Review Dashboard",
-    theme=gr.themes.Base(),
-    css="footer {visibility: hidden} .gradio-container {padding: 0 !important; max-width: 100% !important;}"
-) as demo:
+with gr.Blocks(title="Marginalia — Autonomous Research Digest Review Dashboard") as demo:
     # Hidden components to register with ZeroGPU supervisor
     with gr.Row(visible=False):
         dummy_input = gr.Textbox(value="Marginalia", visible=False)
@@ -54,4 +50,4 @@ with gr.Blocks(
 demo.app.mount("/dashboard", wsgi_app)
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=PORT, show_api=False)
+    demo.launch(server_name="0.0.0.0", server_port=PORT)
