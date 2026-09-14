@@ -68,15 +68,15 @@ The entire workflow executes automatically on schedule via GitHub Actions ([.git
 
 ## Architecture
 
-![Marginalia System Architecture](docs/architecture.png)
+![Marginalia System Architecture](https://raw.githubusercontent.com/abhijithbhat/Marginalia/main/docs/architecture.png)
 
 *Marginalia pipeline architecture: 🟦 Blue = AI Agent Reasoning · 🟩 Green = Deterministic Code · 🟧 Amber = Human Review · ⬛ Gray = Trigger / State Storage.*
 
 ---
 
-## Review Dashboard Preview
+## The Review Interface
 
-![Marginalia Review Dashboard](docs/dashboard_preview.png)
+![Marginalia Review Dashboard](https://raw.githubusercontent.com/abhijithbhat/Marginalia/main/docs/dashboard_preview.png)
 *Marginalia local review dashboard: Real-time candidate filtering, deterministic score breakdowns, transparent claim verification badges, and active-learning corpus expansion.*
 
 ---
