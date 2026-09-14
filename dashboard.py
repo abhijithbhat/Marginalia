@@ -12,6 +12,7 @@ import logging
 import os
 from pathlib import Path
 import re
+import threading
 from dotenv import load_dotenv
 from flask import Flask, jsonify, redirect, render_template_string, request, url_for
 from qdrant_client import QdrantClient
@@ -122,6 +123,33 @@ def save_decision_record(arxiv_id: str, decision: str) -> dict:
     return new_record
 
 
+def _async_upsert_qdrant(content: str, source_filename: str):
+    """Background task to embed and upsert approved paper to Qdrant without blocking HTTP request."""
+    if not qdrant_client:
+        return
+    try:
+        model = get_embedding_model()
+        vector = model.encode(content).tolist()
+        point_id = int(hashlib.sha256(source_filename.encode()).hexdigest()[:16], 16)
+        point = PointStruct(
+            id=point_id,
+            vector=vector,
+            payload={
+                "source": source_filename,
+                "text": content,
+            },
+        )
+        qdrant_client.upsert(collection_name=COLLECTION_NAME, points=[point])
+        logger.info(
+            "Async upserted vector point id=%d for %s into %s",
+            point_id,
+            source_filename,
+            COLLECTION_NAME,
+        )
+    except Exception as e:
+        logger.error("Failed to async upsert to Qdrant: %s", e)
+
+
 def index_approved_paper(paper: dict) -> Path:
     """Save approved paper to corpus/ and incrementally upsert vector to Qdrant."""
     arxiv_id = paper.get("arxiv_id", "unknown")
@@ -148,31 +176,13 @@ def index_approved_paper(paper: dict) -> Path:
     file_path.write_text(content, encoding="utf-8")
     logger.info("Saved approved paper to %s", file_path)
 
-    # 2. Incremental vector upsert to Qdrant Cloud without rebuilding
+    # 2. Incremental vector upsert to Qdrant Cloud in background thread
     if qdrant_client:
-        try:
-            vector = get_embedding_model().encode(content).tolist()
-
-            source_filename = file_path.name
-            point_id = int(hashlib.sha256(source_filename.encode()).hexdigest()[:16], 16)
-
-            point = PointStruct(
-                id=point_id,
-                vector=vector,
-                payload={
-                    "source": source_filename,
-                    "text": content,
-                },
-            )
-            qdrant_client.upsert(collection_name=COLLECTION_NAME, points=[point])
-            logger.info(
-                "Upserted vector point id=%d for %s into %s",
-                point_id,
-                source_filename,
-                COLLECTION_NAME,
-            )
-        except Exception as e:
-            logger.error("Failed to upsert to Qdrant: %s", e)
+        threading.Thread(
+            target=_async_upsert_qdrant,
+            args=(content, file_path.name),
+            daemon=True,
+        ).start()
 
     return file_path
 
@@ -1025,9 +1035,16 @@ DASHBOARD_HTML = """
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ arxiv_id: arxivId, decision: decision })
         });
-        const result = await response.json();
+        
+        let result;
+        const text = await response.text();
+        try {
+          result = JSON.parse(text);
+        } catch (parseErr) {
+          throw new Error('Server error (' + response.status + ')');
+        }
 
-        if (result.status === 'success') {
+        if (response.ok && result.status === 'success') {
           // Update card attributes and styling
           card.dataset.decision = decision;
           card.classList.remove('decided-approve', 'decided-skip');
@@ -1054,7 +1071,7 @@ DASHBOARD_HTML = """
           btns.forEach(b => { b.disabled = false; });
         }
       } catch (err) {
-        showToast('Network error while saving decision: ' + err.message);
+        showToast('Error saving decision: ' + err.message);
         btns.forEach(b => { b.disabled = false; });
       }
     }
