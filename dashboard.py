@@ -954,23 +954,35 @@ DASHBOARD_HTML = """
   </div>
 
   <div id="toast"></div>
+</body>
+</html>
+"""
 
-  <script>
+# JavaScript for the dashboard — extracted from <script> tag because
+# Gradio 6 gr.HTML() does NOT execute inline <script> tags.
+# Must be injected via gr.Blocks(head=f"<script>{DASHBOARD_JS}</script>")
+DASHBOARD_JS = """
     // Tab filtering
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        applyFilters(filter, document.getElementById('searchInput').value.toLowerCase());
+    function initDashboard() {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.dataset.filter;
+          const searchEl = document.getElementById('searchInput');
+          applyFilters(filter, searchEl ? searchEl.value.toLowerCase() : '');
+        });
       });
-    });
 
-    // Search input filtering
-    document.getElementById('searchInput').addEventListener('input', (e) => {
-      const activeFilter = document.querySelector('.tab-btn.active').dataset.filter;
-      applyFilters(activeFilter, e.target.value.toLowerCase());
-    });
+      const searchEl = document.getElementById('searchInput');
+      if (searchEl) {
+        searchEl.addEventListener('input', (e) => {
+          const activeBtn = document.querySelector('.tab-btn.active');
+          const activeFilter = activeBtn ? activeBtn.dataset.filter : 'all';
+          applyFilters(activeFilter, e.target.value.toLowerCase());
+        });
+      }
+    }
 
     function applyFilters(filter, query) {
       document.querySelectorAll('.paper-card').forEach(card => {
@@ -995,13 +1007,6 @@ DASHBOARD_HTML = """
       });
     }
 
-    // Resolve the base URL for fetch calls — works both locally and inside HF Spaces Gradio proxy
-    function getBaseUrl() {
-      // Inside HF Spaces, the page may be served behind a proxy path
-      // The current page URL is the correct base
-      return window.location.origin;
-    }
-
     // Convert arxiv_id dots to dashes for DOM element IDs
     function sanitizeId(aid) {
       return aid.replace(/[.]/g, '-');
@@ -1024,8 +1029,7 @@ DASHBOARD_HTML = """
       btns.forEach(b => { b.disabled = true; });
 
       try {
-        const baseUrl = getBaseUrl();
-        const response = await fetch(baseUrl + '/decide', {
+        const response = await fetch(window.location.origin + '/marginalia_decide', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ arxiv_id: arxivId, decision: decision })
@@ -1049,18 +1053,18 @@ DASHBOARD_HTML = """
           if (decision === 'approve') {
             showToast('✓ Paper approved! Saved to corpus/ and indexed into Qdrant.');
           } else {
-            showToast('↷ Paper marked as skipped in decisions.json.');
+            showToast('↷ Paper skipped.');
           }
 
           // Refresh live stats
           updateStatCounters();
         } else {
-          showToast('Error recording decision: ' + (result.message || 'Unknown'));
+          showToast('Error: ' + (result.message || 'Unknown'));
           btns.forEach(b => { b.disabled = false; });
         }
       } catch (err) {
         console.error('submitDecision fetch error:', err);
-        showToast('Network error while saving decision: ' + err.message);
+        showToast('Network error: ' + err.message);
         btns.forEach(b => { b.disabled = false; });
       }
     }
@@ -1086,10 +1090,26 @@ DASHBOARD_HTML = """
       toast.style.display = 'flex';
       setTimeout(() => { toast.style.display = 'none'; }, 3500);
     }
-  </script>
-</body>
-</html>
+
+    // Auto-init when DOM is ready (retry for Gradio dynamic rendering)
+    function waitAndInit() {
+      if (document.querySelector('.tab-btn')) {
+        initDashboard();
+      } else {
+        setTimeout(waitAndInit, 500);
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', waitAndInit);
+    } else {
+      waitAndInit();
+    }
 """
+
+
+def get_dashboard_js() -> str:
+    """Return the dashboard JavaScript code for injection into gr.Blocks(head=...)."""
+    return DASHBOARD_JS
 
 
 def get_rendered_dashboard_html() -> str:
