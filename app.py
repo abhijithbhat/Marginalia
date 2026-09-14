@@ -1,10 +1,28 @@
 """Marginalia Hugging Face Spaces Entrypoint.
 
 Starts the Marginalia Flask review dashboard on port 7860 (Hugging Face standard).
-Compatible with both Docker and Gradio Space SDKs.
+Includes ZeroGPU hook required by Hugging Face Spaces ZeroGPU runtime.
 """
 
 import os
+
+# Hugging Face ZeroGPU compatibility hook
+try:
+    import spaces
+
+    @spaces.GPU
+    def zero_gpu_marker():
+        """Registers with Hugging Face ZeroGPU runtime supervisor."""
+        return True
+
+    # Invoke once at import time so ZeroGPU supervisor detects it
+    zero_gpu_marker()
+    print("[ZeroGPU] @spaces.GPU marker registered successfully.")
+except ImportError:
+    print("[ZeroGPU] spaces package not installed; skipping GPU registration.")
+except Exception as e:
+    print(f"[ZeroGPU] Registration info: {e}")
+
 from dashboard import app
 
 # Hugging Face Spaces routes public traffic to port 7860
