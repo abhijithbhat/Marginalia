@@ -1,11 +1,14 @@
 ---
-title: Marginalia
+title: Marginalia Dashboard
 emoji: 📑
 colorFrom: indigo
 colorTo: purple
 sdk: gradio
-app_port: 7860
+sdk_version: 6.27.0
+python_version: '3.12'
+app_file: app.py
 pinned: false
+license: mit
 ---
 
 # Marginalia
