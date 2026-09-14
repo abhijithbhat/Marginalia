@@ -9,5 +9,3 @@ requests>=2.31.0
 strands-agents>=1.0.0
 mcp>=1.0.0
 pytest>=8.0.0
-gradio>=4.0.0
-a2wsgi>=1.10.0

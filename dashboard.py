@@ -954,40 +954,28 @@ DASHBOARD_HTML = """
   </div>
 
   <div id="toast"></div>
-</body>
-</html>
-"""
 
-# JavaScript for the dashboard — extracted from <script> tag because
-# Gradio 6 gr.HTML() does NOT execute inline <script> tags.
-# Must be injected via gr.Blocks(head=f"<script>{DASHBOARD_JS}</script>")
-DASHBOARD_JS = """
+  <script>
     // Tab filtering
-    function initDashboard() {
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          const filter = btn.dataset.filter;
-          const searchEl = document.getElementById('searchInput');
-          applyFilters(filter, searchEl ? searchEl.value.toLowerCase() : '');
-        });
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        applyFilters(filter, document.getElementById('searchInput').value.toLowerCase());
       });
+    });
 
-      const searchEl = document.getElementById('searchInput');
-      if (searchEl) {
-        searchEl.addEventListener('input', (e) => {
-          const activeBtn = document.querySelector('.tab-btn.active');
-          const activeFilter = activeBtn ? activeBtn.dataset.filter : 'all';
-          applyFilters(activeFilter, e.target.value.toLowerCase());
-        });
-      }
-    }
+    // Search input filtering
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const activeFilter = document.querySelector('.tab-btn.active').dataset.filter;
+      applyFilters(activeFilter, e.target.value.toLowerCase());
+    });
 
     function applyFilters(filter, query) {
       document.querySelectorAll('.paper-card').forEach(card => {
         const isVerified = card.dataset.verified === 'true';
-        const decision = card.dataset.decision;
+        const decision = card.dataset.decision; // 'approve', 'skip', or 'pending'
         const textContent = card.innerText.toLowerCase();
 
         let matchesTab = true;
@@ -1007,29 +995,23 @@ DASHBOARD_JS = """
       });
     }
 
-    // Convert arxiv_id dots to dashes for DOM element IDs
-    function sanitizeId(aid) {
-      return aid.replace(/[.]/g, '-');
-    }
-
     // Submit review decision via AJAX
     async function submitDecision(arxivId, decision) {
-      const safeId = sanitizeId(arxivId);
-      const card = document.getElementById('card-' + safeId);
-      const statusEl = document.getElementById('status-text-' + safeId);
+      const cardId = 'card-' + arxivId.replace(/[.]/g, '-');
+      const card = document.getElementById(cardId);
+      const statusEl = document.getElementById('status-text-' + arxivId.replace(/[.]/g, '-'));
 
       if (!card) {
-        console.error('submitDecision: card element not found for', arxivId, '(tried card-' + safeId + ')');
-        showToast('Error: could not find paper card in DOM.');
+        console.error('submitDecision: card not found for', arxivId);
         return;
       }
 
-      // Disable buttons immediately to prevent double-clicks
+      // Disable buttons to indicate progress
       const btns = card.querySelectorAll('.btn');
       btns.forEach(b => { b.disabled = true; });
 
       try {
-        const response = await fetch(window.location.origin + '/marginalia_decide', {
+        const response = await fetch('/decide', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ arxiv_id: arxivId, decision: decision })
@@ -1053,18 +1035,17 @@ DASHBOARD_JS = """
           if (decision === 'approve') {
             showToast('✓ Paper approved! Saved to corpus/ and indexed into Qdrant.');
           } else {
-            showToast('↷ Paper skipped.');
+            showToast('↷ Paper marked as skipped in decisions.json.');
           }
 
           // Refresh live stats
           updateStatCounters();
         } else {
-          showToast('Error: ' + (result.message || 'Unknown'));
+          showToast('Error recording decision: ' + (result.message || 'Unknown'));
           btns.forEach(b => { b.disabled = false; });
         }
       } catch (err) {
-        console.error('submitDecision fetch error:', err);
-        showToast('Network error: ' + err.message);
+        showToast('Network error while saving decision: ' + err.message);
         btns.forEach(b => { b.disabled = false; });
       }
     }
@@ -1085,35 +1066,19 @@ DASHBOARD_JS = """
 
     function showToast(msg) {
       const toast = document.getElementById('toast');
-      if (!toast) return;
       toast.innerText = msg;
       toast.style.display = 'flex';
       setTimeout(() => { toast.style.display = 'none'; }, 3500);
     }
-
-    // Auto-init when DOM is ready (retry for Gradio dynamic rendering)
-    function waitAndInit() {
-      if (document.querySelector('.tab-btn')) {
-        initDashboard();
-      } else {
-        setTimeout(waitAndInit, 500);
-      }
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', waitAndInit);
-    } else {
-      waitAndInit();
-    }
+  </script>
+</body>
+</html>
 """
 
 
-def get_dashboard_js() -> str:
-    """Return the dashboard JavaScript code for injection into gr.Blocks(head=...)."""
-    return DASHBOARD_JS
-
-
-def get_rendered_dashboard_html() -> str:
-    """Render the dashboard page HTML string."""
+@app.route("/", methods=["GET"])
+def index():
+    """Render the dashboard page with all digest papers and existing decisions."""
     papers = load_digest()
     decisions = load_decisions()
 
@@ -1144,20 +1109,13 @@ def get_rendered_dashboard_html() -> str:
         except Exception:
             pass
 
-    with app.app_context():
-        return render_template_string(
-            DASHBOARD_HTML,
-            papers=papers,
-            decisions=decisions,
-            stats=stats,
-            qdrant_points=qdrant_points,
-        )
-
-
-@app.route("/", methods=["GET"])
-def index():
-    """Render the dashboard page with all digest papers and existing decisions."""
-    return get_rendered_dashboard_html()
+    return render_template_string(
+        DASHBOARD_HTML,
+        papers=papers,
+        decisions=decisions,
+        stats=stats,
+        qdrant_points=qdrant_points,
+    )
 
 
 @app.route("/decide", methods=["POST"])

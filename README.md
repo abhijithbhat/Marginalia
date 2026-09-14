@@ -1,16 +1,3 @@
----
-title: Marginalia Dashboard
-emoji: 📑
-colorFrom: indigo
-colorTo: purple
-sdk: gradio
-sdk_version: 6.27.0
-python_version: '3.12'
-app_file: app.py
-pinned: false
-license: mit
----
-
 # Marginalia
 
 > An autonomous, self-verifying research thought-partner that continuously surfaces relevant arXiv papers, rigorously grounds claims against your personal note corpus, and expands its memory through your review decisions.
