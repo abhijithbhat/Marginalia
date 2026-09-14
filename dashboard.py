@@ -16,7 +16,6 @@ from dotenv import load_dotenv
 from flask import Flask, jsonify, redirect, render_template_string, request, url_for
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct
-from sentence_transformers import SentenceTransformer
 
 # Setup logging and directories
 logging.basicConfig(level=logging.INFO)
@@ -34,7 +33,7 @@ QDRANT_URL = os.getenv("QDRANT_URL")
 QDRANT_API_KEY = os.getenv("QDRANT_API_KEY")
 COLLECTION_NAME = "marginalia_notes"
 
-# Initialize Qdrant Client and SentenceTransformer
+# Initialize Qdrant Client
 qdrant_client = None
 if QDRANT_URL and QDRANT_API_KEY:
     try:
@@ -42,8 +41,18 @@ if QDRANT_URL and QDRANT_API_KEY:
     except Exception as e:
         logger.warning("Could not initialize QdrantClient: %s", e)
 
-# Load lightweight embedding model for incremental upserts
-embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+# Lazy-loaded embedding model for incremental upserts (keeps worker boot instant and within 512MB RAM)
+_embedding_model = None
+
+
+def get_embedding_model():
+    """Load SentenceTransformer on first approval to keep worker memory low."""
+    global _embedding_model
+    if _embedding_model is None:
+        from sentence_transformers import SentenceTransformer
+        _embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+    return _embedding_model
+
 
 app = Flask(__name__)
 
@@ -142,7 +151,7 @@ def index_approved_paper(paper: dict) -> Path:
     # 2. Incremental vector upsert to Qdrant Cloud without rebuilding
     if qdrant_client:
         try:
-            vector = embedding_model.encode(content).tolist()
+            vector = get_embedding_model().encode(content).tolist()
 
             source_filename = file_path.name
             point_id = int(hashlib.sha256(source_filename.encode()).hexdigest()[:16], 16)
