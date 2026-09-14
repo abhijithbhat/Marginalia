@@ -975,7 +975,7 @@ DASHBOARD_HTML = """
     function applyFilters(filter, query) {
       document.querySelectorAll('.paper-card').forEach(card => {
         const isVerified = card.dataset.verified === 'true';
-        const decision = card.dataset.decision; // 'approve', 'skip', or 'pending'
+        const decision = card.dataset.decision;
         const textContent = card.innerText.toLowerCase();
 
         let matchesTab = true;
@@ -995,14 +995,37 @@ DASHBOARD_HTML = """
       });
     }
 
+    // Resolve the base URL for fetch calls — works both locally and inside HF Spaces Gradio proxy
+    function getBaseUrl() {
+      // Inside HF Spaces, the page may be served behind a proxy path
+      // The current page URL is the correct base
+      return window.location.origin;
+    }
+
+    // Convert arxiv_id dots to dashes for DOM element IDs
+    function sanitizeId(aid) {
+      return aid.replace(/[.]/g, '-');
+    }
+
     // Submit review decision via AJAX
     async function submitDecision(arxivId, decision) {
-      const cardId = 'card-' + arxivId.replace(/\\./g, '-');
-      const card = document.getElementById(cardId);
-      const statusEl = document.getElementById('status-text-' + arxivId.replace(/\\./g, '-'));
+      const safeId = sanitizeId(arxivId);
+      const card = document.getElementById('card-' + safeId);
+      const statusEl = document.getElementById('status-text-' + safeId);
+
+      if (!card) {
+        console.error('submitDecision: card element not found for', arxivId, '(tried card-' + safeId + ')');
+        showToast('Error: could not find paper card in DOM.');
+        return;
+      }
+
+      // Disable buttons immediately to prevent double-clicks
+      const btns = card.querySelectorAll('.btn');
+      btns.forEach(b => { b.disabled = true; });
 
       try {
-        const response = await fetch('/decide', {
+        const baseUrl = getBaseUrl();
+        const response = await fetch(baseUrl + '/decide', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ arxiv_id: arxivId, decision: decision })
@@ -1015,11 +1038,17 @@ DASHBOARD_HTML = """
           card.classList.remove('decided-approve', 'decided-skip');
           card.classList.add('decided-' + decision);
 
+          if (statusEl) {
+            if (decision === 'approve') {
+              statusEl.innerHTML = '<span class="status-badge-approved">✓ Approved into Corpus</span>';
+            } else {
+              statusEl.innerHTML = '<span class="status-badge-skipped">↷ Skipped</span>';
+            }
+          }
+
           if (decision === 'approve') {
-            statusEl.innerHTML = '<span class="status-badge-approved">✓ Approved into Corpus</span>';
             showToast('✓ Paper approved! Saved to corpus/ and indexed into Qdrant.');
           } else {
-            statusEl.innerHTML = '<span class="status-badge-skipped">↷ Skipped</span>';
             showToast('↷ Paper marked as skipped in decisions.json.');
           }
 
@@ -1027,9 +1056,12 @@ DASHBOARD_HTML = """
           updateStatCounters();
         } else {
           showToast('Error recording decision: ' + (result.message || 'Unknown'));
+          btns.forEach(b => { b.disabled = false; });
         }
       } catch (err) {
+        console.error('submitDecision fetch error:', err);
         showToast('Network error while saving decision: ' + err.message);
+        btns.forEach(b => { b.disabled = false; });
       }
     }
 
@@ -1049,6 +1081,7 @@ DASHBOARD_HTML = """
 
     function showToast(msg) {
       const toast = document.getElementById('toast');
+      if (!toast) return;
       toast.innerText = msg;
       toast.style.display = 'flex';
       setTimeout(() => { toast.style.display = 'none'; }, 3500);
