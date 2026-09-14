@@ -1,3 +1,13 @@
+---
+title: Marginalia
+emoji: 📑
+colorFrom: indigo
+colorTo: purple
+sdk: docker
+app_port: 7860
+pinned: false
+---
+
 # Marginalia
 
 > An autonomous, self-verifying research thought-partner that continuously surfaces relevant arXiv papers, rigorously grounds claims against your personal note corpus, and expands its memory through your review decisions.
