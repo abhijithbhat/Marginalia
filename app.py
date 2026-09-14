@@ -6,8 +6,8 @@ Renders the complete review UI directly in the DOM without nested iframes.
 Key architectural decisions for Gradio 6:
 - gr.HTML() does NOT execute <script> tags (XSS protection).
   All JS is injected via gr.Blocks(head=f"<script>...</script>").
-- Custom API routes must be registered via demo.app.add_api_route()
-  AFTER the Blocks context exits, to avoid Gradio's SvelteKit catch-all.
+- Custom API route is inserted at position 0 of demo.app.routes so it
+  is matched BEFORE Gradio's SvelteKit catch-all.
 """
 
 # CRITICAL: `import spaces` MUST be the very first import before torch, sentence_transformers, or dashboard
@@ -20,6 +20,7 @@ except ImportError:
 import os
 from fastapi import Request
 from fastapi.responses import JSONResponse
+from starlette.routing import Route
 import gradio as gr
 from dashboard import (
     get_rendered_dashboard_html,
@@ -60,9 +61,13 @@ with gr.Blocks(
     gr.HTML(get_rendered_dashboard_html)
 
 
-# Handle AJAX review decision posts on FastAPI.
-# Route name is /marginalia_decide to avoid collision with Gradio's own routes.
+# ---------------------------------------------------------------------------
+# Custom API endpoint for review decisions.
+# We insert our route at position 0 of the FastAPI router so it is matched
+# BEFORE Gradio's catch-all SvelteKit route.
+# ---------------------------------------------------------------------------
 async def handle_decision(request: Request):
+    """Record a review decision for a paper and expand corpus/Qdrant on approval."""
     data = await request.json()
     arxiv_id = data.get("arxiv_id", "").strip()
     decision = data.get("decision", "").strip().lower()
@@ -91,8 +96,11 @@ async def handle_decision(request: Request):
         "corpus_file": indexed_file.name if indexed_file else None,
     })
 
-# Register the route on Gradio's underlying FastAPI app
-demo.app.add_api_route("/marginalia_decide", handle_decision, methods=["POST"])
+
+# Insert our custom route at position 0 of the router's route list.
+# This ensures it is evaluated BEFORE Gradio's catch-all SvelteKit route.
+custom_route = Route("/marginalia_decide", endpoint=handle_decision, methods=["POST"])
+demo.app.router.routes.insert(0, custom_route)
 
 
 if __name__ == "__main__":
