@@ -3,7 +3,7 @@ title: Marginalia
 emoji: 📑
 colorFrom: indigo
 colorTo: purple
-sdk: docker
+sdk: gradio
 app_port: 7860
 pinned: false
 ---
