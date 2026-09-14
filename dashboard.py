@@ -123,40 +123,17 @@ def save_decision_record(arxiv_id: str, decision: str) -> dict:
     return new_record
 
 
-def _async_upsert_qdrant(content: str, source_filename: str):
-    """Background task to embed and upsert approved paper to Qdrant without blocking HTTP request."""
-    if not qdrant_client:
-        return
-    try:
-        model = get_embedding_model()
-        vector = model.encode(content).tolist()
-        point_id = int(hashlib.sha256(source_filename.encode()).hexdigest()[:16], 16)
-        point = PointStruct(
-            id=point_id,
-            vector=vector,
-            payload={
-                "source": source_filename,
-                "text": content,
-            },
-        )
-        qdrant_client.upsert(collection_name=COLLECTION_NAME, points=[point])
-        logger.info(
-            "Async upserted vector point id=%d for %s into %s",
-            point_id,
-            source_filename,
-            COLLECTION_NAME,
-        )
-    except Exception as e:
-        logger.error("Failed to async upsert to Qdrant: %s", e)
+def _background_index_paper(paper: dict):
+    """Background thread: write corpus file + embed and upsert to Qdrant.
 
-
-def index_approved_paper(paper: dict) -> Path:
-    """Save approved paper to corpus/ and incrementally upsert vector to Qdrant."""
+    This runs entirely outside the HTTP request lifecycle so it can take
+    as long as needed (model download, embedding, network calls) without
+    blocking the Gunicorn worker or tripping the 30-second timeout.
+    """
     arxiv_id = paper.get("arxiv_id", "unknown")
     safe_id = re.sub(r"[^a-zA-Z0-9_\-]", "_", arxiv_id)
     file_path = CORPUS_DIR / f"approved_{safe_id}.md"
 
-    # 1. Write structured markdown note to corpus/
     title = paper.get("title", "Untitled")
     authors = ", ".join(paper.get("authors", []))
     published_date = paper.get("published_date", "")
@@ -173,18 +150,31 @@ def index_approved_paper(paper: dict) -> Path:
         f"## Abstract\n{abstract}\n\n"
         f"## Established Connection Claim\n{claim}\n"
     )
-    file_path.write_text(content, encoding="utf-8")
-    logger.info("Saved approved paper to %s", file_path)
 
-    # 2. Incremental vector upsert to Qdrant Cloud in background thread
-    if qdrant_client:
-        threading.Thread(
-            target=_async_upsert_qdrant,
-            args=(content, file_path.name),
-            daemon=True,
-        ).start()
+    # Step 1: Write corpus file
+    try:
+        file_path.write_text(content, encoding="utf-8")
+        logger.info("Background: saved corpus file %s", file_path)
+    except Exception as e:
+        logger.error("Background: failed to write corpus file: %s", e)
 
-    return file_path
+    # Step 2: Embed + upsert to Qdrant
+    if not qdrant_client:
+        logger.info("Background: no Qdrant client, skipping upsert")
+        return
+    try:
+        model = get_embedding_model()
+        vector = model.encode(content).tolist()
+        point_id = int(hashlib.sha256(file_path.name.encode()).hexdigest()[:16], 16)
+        point = PointStruct(
+            id=point_id,
+            vector=vector,
+            payload={"source": file_path.name, "text": content},
+        )
+        qdrant_client.upsert(collection_name=COLLECTION_NAME, points=[point])
+        logger.info("Background: upserted point %d for %s", point_id, file_path.name)
+    except Exception as e:
+        logger.error("Background: Qdrant upsert failed: %s", e)
 
 
 DASHBOARD_HTML = """
@@ -1146,47 +1136,61 @@ def index():
 
 @app.route("/decide", methods=["POST"])
 def decide():
-    """Record a review decision for a paper and expand corpus/Qdrant on approval."""
-    data = request.get_json(silent=True) or request.form
-    arxiv_id = data.get("arxiv_id", "").strip()
-    decision = data.get("decision", "").strip().lower()
+    """Record a review decision for a paper and expand corpus/Qdrant on approval.
 
-    if not arxiv_id or decision not in ("approve", "skip"):
-        return jsonify({"status": "error", "message": "Invalid arxiv_id or decision"}), 400
+    CRITICAL: This must return JSON within ~2 seconds to avoid Render's
+    30-second Gunicorn worker timeout. All heavy work (corpus write,
+    model download, embedding, Qdrant upsert) happens in a daemon thread.
+    """
+    try:
+        data = request.get_json(silent=True) or request.form
+        arxiv_id = data.get("arxiv_id", "").strip()
+        decision = data.get("decision", "").strip().lower()
 
-    # 1. Save to decisions.json
-    record = save_decision_record(arxiv_id, decision)
+        if not arxiv_id or decision not in ("approve", "skip"):
+            return jsonify({"status": "error", "message": "Invalid arxiv_id or decision"}), 400
 
-    indexed_file = None
-    if decision == "approve":
-        # 2. Find paper in digest.json to write to corpus/ and index to Qdrant
-        papers = load_digest()
-        target_paper = next((p for p in papers if p.get("arxiv_id") == arxiv_id), None)
-        if not target_paper:
-            # Try without version suffix
-            target_paper = next(
-                (p for p in papers if p.get("arxiv_id", "").split("v")[0] == arxiv_id.split("v")[0]),
-                None,
-            )
+        # 1. Save to decisions.json (fast — small file read/write)
+        record = save_decision_record(arxiv_id, decision)
+        logger.info("Saved decision: %s -> %s", arxiv_id, decision)
 
-        if target_paper:
-            indexed_file = index_approved_paper(target_paper)
-        else:
-            logger.warning("Paper %s not found in digest.json to create corpus file", arxiv_id)
+        if decision == "approve":
+            # 2. Find the paper data and spawn background thread
+            papers = load_digest()
+            target_paper = next((p for p in papers if p.get("arxiv_id") == arxiv_id), None)
+            if not target_paper:
+                target_paper = next(
+                    (p for p in papers if p.get("arxiv_id", "").split("v")[0] == arxiv_id.split("v")[0]),
+                    None,
+                )
 
-    # If it was a form post, redirect back to /
-    if not request.is_json:
-        return redirect(url_for("index"))
+            if target_paper:
+                # ALL heavy work in background — corpus write + Qdrant upsert
+                threading.Thread(
+                    target=_background_index_paper,
+                    args=(target_paper,),
+                    daemon=True,
+                ).start()
+                logger.info("Spawned background index thread for %s", arxiv_id)
+            else:
+                logger.warning("Paper %s not found in digest.json", arxiv_id)
 
-    return jsonify(
-        {
-            "status": "success",
-            "decision": decision,
-            "arxiv_id": arxiv_id,
-            "timestamp": record.get("timestamp"),
-            "corpus_file": indexed_file.name if indexed_file else None,
-        }
-    )
+        # If it was a form post, redirect back to /
+        if not request.is_json:
+            return redirect(url_for("index"))
+
+        return jsonify(
+            {
+                "status": "success",
+                "decision": decision,
+                "arxiv_id": arxiv_id,
+                "timestamp": record.get("timestamp"),
+                "corpus_file": f"approved_{re.sub(r'[^a-zA-Z0-9_-]', '_', arxiv_id)}.md" if decision == "approve" else None,
+            }
+        )
+    except Exception as exc:
+        logger.exception("Unhandled error in /decide: %s", exc)
+        return jsonify({"status": "error", "message": str(exc)}), 500
 
 
 import socket
