@@ -1,31 +1,57 @@
 """Marginalia Hugging Face Spaces Entrypoint.
 
-Starts the Marginalia Flask review dashboard on port 7860 (Hugging Face standard).
-Includes ZeroGPU hook required by Hugging Face Spaces ZeroGPU runtime.
+Serves the Marginalia Flask review dashboard within a Hugging Face Gradio ZeroGPU space.
+Mounts the complete Flask WSGI application into FastAPI/Gradio and satisfies ZeroGPU supervisor.
 """
 
 import os
+import gradio as gr
+from a2wsgi import WSGIMiddleware
+from dashboard import app as flask_app
 
-# Hugging Face ZeroGPU compatibility hook
+# Try importing spaces for Hugging Face ZeroGPU runtime
 try:
     import spaces
-
-    @spaces.GPU
-    def zero_gpu_marker():
-        """Registers with Hugging Face ZeroGPU runtime supervisor."""
-        return True
-
-    print("[ZeroGPU] @spaces.GPU marker registered successfully.")
+    has_spaces = True
 except ImportError:
-    print("[ZeroGPU] spaces package not installed; skipping GPU registration.")
-except Exception as e:
-    print(f"[ZeroGPU] Registration info: {e}")
+    has_spaces = False
 
-from dashboard import app
-
-# Hugging Face Spaces routes public traffic to port 7860
 PORT = int(os.environ.get("PORT", 7860))
 
+# ZeroGPU worker function
+if has_spaces:
+    @spaces.GPU
+    def zero_gpu_worker(prompt: str) -> str:
+        """Registered GPU task for Hugging Face ZeroGPU supervisor."""
+        return f"GPU Active: {prompt[:30]}"
+else:
+    def zero_gpu_worker(prompt: str) -> str:
+        return f"CPU: {prompt[:30]}"
+
+# Convert Flask WSGI app to ASGI
+wsgi_app = WSGIMiddleware(flask_app)
+
+with gr.Blocks(
+    title="Marginalia — Autonomous Research Digest Review Dashboard",
+    theme=gr.themes.Base(),
+    css="footer {visibility: hidden} .gradio-container {padding: 0 !important; max-width: 100% !important;}"
+) as demo:
+    # Hidden components to register with ZeroGPU supervisor
+    with gr.Row(visible=False):
+        dummy_input = gr.Textbox(value="Marginalia", visible=False)
+        dummy_output = gr.Textbox(visible=False)
+        dummy_btn = gr.Button("GPU Check", visible=False)
+        dummy_btn.click(zero_gpu_worker, inputs=dummy_input, outputs=dummy_output)
+
+    # Full-height embedded dashboard
+    gr.HTML(
+        '<div style="width: 100%; height: 96vh; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.5);">'
+        '<iframe src="/dashboard/" style="width: 100%; height: 100%; border: none;"></iframe>'
+        '</div>'
+    )
+
+# Mount the Flask application onto Gradio's underlying Starlette/FastAPI server
+demo.app.mount("/dashboard", wsgi_app)
+
 if __name__ == "__main__":
-    print(f"Starting Marginalia Dashboard for Hugging Face Spaces on port {PORT}...")
-    app.run(host="0.0.0.0", port=PORT, debug=False)
+    demo.launch(server_name="0.0.0.0", server_port=PORT, show_api=False)
