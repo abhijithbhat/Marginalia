@@ -11,7 +11,6 @@ Coordinates:
 from datetime import datetime, timedelta, timezone
 import json
 import logging
-import os
 from pathlib import Path
 import re
 from dotenv import load_dotenv
@@ -20,6 +19,7 @@ from strands import Agent
 from strands.models.openai import OpenAIModel
 from strands.types.exceptions import MaxTokensReachedException
 
+from env_utils import get_env_value
 from scoring import load_profile, score_relevance
 from tools.fetch_papers import fetch_new_papers
 from verification import skeptic_review, verify_claim
@@ -137,9 +137,9 @@ def run_digest(since_date: str) -> list[dict]:
     env_path = base_dir / ".env"
     load_dotenv(dotenv_path=env_path)
 
-    groq_api_key = os.getenv("GROQ_API_KEY")
-    qdrant_url = os.getenv("QDRANT_URL")
-    qdrant_api_key = os.getenv("QDRANT_API_KEY")
+    groq_api_key = get_env_value("GROQ_API_KEY")
+    qdrant_url = get_env_value("QDRANT_URL")
+    qdrant_api_key = get_env_value("QDRANT_API_KEY")
 
     if not groq_api_key:
         raise ValueError("GROQ_API_KEY is not set in .env")
