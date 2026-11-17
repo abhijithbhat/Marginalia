@@ -1,30 +1,91 @@
 [
   {
-    "arxiv_id": "2611.18514v1",
-    "title": "Can Mechanistic Interpretability Help Explain LLM Agent Failures? A Case Study on Web Element Hallucination",
+    "arxiv_id": "2611.21577v1",
+    "title": "When Tool Names Are Not Identities: Measuring Provider Misbinding in MCP-Based AI Agents",
     "authors": [
-      "Mohamed Aghzal",
-      "Mor Geva",
-      "Gregory J. Stein",
-      "Ziyu Yao"
+      "Zeynab Anbiaee",
+      "Sajjad Dadkhah",
+      "Ali A. Ghorbani"
     ],
-    "abstract": "Mechanistic Interpretability (MI) has made significant progress in explaining the internal computations of Large Language Models (LLMs); however, these advances have yet to demonstrate comparable success in explaining the decision-making processes of LLM-based agents. This paper examines the challenges MI tools face when applied to realistic agentic failures. We focus on one such failure: web agents hallucinating actions that are not available on a website. We apply a series of mechanistic analyzes to Qwen2.5-7B-Instruct as it interacts with live websites. We find that a linear probe trained on the last prompt token can predict hallucinations before generation begins (0.80 AUC) and steering along a probe direction corrects 85\\% of hallucinations, but disrupts 7\\% of valid actions. However, these results only provide a partial explanation of why the agent hallucinates. The probe direction is sensitive to prompt formatting, losing much of its steering effect after a minor change to how actions are represented. Additionally, circuit identification can be difficult as the computation is distributed across multiple components and positions, and the information the agent relies on varies across examples. We discuss how these observations challenge the assumptions underlying standard MI methods for circuit discovery and feature identification, and outline future directions for making these methods better suited to explain failures in LLM-based agents.",
-    "published_date": "2026-11-13T18:30:58Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.18514v1",
+    "abstract": "Large language model (LLM) applications increasingly act as agents that select and invoke external tools. The Model Context Protocol (MCP) standardizes this interaction by allowing clients to compose tools advertised by multiple servers. However, tool metadata used for discovery and selection is not, by itself, necessarily bound to a verified provider identity. This paper studies this gap as tool-provider misbinding: a failure in which a request intended for a legitimate provider is instead resolved to an attacker-controlled tool. The attacker does not compromise the host, LLM, legitimate server, or network channel; it only operates another MCP server that advertises tools with chosen metadata. We formulate tool provider misbinding as an attacker-controlled tool-selection optimization problem and evaluate it in a controlled MCP environment across five LLM-based clients. The results show that interactions drive misbinding. The strongest failures occur when exact-name collision, task-aligned description, and compatible schema reinforce one another, but authority-enhanced descriptions with compatible schema can also cause wrong-provider execution or unresolved provider ambiguity without name collision. Different models expose the same provider-binding weakness differently, including attacker-controlled provider selection, clarification requests, and unstable or inconsistent provider resolution.",
+    "published_date": "2026-11-16T18:49:37Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.21577v1",
     "score": {
-      "total_score": 0.366,
-      "keyword_score": 0.136,
-      "recency_score": 0.903,
+      "total_score": 0.419,
+      "keyword_score": 0.182,
+      "recency_score": 0.971,
       "matched_keywords": [
-        "LLM agents",
-        "LLM-based agents"
+        "model context protocol",
+        "MCP"
       ],
-      "days_since_published": 2.9
+      "days_since_published": 0.9
     },
-    "claim": "Applies mechanistic interpretability to diagnose web\u2011element hallucinations in LLM agents, informing error\u2011propagation analysis.",
+    "claim": "Measures provider misbinding in MCP-based agents, directly engaging with the Model Context Protocol tool standard.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.5978,
+      "supporting_excerpt": "The Model Context Protocol standardizes how an application exposes tools and context to a model, so a tool built once can be reused across different agent frameworks instead of rewritten for each one.",
+      "matched_source": "note_mcp.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt only describes MCP\u2019s role in standardizing tool exposure and reuse, not any measurement of provider misbinding."
+  },
+  {
+    "arxiv_id": "2611.21404v1",
+    "title": "Efficient Modeling of Multi-Agent Systems via Structure-Aware Physics-Informed Learning",
+    "authors": [
+      "Yulun Wu",
+      "Nicola Bastianello",
+      "Karl Henrik Johansson",
+      "Matthieu Barreau"
+    ],
+    "abstract": "Modeling large multi-agent systems poses challenges for trajectory inference and parameter identification, as network size and coupling increase computational demands and partial observations require reconstructing unobserved states. We propose MAS-PINN, a neural-network architecture with a tailored training algorithm for a physics-informed learning framework that leverages the network topology and the agents' similarity to reduce computational and memory costs of simulating and identifying multi-agent systems. Its architecture represents agent trajectories through shared temporal features and agent-specific coefficients. Training alternates between learning features, fitting coupled trajectories, and estimating physical parameters. A matrix-free update exploits local interactions to fit trajectories without forming large global matrices. Experiments on Lorenz rings, Lotka--Volterra networks, and R\u00f6ssler oscillators show improved trajectory and parameter accuracy over baselines, including inference in large systems and identification under partial observations or unknown topology, alongside substantial computational savings in coefficient fitting.",
+    "published_date": "2026-11-16T16:57:25Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.21404v1",
+    "score": {
+      "total_score": 0.386,
+      "keyword_score": 0.136,
+      "recency_score": 0.969,
+      "matched_keywords": [
+        "multi-agent systems"
+      ],
+      "days_since_published": 0.9
+    },
+    "claim": "Introduces a structure-aware physics-informed learning framework for modeling large MAS, contributing to coordination and error-propagation understanding in multi-agent systems.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.5198,
+      "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
+      "matched_source": "note_multi_agent_systems.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt never mentions a \u201cstructure\u2011aware physics\u2011informed learning framework\u201d or any concrete modeling contribution, so the claim invents features that are not present in the provided text."
+  },
+  {
+    "arxiv_id": "2611.21513v1",
+    "title": "A Scalable Decentralized Event-Triggered Topology-Switching Protocol for Verifiable Safety in Multi-Agent Systems",
+    "authors": [
+      "Amber He Wei",
+      "Shiyu Cheng",
+      "Andrew Clark",
+      "Bruno Sinopoli"
+    ],
+    "abstract": "This paper develops a decentralized event-triggered topology-switching protocol that allows agents to disconnect from the communication network while preserving state safety and excluding Zeno behavior. We establish a robust barrier function condition that guarantees safety as long as the estimation error remains within a prescribed threshold. Each agent uses locally computable certificates to determine when to connect and disconnect from the network. The certificate construction improves scalability by reducing the complexity of topology-dependent computations from $O(2^N)$ to $O(N)$, where $N$ is the number of agents. We formally prove that the protocol ensures the estimation error does not exceed the prescribed threshold and is non-Zeno. An alternating method computes an error-weighting matrix and a quadratic barrier function that guarantee safety under the proposed protocol. Finally, we evaluate the protocol on four interconnected microgrids. Compared with maintaining network connectivity at all times, the protocol reduces the time agents remain connected while keeping phase and frequency within their safe operating region.",
+    "published_date": "2026-11-16T18:09:22Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.21513v1",
+    "score": {
+      "total_score": 0.355,
+      "keyword_score": 0.091,
+      "recency_score": 0.97,
+      "matched_keywords": [
+        "multi-agent systems"
+      ],
+      "days_since_published": 0.9
+    },
+    "claim": "Presents a decentralized event-triggered topology-switching protocol that ensures verifiable safety, directly addressing multi-agent coordination and deterministic safety checks.",
     "claim_verified": {
       "verified": false,
-      "best_match_score": 0.4123,
+      "best_match_score": 0.361,
       "supporting_excerpt": null,
       "matched_source": null
     },
@@ -32,268 +93,29 @@
     "skeptic_objection": null
   },
   {
-    "arxiv_id": "2611.17883v1",
-    "title": "Securing Multi-Agent Systems by Design",
+    "arxiv_id": "2611.21129v1",
+    "title": "Linglong Agent Service: A Runtime for Centralized Agent Reasoning and Distributed Execution",
     "authors": [
-      "Xilong Wang",
-      "Xiaoxing Chen",
-      "Neil Gong"
+      "Hua Zhang",
+      "Min Jiang"
     ],
-    "abstract": "Multi-agent systems solve complex tasks by decomposing them into subtasks, delegating the subtasks to agents, and aggregating the agents' responses using an aggregation rule. Malicious agents can manipulate the final solution by providing malicious responses to their assigned subtasks. In this paper, we first propose response manipulation attacks (ReMA), which iteratively optimize malicious responses to maximize attack effectiveness. Specifically, we formulate untargeted and targeted attacks as optimization problems and develop an approach to approximately solve these problems by iteratively refining malicious responses based on feedback from a surrogate multi-agent system. To defend against such attacks, we further propose SecMAS, a secure aggregation rule that leverages the semantic similarities among agent responses to select the response that is most consistent with a sufficiently large subset of the other responses. We theoretically establish security guarantees for SecMAS against both untargeted and targeted attacks. Extensive evaluations demonstrate that existing aggregation rules are vulnerable to ReMA, whereas SecMAS effectively defends against all evaluated attacks, including adaptive variants of ReMA, while maintaining utility comparable to that of existing aggregation rules.",
-    "published_date": "2026-11-13T08:22:06Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.17883v1",
-    "score": {
-      "total_score": 0.362,
-      "keyword_score": 0.136,
-      "recency_score": 0.889,
-      "matched_keywords": [
-        "multi-agent systems"
-      ],
-      "days_since_published": 3.3
-    },
-    "claim": "Proposes a security\u2011by\u2011design framework for multi\u2011agent systems, addressing coordination vulnerabilities and deterministic safety checks.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5316,
-      "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
-      "matched_source": "note_multi_agent_systems.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt merely describes coordination patterns and an open problem about error propagation, without presenting any security\u2011by\u2011design framework or deterministic safety checks, so the claim overstates what the text actually provides."
-  },
-  {
-    "arxiv_id": "2611.17880v1",
-    "title": "Soteria: Formally Verified Planning with Runtime Enforcement for Safe LLM Agents",
-    "authors": [
-      "Mike He",
-      "Ankush Desai",
-      "Sharad Malik",
-      "Aarti Gupta"
-    ],
-    "abstract": "LLM agents that execute multi-step tool calls must satisfy two objectives simultaneously: completing the user's task (utility) and conforming to domain policies and correctness constraints (safety). These objectives are in tension -- blocking an unsafe action prevents a violation but can leave the agent stranded with no principled way to recover. Existing approaches sacrifice one objective for the other. We introduce Soteria, a framework that reconciles safety and utility through verified hierarchical planning and runtime enforcement of specifications. Before execution, the agent generates a structured plan that is formally verified against the specifications prior to any tool invocation. During execution, the verified plan serves dual roles: it ensures that the agent takes specification-conformant trajectories and provides guidance when unsafe actions are blocked. Across multiple benchmarks covering a diverse range of tool-use tasks, Soteria achieves 1.7 times the average task success rate of the best baselines, with no violations of policy specifications, demonstrating that safety and utility need not be traded off.",
-    "published_date": "2026-11-13T08:14:04Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.17880v1",
-    "score": {
-      "total_score": 0.362,
-      "keyword_score": 0.136,
-      "recency_score": 0.889,
-      "matched_keywords": [
-        "LLM agents"
-      ],
-      "days_since_published": 3.3
-    },
-    "claim": "Presents Soteria, a formally verified planner with runtime enforcement to guarantee safe execution of LLM agents, exemplifying deterministic safety checks.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5444,
-      "supporting_excerpt": "An LLM agent is a loop: the model reasons about a goal, optionally calls a tool, observes the result, and repeats until done. Most of the interesting engineering isn't in the model \u2014 it's in what you let the agent touch, and where a human or a deterministic check sits before anything irreversible happens.",
-      "matched_source": "note_language_model_agents.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt never says Soteria is a formally verified planner or that it guarantees safety\u2014 it only notes that safety relies on where deterministic checks are inserted, not on formal verification or enforced guarantees."
-  },
-  {
-    "arxiv_id": "2611.17790v1",
-    "title": "AutoRL: A Multi-Agent System towards Autonomous Reinforcement Learning",
-    "authors": [
-      "Simon Tang",
-      "Wenjie Shi",
-      "Yongjing Yin",
-      "Keheng Wang",
-      "Jialin Liu",
-      "Zheng Zhang",
-      "Linvo Lin",
-      "Xiangyuan Xue",
-      "Kan Ren",
-      "Jingang Wang",
-      "Xunliang Cai"
-    ],
-    "abstract": "Recursive self-improvement (RSI) is one of the most promising paths toward an AI singularity for superintelligence. Achieving this vision requires AI systems to undertake the full training pipeline for iterative improvement. Reinforcement learning (RL) plays an essential role in this cycle to improve model capabilities and generalization, yet automating RL remains difficult due to unstable training dynamics and the need for sustained supervision. We introduce AutoRL, a multi-agent system for automating RL training, as a cornerstone for future RSI. Different from conducting research by end-to-end complete experiments, AutoRL monitors the evolving training state and integrates process-level supervision and research into an ongoing RL training, following the practical workflow of an RL researcher. Specifically, AutoRL consists of three RL-specific agentic roles. Perceptors track training dynamics, rollouts, evaluation, and efficiency, triggering deliberation when they detect anomalies, degradation, or stagnation. Three complementary Proposers diagnose problems and refine candidate interventions through shared evidence and checks. The Orchestrator reviews their recommendation and applies approved changes through online hot updates or checkpoint-based resumption. Experiments on Qwen3 and LongCat-Flash-Lite demonstrate the superiority of AutoRL over static RL recipes and a general agent. The research records show that existing agents can handle unattended RL supervision and dynamic adjustment. The difficulty for future RSI lies in developing fundamental methods that are valuable for resource-consuming validation.",
-    "published_date": "2026-11-13T06:06:36Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.17790v1",
-    "score": {
-      "total_score": 0.361,
-      "keyword_score": 0.136,
-      "recency_score": 0.886,
-      "matched_keywords": [
-        "multi-agent systems"
-      ],
-      "days_since_published": 3.4
-    },
-    "claim": "Introduces AutoRL, a multi\u2011agent architecture that autonomously conducts reinforcement\u2011learning pipelines, illustrating challenges of agent coordination and pipeline orchestration.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5114,
-      "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
-      "matched_source": "note_multi_agent_systems.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt describes generic LLM\u2011driven multi\u2011agent coordination patterns, not an AutoRL system or reinforcement\u2011learning pipeline orchestration, so it does not substantiate the claim."
-  },
-  {
-    "arxiv_id": "2611.17776v1",
-    "title": "Certified Improvements to Best-Known Thomson-Problem Configurations with a Search Pipeline Built with Large Language Model Agents",
-    "authors": [
-      "Hui Shao",
-      "Tao Wang",
-      "Xiaotian Liu",
-      "Yijie Peng"
-    ],
-    "abstract": "The Thomson problem asks for N unit charges on a sphere with minimum Coulomb energy; for large N the best configurations known are curated in the Cambridge Cluster Database, whose largest-N entries were set in October 2026. We report configurations for N = 912, 1382 and 2502 with energies 0.0036186, 0.0109730 and 0.0614033 below the database values, certified by exact integer arithmetic. All three are numerically strict local minima modulo rotations and keep the defect inventory and scar compositions of the database configurations; the database value for N = 912 had been reached by two different methods. Our search runs unconstrained replica-exchange basin hopping from the database configurations, with a shared pool of minima, recombination of improved regions after relabelling by geometry, and gradient-only polishing; replica-exchange basin hopping alone found the N = 912 and 1382 configurations, the former in one of five runs. We built and ran it with large language model agents (Claude, through a chat interface and the Claude Code agent), and we report every search, including those that failed. Two findings matter for others who search the database. Polishing alone lowers two entries by more than the threshold at which our pipeline reports a candidate, which produced two spurious records until candidates were compared with the polished database energies (the polished baseline). A local-relaxation speed-up passed its exactness test yet found nothing in a controlled comparison in which every arm with full relaxation went below the database value within 15 minutes. We distil three practices for computational discovery with large language model agents: calibrate the search code and verify candidates with code separate from the search, compare candidates with the polished baseline, and test design changes in controlled comparisons with pass criteria fixed in advance.",
-    "published_date": "2026-11-13T05:38:15Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.17776v1",
-    "score": {
-      "total_score": 0.361,
-      "keyword_score": 0.136,
-      "recency_score": 0.885,
-      "matched_keywords": [
-        "language model agents"
-      ],
-      "days_since_published": 3.4
-    },
-    "claim": "Uses an LLM\u2011agent\u2011driven search pipeline to certify improvements to Thomson\u2011problem configurations, showcasing agent pipeline orchestration.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.54,
-      "supporting_excerpt": "An LLM agent is a loop: the model reasons about a goal, optionally calls a tool, observes the result, and repeats until done. Most of the interesting engineering isn't in the model \u2014 it's in what you let the agent touch, and where a human or a deterministic check sits before anything irreversible happens.",
-      "matched_source": "note_language_model_agents.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt is a generic description of LLM agents and their loops, never mentioning Thomson\u2011problem configurations, certification, or a specific search pipeline, so it does not substantiate the claim."
-  },
-  {
-    "arxiv_id": "2611.17788v1",
-    "title": "RAG-FGO: Dynamic Optimization of Query-Rewriting Agents for Generative RAG",
-    "authors": [
-      "Qigan Sun",
-      "Xudong Wang",
-      "Chaoning Zhang",
-      "Chenghao Li",
-      "Jiaquan Zhang",
-      "Jiehui Xie",
-      "Sungyoung Lee",
-      "Jie Zou",
-      "Ning Xie",
-      "Peng Wang",
-      "Yang Yang",
-      "Heng Tao Shen"
-    ],
-    "abstract": "In retrieval-augmented generation (RAG), query rewriting serves as a core interface that aligns user intent with external knowledge bases, and its effectiveness directly determines overall system performance. However, generative retrieval faces three critical challenges in real-world deployment: noisy retrieval feedback, the difficulty of jointly optimizing discrete prompt templates and continuous decoding-control parameters, and the limited generalization of static rewriting strategies under semantically complex scenarios. To address these issues, we propose RAG-FGO, a dynamic optimization framework for generative retrieval strategies. RAG-FGO formulates query rewriting as a non-differentiable black-box optimization problem in a mixed discrete-continuous space, and represents prompt templates and decoding parameters as adaptively optimizable query-rewriting agents. The framework performs global search to enable semantic jumps and structural reorganization that escape local optima, while applying local perturbations for fine-grained alignment and precise refinement. In addition, RAG-FGO introduces an elite-preserving memory pool that accumulates high-quality strategies across iterations, thereby mitigating the impact of stochasticity and noisy feedback on optimization stability. Experimental results on a diverse suite of benchmarks demonstrate the effectiveness and robustness of the proposed method, supporting its applicability to complex semantic retrieval tasks.",
-    "published_date": "2026-11-13T06:01:09Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.17788v1",
-    "score": {
-      "total_score": 0.361,
-      "keyword_score": 0.136,
-      "recency_score": 0.886,
-      "matched_keywords": [
-        "RAG"
-      ],
-      "days_since_published": 3.4
-    },
-    "claim": "RAG\u2011FGO dynamically optimizes query\u2011rewriting agents for generative retrieval\u2011augmented generation, directly advancing the RAG and claim\u2011verification theme.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5573,
-      "supporting_excerpt": "# Q2D-Web: A Large-Scale Benchmark for Retrieval in Agentic RAG Systems\n\n**arXiv ID**: 2609.08887v1\n\n**Published Date**: 2026-09-08T15:26:05Z\n\n**Authors**: Maximilian Schall, Sedigheh Eslami, Markus Krimmel, Antoine Chaffin, Louis Milliken, Bo Wang, Denis Bykov\n\n**PDF**: https://arxiv.org/pdf/2609.08887v1\n\n## Abstract\nEvaluating first-stage retrievers in large-scale production RAG requires a benchmark that pairs a large-scale corpus with a large set of agent-reformulated search queries based on real user queries and their conversation threads, and that labels many relevant documents per query. No existing public benchmark evaluates this setting: large-scale collections typically provide only a small number of evaluation queries, whereas benchmarks with many queries generally contain only millions of documents. Moreover, most benchmarks assess human-written queries, while the first-stage retrievers in agentic RAG pipelines serve machine-written reformulations whose distribution differs from human search behavior. To overcome these evaluation gaps, we introduce Q2D-Web (Query2Doc-Web), a large-scale agentic retrieval benchmark consisting of a 190M-document web corpus and 70k agentic search queries in ten languages, reformulated from real-world user queries in production systems. Q2D-Web provides three sets of fixed relevance judgments: agent citations, production rankings, and a combined set that unions both signals and adds LLM-based judgments of unlabeled pooled documents to reduce false negatives. We benchmark 13 retrievers including lexical, dense, and late-interaction models and find that their relative ordering is largely insensitive to the choice of judgment set, while diverging substantially across topical domains, query languages, and query types. To enable fast evaluation, we also study subcorpus sampling as an approximation to full-corpus evaluations. Retaining a third of the corpus, selected by reciprocal rank fusion over pooled retriever runs, preserves the full-corpus model ranking under the combined judgments while raising absolute Recall@1000 only by 3 to 7 points. The public leaderboard is accessible under: https://huggingface.co/spaces/perplexity-ai/q2d-web-leaderboard\n\n## Established Connection Claim\nProvides a large\u2011scale benchmark of agent\u2011reformulated queries for RAG systems, supporting evaluation of claim verification pipelines.\n",
-      "matched_source": "approved_2609_08887v1.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt merely introduces a benchmark for evaluating agent\u2011reformulated queries, without presenting any method that dynamically optimizes query\u2011rewriting agents or advances claim\u2011verification."
-  },
-  {
-    "arxiv_id": "2611.16661v1",
-    "title": "Reducing Batch Makespan for LLM Agent Workloads through Inference-Environment Coordination",
-    "authors": [
-      "Wei Feng",
-      "Meiling Chen",
-      "Boxiao Chen",
-      "Lu Liu",
-      "Bin Zi",
-      "Libin Ye",
-      "Xingyu Lu",
-      "Lei Xu",
-      "Jun Zhou"
-    ],
-    "abstract": "Efficient batch execution of agent tasks is critical to LLM training and development workflows, including benchmark evaluation, synthetic-data generation, and RL rollouts. Since these tasks alternate between LLM inference and environment interaction, we present coordinated optimizations to reduce batch makespan, the time required to complete all tasks in a batch. For hybrid LLMs, a workload-based resource model guides GPU-memory allocation between key-value (KV) cache and recurrent state and provides a reference sample concurrency to exploit parallelism while limiting recomputation. Trajectory-aware routing and scheduling promote cache reuse while balancing worker load. Under constrained environment capacity, we decouple sample admission from environment execution and introduce Chain-Advancing Action Scheduling (CAAS), which prioritizes long chains using observed progress to shorten the batch tail. Controlled replay combines actual inference with recorded environment responses and durations for ablations of individual optimizations. Live evaluations with Ling-3.0-Flash and Ling-3.1-Flash on the BFCL, SWE-bench Multilingual, WideSearch, and MCP-Atlas benchmarks demonstrate makespan reductions of 10.4% to 65.0%, while evaluation scores remain aligned. Furthermore, these methods have been successfully applied to training and evaluation workflows for the Ling-3.x model series, accelerating the model-development cycle.",
-    "published_date": "2026-11-12T11:38:21Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.16661v1",
+    "abstract": "LLM agents can use remote tools and cloud sandboxes, but integrating reasoning, session state, and heterogeneous execution sites remains a runtime design problem. We present Linglong Agent Service (agentsvc), a self-hosted HTTP service and embeddable Python runtime that treats execution site as a configurable dimension alongside model, tools, and context. A parent service retains inference orchestration, tool descriptions, and conversation history; each inference request selects one child environment for file, shell, terminal, and MCP operations. Direct HTTP and child-initiated WebSocket tunnels carry the same application interfaces, including portable request context and centrally managed updates. The normal core path requires no third-party Python packages, with an optional Windows pseudo-terminal dependency. We further present online_debugger as the process-scale special case of execution-site separation: an instrumented program submits exception evidence, executes session-scoped inspection tools inside the incident process, and resumes the same diagnostic session. Its default prompt requires failing-then-passing reproduction evidence for source changes, while runtime patch activation and failed-call recovery remain unimplemented. We explain the design through constrained expected-utility reasoning, compare concrete mechanisms with Hermes Agent, Pi, Codex, and Claude Code, and report implementation and regression-test evidence. The current evidence establishes executable contracts, not performance advantages, repair accuracy, or production recovery. The source code is open source under the MIT license at https://github.com/mz24cn/agents.",
+    "published_date": "2026-11-16T14:07:45Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.21129v1",
     "score": {
       "total_score": 0.353,
-      "keyword_score": 0.136,
-      "recency_score": 0.86,
+      "keyword_score": 0.091,
+      "recency_score": 0.965,
       "matched_keywords": [
         "LLM agents",
         "MCP"
       ],
-      "days_since_published": 4.2
+      "days_since_published": 1.1
     },
-    "claim": "Reduces batch makespan for LLM\u2011agent workloads by coordinating inference and environment interaction, addressing coordination and orchestration efficiency.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.6457,
-      "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
-      "matched_source": "note_multi_agent_systems.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt only discusses coordination patterns and error propagation in multi\u2011agent LLM systems, without any mention of batch makespan or inference\u2011environment scheduling, so it cannot substantiate the claim of reducing batch makespan."
-  },
-  {
-    "arxiv_id": "2611.16425v1",
-    "title": "RMIT-ADM+S at TREC RAG 2026: Research Agents, Retriever Ablations, and Open-Weight Replication",
-    "authors": [
-      "Oleg Zendel",
-      "Kun Ran",
-      "Chenglong Ma",
-      "Nguyen Khoi Vo",
-      "Shuai Wang"
-    ],
-    "abstract": "We describe the RMIT-ADM+S team's participation in the TREC 2026 Retrieval-Augmented Generation (RAG) track using the ClimbMix corpus. We submitted seven research-agent runs using proprietary OpenAI and open-weight models, exploring different retrieval strategies, writer models, and agent workflows. Pre-submission ablations identified writer selection and adjacent-chunk expansion as the main factors affecting answer quality. In the official NIST evaluation, six of seven runs exceeded the track median across all three rubric/nugget collections. Our best-performing run, brief-hybrid, achieved the highest all-item coverage among our submissions and tied the track maximum (0.892) for Batch-1 vital coverage. Human side-by-side preferences differed across evaluation batches: the open-weight owa-glm5 led Batch 1 despite lower automated coverage, while sol-research-first led Batch 2. These findings highlight differences between automated coverage measures and human preferences, as well as the potential of lower-cost open-weight models for research-agent systems.",
-    "published_date": "2026-11-12T07:34:28Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.16425v1",
-    "score": {
-      "total_score": 0.352,
-      "keyword_score": 0.136,
-      "recency_score": 0.854,
-      "matched_keywords": [
-        "RAG"
-      ],
-      "days_since_published": 4.4
-    },
-    "claim": "Describes research\u2011agent runs in the TREC RAG track exploring retriever variations, contributing to RAG system evaluation.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5626,
-      "supporting_excerpt": "# Q2D-Web: A Large-Scale Benchmark for Retrieval in Agentic RAG Systems\n\n**arXiv ID**: 2609.08887v1\n\n**Published Date**: 2026-09-08T15:26:05Z\n\n**Authors**: Maximilian Schall, Sedigheh Eslami, Markus Krimmel, Antoine Chaffin, Louis Milliken, Bo Wang, Denis Bykov\n\n**PDF**: https://arxiv.org/pdf/2609.08887v1\n\n## Abstract\nEvaluating first-stage retrievers in large-scale production RAG requires a benchmark that pairs a large-scale corpus with a large set of agent-reformulated search queries based on real user queries and their conversation threads, and that labels many relevant documents per query. No existing public benchmark evaluates this setting: large-scale collections typically provide only a small number of evaluation queries, whereas benchmarks with many queries generally contain only millions of documents. Moreover, most benchmarks assess human-written queries, while the first-stage retrievers in agentic RAG pipelines serve machine-written reformulations whose distribution differs from human search behavior. To overcome these evaluation gaps, we introduce Q2D-Web (Query2Doc-Web), a large-scale agentic retrieval benchmark consisting of a 190M-document web corpus and 70k agentic search queries in ten languages, reformulated from real-world user queries in production systems. Q2D-Web provides three sets of fixed relevance judgments: agent citations, production rankings, and a combined set that unions both signals and adds LLM-based judgments of unlabeled pooled documents to reduce false negatives. We benchmark 13 retrievers including lexical, dense, and late-interaction models and find that their relative ordering is largely insensitive to the choice of judgment set, while diverging substantially across topical domains, query languages, and query types. To enable fast evaluation, we also study subcorpus sampling as an approximation to full-corpus evaluations. Retaining a third of the corpus, selected by reciprocal rank fusion over pooled retriever runs, preserves the full-corpus model ranking under the combined judgments while raising absolute Recall@1000 only by 3 to 7 points. The public leaderboard is accessible under: https://huggingface.co/spaces/perplexity-ai/q2d-web-leaderboard\n\n## Established Connection Claim\nProvides a large\u2011scale benchmark of agent\u2011reformulated queries for RAG systems, supporting evaluation of claim verification pipelines.\n",
-      "matched_source": "approved_2609_08887v1.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt discusses a new benchmark dataset and retrieval experiments, never mentioning the TREC RAG track or research\u2011agent runs within it, so the claim misreads the connection."
-  },
-  {
-    "arxiv_id": "2611.15680v1",
-    "title": "SpaceMCP: Vision Language Model Spatial Reasoning via Model Context Protocol",
-    "authors": [
-      "Ameen Izhac",
-      "Nobuko Yoshida",
-      "Ronald Clark"
-    ],
-    "abstract": "Despite impressive advances in large language models (LLM), vision-language models (VLM) still exhibit limited spatial reasoning capabilities. Recent progress in feed-forward 3D reconstruction has enabled precise, real-time geometric understanding from visual inputs. In this work, we propose SpaceMCP, a framework that leverages these advances to introduce an MCP-style paradigm for spatial reasoning. Our approach augments a VLM with structured function calls, allowing it to query a scene graph for spatial information such as distances, object positioning, and camera properties. The scene graph is constructed in real time using feed-forward 3D reconstruction to recover metric geometry, combined with open-vocabulary segmentation to identify and localize relevant objects within the scene. Paired with the VLM's strong reasoning capabilities, the VLM is able to combine this primitive information to solve more complex spatial tasks. Without any training, SpaceMCP achieves state-of-the-art results on VSI-Bench, MMSI-Bench and VSTI-Bench, outperforming recent spatially post-trained VLMs and improving its base VLM by 15-22 points per benchmark. We argue that, given the contrast between the relatively slow progress in native VLM spatial reasoning and the rapid advances in feed-forward 3D computer vision, this paradigm offers a promising path forward for enabling robust spatial reasoning.",
-    "published_date": "2026-11-11T16:21:39Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.15680v1",
-    "score": {
-      "total_score": 0.345,
-      "keyword_score": 0.136,
-      "recency_score": 0.833,
-      "matched_keywords": [
-        "model context protocol",
-        "MCP"
-      ],
-      "days_since_published": 5.0
-    },
-    "claim": "Introduces SpaceMCP, a model\u2011context\u2011protocol for vision\u2011language models, directly implementing the MCP tool standard.",
+    "claim": "Presents Linglong Agent Service, a runtime that centralizes reasoning while managing distributed execution, aligning with orchestration and handoff themes.",
     "claim_verified": {
       "verified": false,
-      "best_match_score": 0.4513,
+      "best_match_score": 0.4833,
       "supporting_excerpt": null,
       "matched_source": null
     },
@@ -301,227 +123,335 @@
     "skeptic_objection": null
   },
   {
-    "arxiv_id": "2611.18471v1",
-    "title": "Do Verifier Judgments Survive Abstraction? Measuring Verification Transport for LLM Agent Evaluation",
+    "arxiv_id": "2611.20891v1",
+    "title": "From Recursion to Convolution: Parallel Self-Improvement for Multi-Agent Systems",
     "authors": [
-      "Disha Sheshanarayana",
-      "Sai Linisha Reddy Goli"
+      "Zheng Wang",
+      "Yuang Liu",
+      "Sachith Abeywickrama",
+      "Yangkai Ding",
+      "Tao Yu",
+      "Xinyu Zhang",
+      "Hongbo Wang",
+      "Qi Ye",
+      "Xuefeng Jin",
+      "Zhangchun Zhao"
     ],
-    "abstract": "LLM-based verifiers are increasingly used to evaluate agent executions, but their reliability is typically measured under a single representation of the trajectory. In deployed agent systems, the same execution may be exposed through composed tools, delegation boundaries, or compacted histories, changing what execution evidence is directly observable to the verifier. It therefore remains unclear whether correct verifier judgments persist across such abstraction boundaries. We introduce Verification Transport, a reliability test that measures judgment stability under abstraction-induced changes in execution observability. We construct matched native, abstracted, and restored views of the same frozen executions while holding the task, realized trajectory, outcome, ground truth, evaluation criterion, and verifier fixed. Across four agent-evaluation benchmarks, seven verifier backbones, four verification protocols, and three abstraction boundaries, we find substantial transport failure, reaching about 31% under macro abstraction and delegation. Verification protocols exhibit distinct failure modes: direct verification more often produces incorrect verdicts, whereas evidence-grounded and deliberative protocols tend to abstain under limited observability. This suggests that lower transport failure rates do not necessarily imply greater reliability. Restoring the corresponding execution provenance recovers 85.5% of transport failures, while recovery is lower when provenance is lossy or unavailable. These results show that native-view accuracy alone is insufficient to characterize verifier reliability when execution evidence crosses abstraction boundaries.",
-    "published_date": "2026-11-13T17:44:01Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.18471v1",
+    "abstract": "Multi-agent self-improvement enables agents to improve through interaction and feedback. However, sequential dependencies across agents and refinement rounds can propagate errors, increase computational costs, and limit parallelism. Moreover, refining individual features or agents in isolation can overlook their dependencies and restrict collective coordination. To address these challenges, we propose ConvRSI, a framework for parallelizing multi-agent self-improvement through convolution. ConvRSI couples intra-agent convolution, which jointly refines related agent features, with inter-agent graph convolution, which aggregates messages according to the collaboration topology. Both stages operate in latent space, enabling parallel updates without repeatedly decoding and re-encoding intermediate messages. Experiments on MATH-500 show that ConvRSI achieves 5.04% performance improvement while reducing 17.27% inference cost, and 45.11% latency compared with RecursiveMAS. It also supports diverse collaboration patterns by representing their topologies as adjacency matrices. These results demonstrate the potential of convolutional co-evolution for efficient multi-agent self-improvement. Our code and datasets are provided in https://github.com/LYA2333/ConvRSI.",
+    "published_date": "2026-11-16T11:00:28Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.20891v1",
     "score": {
-      "total_score": 0.334,
+      "total_score": 0.352,
       "keyword_score": 0.091,
-      "recency_score": 0.902,
+      "recency_score": 0.96,
       "matched_keywords": [
-        "LLM agents"
+        "multi-agent systems"
       ],
-      "days_since_published": 2.9
+      "days_since_published": 1.2
     },
-    "claim": "Investigates whether verifier judgments survive abstraction layers, assessing the robustness of deterministic safety checks for agent evaluation.",
+    "claim": "Develops parallel self-improvement techniques for MAS, highlighting coordination challenges and error propagation in multi-agent loops.",
     "claim_verified": {
       "verified": true,
-      "best_match_score": 0.5241,
-      "supporting_excerpt": "An LLM agent is a loop: the model reasons about a goal, optionally calls a tool, observes the result, and repeats until done. Most of the interesting engineering isn't in the model \u2014 it's in what you let the agent touch, and where a human or a deterministic check sits before anything irreversible happens.",
-      "matched_source": "note_language_model_agents.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt only describes the role of deterministic checks in the agent loop, never indicating a study of how verifier judgments persist through abstraction layers, so the claim overstates the connection."
-  },
-  {
-    "arxiv_id": "2611.17115v1",
-    "title": "CapLite: Prompt-Injection Defense for Small Language Model Agents without Model-Written Security Artifacts",
-    "authors": [
-      "Zimo Xu",
-      "Wenzhuo Liu",
-      "Hideki Nakayama"
-    ],
-    "abstract": "Enforcement defenses against prompt injection, such as CaMeL, Progent, IPIGuard and DRIFT, ask the agent's own model to write a security artifact (a program, a privilege policy, a dependency graph or a constraint list) that code then enforces. We ask whether small language model (SLM) agents can be trusted to write these artifacts. Across 15 open-weight models, 13 of them between 1.7B and 12B parameters, they cannot: the policies, graphs and constraints that the agent's model writes admit attacks on 14 (Progent), 13 (IPIGuard) and 11 (DRIFT) of the models, and CaMeL's programs fail to run in up to 68% of episodes. We present CapLite, which derives its policy from the tool schemas, commits the write calls before any tool result is read, and admits a write only if every argument that decides whom or what it affects is stated in the user's request. This guarantees write integrity: injected text cannot add a write, and no write reaches a recipient, amount, object or destination that the user did not state. No attack succeeds in 13,935 attacked AgentDojo episodes. CapLite reaches utility under attack comparable to CaMeL's (29.0% vs. 27.2%) with fewer tokens than every other enforcement defense and than the undefended agent: 17.1k per episode, 18% of CaMeL's, and the highest utility per token of all enforcement defenses.",
-    "published_date": "2026-11-12T17:07:22Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.17115v1",
-    "score": {
-      "total_score": 0.324,
-      "keyword_score": 0.091,
-      "recency_score": 0.868,
-      "matched_keywords": [
-        "language model agents"
-      ],
-      "days_since_published": 4.0
-    },
-    "claim": "CapLite defends against prompt\u2011injection without requiring model\u2011written security artifacts, reinforcing deterministic safety checks for small\u2011model agents.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5138,
-      "supporting_excerpt": "# No-Box Vulnerability Analysis: Description-only Detection of Indirect Prompt Injection Vulnerabilities in MCP Servers\n\n**arXiv ID**: 2609.10854v1\n\n**Published Date**: 2026-09-09T21:43:27Z\n\n**Authors**: Zehua Zhang, Jie Hu, Pratham Hegde, Aditya Maheshbhai Gabani, Souradip Nath, Yibo Liu, Siyu Liu, Hongkai Chen, Hulin Wang, Zhuoer Lyu, Chang Zhu, Divij Handa, Yan Shoshitaishvili, Tiffany Bao, Ruoyu Wang, Adam Doupe\n\n**PDF**: https://arxiv.org/pdf/2609.10854v1\n\n## Abstract\nConventional vulnerability analysis relies on either system access or dynamic interaction, all of which may be unavailable to third-party analysts auditing closed-source, remotely hosted, critical in situ systems, or commercially gated software. Therefore, we propose a new paradigm of no-box vulnerability analysis in which neither access nor runtime interaction is available, and only functionality metadata is available. Such metadata defines the intended behavior of the system, including its inputs, outputs, and side effects, while constraining the space of implementations consistent with that behavior. We propose hypothesizing about vulnerabilities that exist across all possible implementations of a given system metadata, without observing or interacting with the target system. An analyst can later validate these hypotheses when additional access is available. We showcase the feasibility of no-box vulnerability analysis through implementing a prototype called MCPSEC, which audits Model Context Protocol (MCP) servers for indirect prompt injection vulnerabilities using only the tool metadata exposed at server registration time. We evaluate MCPSEC on 20 widely deployed MCP servers comprising 177 tools, among which human evaluators confirm 95 vulnerable tools. MCPSEC identified 143 tools as vulnerable, and for each vulnerable tool, it produced a hypothesized vulnerability along with exploitation technique. Using metadata alone, MCPSEC predicted 94 (98.9% recall) real verified vulnerabilities, compared against an LLM baseline with 80 (84.2% recall). Overall, our results introduce no-box vulnerability analysis as a new analysis paradigm and demonstrate its practical feasibility in realistic systems.\n\n## Established Connection Claim\nProposes a no\u2011box vulnerability analysis method for MCP servers, focusing on the MCP tool\u2011standard security assessment.\n",
-      "matched_source": "approved_2609_10854v1.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt discusses a no\u2011box vulnerability analysis tool for detecting prompt\u2011injection flaws in MCP servers, but never mentions CapLite or any defensive mechanism, so it provides no support for the claim that CapLite mitigates prompt\u2011injection without model\u2011written artifacts."
-  },
-  {
-    "arxiv_id": "2611.15754v1",
-    "title": "MULTILOOP: Evolving Multi-Agent Harnesses for Complex Information-Seeking Tasks",
-    "authors": [
-      "Daniela Gottesman",
-      "Gal Yona",
-      "Ori Ram",
-      "Zorik Gekhman",
-      "Jonathan Herzig",
-      "Mor Geva",
-      "Roee Aharoni"
-    ],
-    "abstract": "The performance of LLM-based agents depends not only on the underlying model but also on the harness: the prompts, tools, and orchestration logic around it. Recent works automate harness optimization with coding agents that analyze execution traces, diagnose failures, and edit the harness code; however, those focused on single-agent systems. Multi-agent harnesses are harder to optimize as fixing them requires changing how agents interact in addition to how each behaves. We study whether automated harness optimization can diagnose and repair failures in multi-agent systems through a case study on complex information-seeking tasks from DeepSearchQA [Gupta et al., 2026]. We apply MULTILOOP, a simple optimization loop in which a coding agent iteratively analyzes, evaluates and edits the harness. With only 10 training samples, the evolved harness improves accuracy by 4.6% over the base harness and by 3.2% over the best single-agent system. However, a taxonomy of failure modes before and after optimization shows that the orchestration failures that characterize multi-agent systems largely persist. Our findings motivate harness optimization methods that encourage structural changes to how agents delegate tasks and share information.",
-    "published_date": "2026-11-11T17:34:12Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.15754v1",
-    "score": {
-      "total_score": 0.314,
-      "keyword_score": 0.091,
-      "recency_score": 0.835,
-      "matched_keywords": [
-        "multi-agent systems",
-        "LLM-based agents"
-      ],
-      "days_since_published": 4.9
-    },
-    "claim": "MULTILOOP evolves multi\u2011agent harnesses through iterative loops, focusing on deterministic safety and coordination improvements.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5071,
+      "best_match_score": 0.5732,
       "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
       "matched_source": "note_multi_agent_systems.md"
     },
     "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt never mentions MULTILOOP, iterative loops, or deterministic safety, so the claim invents details not supported by the text."
+    "skeptic_objection": "The excerpt never mentions \u201cparallel self\u2011improvement techniques,\u201d only coordination patterns and error\u2011propagation concerns, so the claim adds a concept not supported by the source."
   },
   {
-    "arxiv_id": "2611.10977v1",
-    "title": "DM-Call: Decision-Model-Guided Function Calling with Cumulative Verification Feedback",
+    "arxiv_id": "2611.20922v1",
+    "title": "Experience Rot: Experienced Agents Fail Where Novices Succeed",
     "authors": [
-      "Minhyeong Yu",
-      "Wonduk Seo",
-      "Seunghyun Lee"
+      "Zhen Xu",
+      "Hang Yin",
+      "Zitao Zhang",
+      "Kevin Zhao",
+      "Xuefeng Liu"
     ],
-    "abstract": "Reliable function calling requires Large Language Models (LLMs) to select appropriate functions and generate arguments consistent with user intent. However, syntactically valid calls may still be semantically incorrect due to inappropriate function selection or mismatched arguments. In this paper, we propose Decision-Model-Guided Function Calling (DM-Call), a framework that combines local schema validation with separate decision-model verification of function selection and argument correctness. For rejected candidates, DM-Call accumulates verification probabilities, binary judgments, and schema errors across attempts. A hybrid feedback representation further combines numerical probabilities with verbal correctness labels to guide iterative refinement without executing external tools. Extensive evaluation across BFCL and API-Bank (first-call) demonstrates DM-Call boosts function-calling accuracy versus direct generation, at modest additional cost.",
-    "published_date": "2026-11-07T21:29:51Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.10977v1",
+    "abstract": "Agents are increasingly built to learn from experience: they keep conversation histories, memory files, retrieved notes and skills, and reuse what worked before. We show that this experience turns against them when their tools change silently. We test a range of models with tools defined as in the Model Context Protocol (MCP). After a silent change, experienced agents fail on most tasks, while agents new to the task mostly succeed. We call this failure Experience Rot. Experienced agents copy their earlier call instead of checking the current interface, even when the tool definition shows the change. Then they report success. When the documentation is incomplete, experience is what makes agents succeed. After a change, the same experience leaves them worse off than no experience at all. The failure appears in every form of memory we test and grows with the amount of experience. Simple remedies fall short: announcing the update barely helps, and pointing the agent to the documentation fails whenever the documentation does not spell out the answer.",
+    "published_date": "2026-11-16T11:31:08Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.20922v1",
     "score": {
-      "total_score": 0.308,
-      "keyword_score": 0.136,
-      "recency_score": 0.707,
-      "matched_keywords": [
-        "function calling"
-      ],
-      "days_since_published": 8.8
-    },
-    "claim": "DM\u2011Call integrates decision\u2011model\u2011guided function calling with cumulative verification feedback, embodying tool\u2011use contracts and safety verification.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5277,
-      "supporting_excerpt": "Tool use lets an LLM extend its reasoning by calling external functions mid-generation. Key lesson: a tool's docstring is the interface contract \u2014 vague documentation causes far more wrong or missing arguments than the underlying model's raw capability would predict.",
-      "matched_source": "note_tool_use.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt merely notes that clear docstrings serve as interface contracts and affect argument accuracy, without any mention of decision\u2011model guidance, cumulative verification feedback, or safety verification, so the claim extends far beyond what the text supports."
-  },
-  {
-    "arxiv_id": "2611.14808v1",
-    "title": "OverServe: Resource Amplification Attacks on SaaS Agents via Tool--Prompt Co-Design",
-    "authors": [
-      "Ruiheng Yu",
-      "Oteo Mamo",
-      "Siyu Gan",
-      "Weikuan Yu",
-      "Mulong Luo"
-    ],
-    "abstract": "Advances in large language models (LLMs) are enabling software-as-a-service (SaaS) providers to automate longer business workflows with agents. In subscription-based SaaS deployments, model and tool calls consume provider resources without additional customer payments. Because the agent autonomously decides when to stop, a malicious tenant can send a prompt to the agent, exploiting its completion decisions to extend execution and waste provider resources. In this paper, we present OverServe, a multi-agent framework for constructing such attacks against SaaS agents. OverServe co-designs Model Context Protocol (MCP) status tools and completion-confirmation prompts for the attacker. Each tool call returns accurate status and terminates normally, yet the agent may repeatedly check an unfinished condition to satisfy the prompt. This consumes the SaaS provider's resources even after the original business task is completed. OverServe constructs service-specific tool--prompt pairs and uses separate tool and prompt reviews to guide candidate pair selection. Tested tool specifications trigger no alerts in the evaluated MCP scanners. We evaluate Qwen, Nemotron, DeepSeek, and Sonnet on selected tasks from nine benchmarks. All OverServe runs pass the original task checks. OverServe can reach a maximal amplification of API requests by $93.88\\times$ while preserving the original task goal and collateral checks.",
-    "published_date": "2026-11-10T22:50:35Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.14808v1",
-    "score": {
-      "total_score": 0.306,
+      "total_score": 0.352,
       "keyword_score": 0.091,
-      "recency_score": 0.809,
+      "recency_score": 0.961,
       "matched_keywords": [
         "model context protocol",
         "MCP"
       ],
-      "days_since_published": 5.7
+      "days_since_published": 1.2
     },
-    "claim": "Demonstrates resource\u2011amplification attacks via co\u2011design of tools and prompts, highlighting vulnerabilities in tool\u2011use contracts and safety.",
+    "claim": "Shows that accumulated experience can cause agent failures under tool changes, highlighting error propagation in multi-agent systems.",
     "claim_verified": {
       "verified": true,
-      "best_match_score": 0.5219,
-      "supporting_excerpt": "# No-Box Vulnerability Analysis: Description-only Detection of Indirect Prompt Injection Vulnerabilities in MCP Servers\n\n**arXiv ID**: 2609.10854v1\n\n**Published Date**: 2026-09-09T21:43:27Z\n\n**Authors**: Zehua Zhang, Jie Hu, Pratham Hegde, Aditya Maheshbhai Gabani, Souradip Nath, Yibo Liu, Siyu Liu, Hongkai Chen, Hulin Wang, Zhuoer Lyu, Chang Zhu, Divij Handa, Yan Shoshitaishvili, Tiffany Bao, Ruoyu Wang, Adam Doupe\n\n**PDF**: https://arxiv.org/pdf/2609.10854v1\n\n## Abstract\nConventional vulnerability analysis relies on either system access or dynamic interaction, all of which may be unavailable to third-party analysts auditing closed-source, remotely hosted, critical in situ systems, or commercially gated software. Therefore, we propose a new paradigm of no-box vulnerability analysis in which neither access nor runtime interaction is available, and only functionality metadata is available. Such metadata defines the intended behavior of the system, including its inputs, outputs, and side effects, while constraining the space of implementations consistent with that behavior. We propose hypothesizing about vulnerabilities that exist across all possible implementations of a given system metadata, without observing or interacting with the target system. An analyst can later validate these hypotheses when additional access is available. We showcase the feasibility of no-box vulnerability analysis through implementing a prototype called MCPSEC, which audits Model Context Protocol (MCP) servers for indirect prompt injection vulnerabilities using only the tool metadata exposed at server registration time. We evaluate MCPSEC on 20 widely deployed MCP servers comprising 177 tools, among which human evaluators confirm 95 vulnerable tools. MCPSEC identified 143 tools as vulnerable, and for each vulnerable tool, it produced a hypothesized vulnerability along with exploitation technique. Using metadata alone, MCPSEC predicted 94 (98.9% recall) real verified vulnerabilities, compared against an LLM baseline with 80 (84.2% recall). Overall, our results introduce no-box vulnerability analysis as a new analysis paradigm and demonstrate its practical feasibility in realistic systems.\n\n## Established Connection Claim\nProposes a no\u2011box vulnerability analysis method for MCP servers, focusing on the MCP tool\u2011standard security assessment.\n",
-      "matched_source": "approved_2609_10854v1.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt only describes a no\u2011box analysis for detecting indirect prompt\u2011injection flaws in MCP tools, never mentioning resource\u2011amplification attacks or co\u2011design of tools and prompts."
-  },
-  {
-    "arxiv_id": "2611.18183v1",
-    "title": "When Should a Virtual Patient Ask? RISP-Guided Proactive Information Seeking in Multi-Agent Patient Simulation",
-    "authors": [
-      "Jingyao Cai",
-      "Shuaijun Liu",
-      "Abdul Rehman",
-      "Xiaowan Li",
-      "Qintian",
-      "Thomas Dolby",
-      "Sue M Green",
-      "Xiaosong Yang"
-    ],
-    "abstract": "Virtual patient (VP) systems support nursing communication training by providing simulated encounters in which learners practise explaining care and responding to patient concerns. Although large language models (LLMs) support flexible dialogue, current approaches give less explicit attention to how patients' information needs develop and guide the content and timing of their questions. We draw on the Risk Information Seeking and Processing (RISP) model, which relates information seeking to perceived risk and the gap between perceived knowledge and desired understanding. Guided by this perspective, we propose the RISP Multi-Agent System (RISP-MAS), a VP system for patient-initiated information seeking. The system links ongoing assessment of the patient's perceptions and information needs to coordinated decisions about whether to seek information, when to ask and which uncertainty to address. Evaluation of nursing student-VP interactions suggested that RISP-MAS exhibited plausible patient information-seeking behaviour, as indicated by expert assessments, while student feedback reflected positive interaction experiences. This work extends patient simulation by connecting a psychological account of information needs to explicit decisions about question initiation. The approach offers nursing students opportunities to practise recognising unresolved patient concerns and tailoring explanations to patients' information needs.",
-    "published_date": "2026-11-13T13:51:21Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.18183v1",
-    "score": {
-      "total_score": 0.301,
-      "keyword_score": 0.045,
-      "recency_score": 0.897,
-      "matched_keywords": [
-        "multi-agent systems"
-      ],
-      "days_since_published": 3.1
-    },
-    "claim": "Examines proactive information\u2011seeking coordination among virtual patient agents, directly relating to our theme on multi\u2011agent systems coordination and error propagation.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5527,
+      "best_match_score": 0.6123,
       "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
       "matched_source": "note_multi_agent_systems.md"
     },
     "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt never mentions virtual patient agents or proactive information\u2011seeking, so the claim misreads the connection."
+    "skeptic_objection": "The excerpt never mentions accumulated experience or tool changes, so it provides no basis for the claim that experience causes failures when tools change."
   },
   {
-    "arxiv_id": "2611.18315v1",
-    "title": "Experts Across Schemas: Agent-Guided Mixture-of-Relational-Experts for Cross-Database Generalization",
+    "arxiv_id": "2611.20736v1",
+    "title": "GainCtrl: Predicting Remaining Gains for Efficient LLM Agent Execution",
     "authors": [
-      "Hiren Madhu",
-      "Sukanta Ganguly",
-      "Kiran Srinivasan",
-      "Smita Krishnaswamy",
-      "Rex Ying"
+      "Kangwen Zhao",
+      "Jianfeng Cai",
+      "Ruopei Sun",
+      "Mingxiao Feng",
+      "Peng Zhang",
+      "Wengang Zhou",
+      "Houqiang Li"
     ],
-    "abstract": "Web platforms record user and item activity in relational databases whose schemas differ from platform to platform, which makes it difficult to transfer predictive models between them. Relational foundation models address this through cross-database pretraining, yet recent improvements have relied on increasingly large pretraining corpora. We ask whether a better architecture, together with features specific to the target database, can deliver comparable gains from far less pretraining data. We introduce MoREGT, a mixture-of-relational-experts graph transformer that represents both rows and cells as tokens, adds the log-ages of rows and the names of foreign-key relationships to attention, and routes cells and rows to experts by column metadata rather than by values. A label-blind LLM agent complements the model: it reads the target database's schema and column statistics and adds validated single-row derived columns, without access to labels or model scores. On 21 RelBench tasks with leave-one-database-out pretraining on six databases, the MoREGT backbone improves on the Relational Transformer pretrained on the same databases by 2.25 points of mean AUROC and 5.83 points of mean nMAE. The agent's columns raise mean AUROC from 78.45 to 79.63 and lower mean nMAE from 27.91 to 26.98, the highest means on both metrics among the compared methods, including RT-J, which pretrains on about 400 times as many databases.",
-    "published_date": "2026-11-13T15:32:09Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.18315v1",
+    "abstract": "Large language models (LLMs) are widely used to power agents that interact with tools and environments to solve complex tasks. Repeated attempts improve the quality of tool-using agents, but continued execution incurs additional costs even when it is unlikely to improve the best result ultimately returned. This raises the question of when to stop an attempt to reduce execution cost while preserving task-level Best-of-N quality. To address this question, we introduce GainCtrl, a gain-based execution controller for LLMs. In GainCtrl, a lightweight CPU predictor uses interaction histories to estimate expected positive gains over retained scores, which are then used to guide stopping decisions with calibrated thresholds to limit the loss in mean Best-of-N task quality. We evaluate the controller through trajectory replay across three environments and three LLM actors. Comparisons of interpolated quality-cost Pareto frontiers show that GainCtrl generally uses fewer tokens than baselines at matched target quality. Fixed policies also achieve quality close to that of full execution while substantially reducing token consumption. The predictor runs at millisecond latency on a single CPU thread, supporting repeated monitoring without access to LLM internals.",
+    "published_date": "2026-11-16T08:40:29Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.20736v1",
     "score": {
-      "total_score": 0.301,
-      "keyword_score": 0.045,
-      "recency_score": 0.899,
+      "total_score": 0.351,
+      "keyword_score": 0.091,
+      "recency_score": 0.957,
       "matched_keywords": [
         "LLM agents"
       ],
-      "days_since_published": 3.0
+      "days_since_published": 1.3
     },
-    "claim": "Agent\u2011guided mixture\u2011of\u2011relational\u2011experts enables modular handoffs across heterogeneous database schemas, illustrating pipeline orchestration.",
+    "claim": "Proposes GainCtrl to predict diminishing returns of further tool calls, informing deterministic safety checks and loop termination for LLM agents.",
     "claim_verified": {
       "verified": true,
-      "best_match_score": 0.5231,
+      "best_match_score": 0.5715,
+      "supporting_excerpt": "An LLM agent is a loop: the model reasons about a goal, optionally calls a tool, observes the result, and repeats until done. Most of the interesting engineering isn't in the model \u2014 it's in what you let the agent touch, and where a human or a deterministic check sits before anything irreversible happens.",
+      "matched_source": "note_language_model_agents.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt never mentions predicting diminishing returns or a GainCtrl mechanism, only that deterministic checks are placed before irreversible actions."
+  },
+  {
+    "arxiv_id": "2611.20644v1",
+    "title": "Instrumenting Failure: Scoring Language Model Agents at Every Decision Node in Imperfect-Information Games",
+    "authors": [
+      "Michael Kingston",
+      "Sonit Singh",
+      "Alan Blair"
+    ],
+    "abstract": "Agent evaluations report task success and rarely say what an agent did at each decision. We score every decision node of three 12B to 14B instruct-tuned language models (LMs) playing five zero-sum imperfect-information games against four opponents on eight properties from decision and game theory, five of them against a CFR+ equilibrium reference. At each node, the LM also states a belief about the opponent's hidden state in a separate call. Without memory and at temperature 0, stated beliefs sit 0.250 to 0.288 in total variation distance from the equilibrium posterior, and where the action responds to the state its agreement with that belief exceeds chance by -0.04 to 0.19. The two calls frame the opponent differently, so the result is a behavioural inconsistency and makes no claim about internal beliefs. Under one prompt and greedy decoding, the LM's action never varies with the state in 10 of the 38 cells where the reference varies its own. Memory lowers the constant-action share in 9 of 13 testable ladders at temperature 0; at temperature 0.2 the cells at 1 fall from 16 to 5 of the 46 informative cells, while the belief results hold. A gate withholds, with a stated reason, any belief score the run cannot support, and seven of the eight non-zero defect rates are attributable to the instrument, a representation, or the LMs.",
+    "published_date": "2026-11-16T07:04:32Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.20644v1",
+    "score": {
+      "total_score": 0.35,
+      "keyword_score": 0.091,
+      "recency_score": 0.955,
+      "matched_keywords": [
+        "language model agents"
+      ],
+      "days_since_published": 1.4
+    },
+    "claim": "Scores LLM agents at every decision node in imperfect-information games, offering fine-grained safety checks for agent loops.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.6305,
+      "supporting_excerpt": "An LLM agent is a loop: the model reasons about a goal, optionally calls a tool, observes the result, and repeats until done. Most of the interesting engineering isn't in the model \u2014 it's in what you let the agent touch, and where a human or a deterministic check sits before anything irreversible happens.",
+      "matched_source": "note_language_model_agents.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt never mentions scoring decisions or imperfect-information games, so it does not substantiate the claim that LLM agents are evaluated at every decision node for safety."
+  },
+  {
+    "arxiv_id": "2611.21515v1",
+    "title": "Beyond Leaderboard Ranks: Selecting Software Engineering Agents Under Budget Constraints",
+    "authors": [
+      "Srinath Srinivasan",
+      "Tim Menzies"
+    ],
+    "abstract": "Teams that adopt LLM agents for issue resolution must decide which agent to pay for, and how much to spend finding out. Leaderboard ranks give weak evidence for this decision. Accuracy differences may be statistically unresolved, reported costs may be inconsistent, and evaluating candidate agents can itself be expensive. We investigate budget-constrained agent selection using 58,197 run--task records extracted from the Holistic Agent Leaderboard (HAL), focusing on SWE-bench and six additional benchmarks.\n  Across seven benchmarks, 27 of 35 steps along the accuracy--cost Pareto frontiers are statistically unresolved. On SWE-bench, a run costing $34.16 trails the $170.78 leader by 14.6 percentage points, but the available tasks cannot statistically distinguish their accuracy. Reported costs also differ from standardized token-based estimates by up to 11.7x, while selective task evaluation can bias estimates of full-benchmark execution cost.\n  We therefore compare evaluation strategies under explicit evaluation budgets and deployment-cost caps. Under advance knowledge of task costs, successive halving reaches our uncertainty-aware selection target on SWE-bench using 6.6% of exhaustive evaluation spend, achieving the lowest cost on six of seven benchmarks and tying on the seventh. Its advantage narrows when task costs are unknown before execution or exact-best selection is required.\n  Our findings motivate decision-oriented agent evaluation that accounts for accuracy uncertainty, validates execution costs, and compares complex selection methods against simple adaptive allocation.",
+    "published_date": "2026-11-16T18:10:37Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.21515v1",
+    "score": {
+      "total_score": 0.323,
+      "keyword_score": 0.045,
+      "recency_score": 0.97,
+      "matched_keywords": [
+        "LLM agents"
+      ],
+      "days_since_published": 0.9
+    },
+    "claim": "Studies budget-constrained selection of software-engineering agents, addressing orchestration and modular handoff decisions.",
+    "claim_verified": {
+      "verified": false,
+      "best_match_score": 0.4143,
+      "supporting_excerpt": null,
+      "matched_source": null
+    },
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
+  },
+  {
+    "arxiv_id": "2611.21250v1",
+    "title": "Stream of Belief: Eliciting Collective Intelligence through Latent Belief Dynamics",
+    "authors": [
+      "Yu Yao",
+      "Jiayi Dong",
+      "Yilun Du"
+    ],
+    "abstract": "In this work, we view multi-agent reasoning as a process of seeking a collective equilibrium of implicit belief dynamics and introduce Stream of Belief (SoB), where agents maintain continuous latent beliefs and iteratively refine them through communication and reflection. Our method seeks a collective belief state of a multi-agent system where further communication induces no meaningful information propagation. Through extensive experiments, we demonstrate the generalization of SoB across tasks and model families. More Broadly, our results suggest a new perspective on scaling multi-agent reasoning from belief dynamics.",
+    "published_date": "2026-11-16T15:28:04Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.21250v1",
+    "score": {
+      "total_score": 0.322,
+      "keyword_score": 0.045,
+      "recency_score": 0.967,
+      "matched_keywords": [
+        "multi-agent systems"
+      ],
+      "days_since_published": 1.0
+    },
+    "claim": "Models collective belief dynamics as a latent coordination process, linking to the theme on multi-agent system coordination and error propagation.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.5663,
+      "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
+      "matched_source": "note_multi_agent_systems.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt discusses coordination mechanisms and error propagation among agents but never addresses modeling collective belief dynamics, so the claim overstates the connection."
+  },
+  {
+    "arxiv_id": "2611.21298v1",
+    "title": "Agent-Native by Design: A Programming Language for Agentic Applications",
+    "authors": [
+      "Jayanaka Dantanarayana",
+      "Savini Kashmira",
+      "Xiaoyu Ma",
+      "Malitha",
+      "Malitha Prabhashana",
+      "Lingjia Tang",
+      "Jason Mars"
+    ],
+    "abstract": "Building agentic applications requires combining large language model (LLM) operations, workflow structure and application state, and model-guided routing. With SDKs and agent frameworks, developers connect these components through supporting code that prepares model inputs, propagates state, and dispatches model-selected steps. Workflow changes can require coordinated updates to this code, increasing development and testing effort. Splitting execution logic between application code and framework internals also limits compiler visibility into control flow and state dependencies, hindering automatic optimization. We introduce Agent-Native Programming, which unifies these three components with shared execution semantics. We realize this approach in Jac, a Python-superset language, through \"by llm()\" for typed model operations and tool use, Object-Spatial Programming for workflow structure and state, and \"visit ... by llm()\" for model-guided routing. The routing construct derives the model's choices from executable workflow steps and schedules the selected steps. This explicit connection between model decisions and program execution gives the compiler and runtime a common basis for dependency analysis and automatic optimization. Across five benchmarks and five baselines, Jac achieves a 1.8-8.7x reduction in AI-integration code relative to the OpenAI SDK, with competitive observed task quality and lower coding-agent development effort. Two case studies demonstrate speculative execution and service partitioning through configuration alone, using program analysis and runtime checks to preserve workflow behavior under stated conditions.",
+    "published_date": "2026-11-16T16:01:06Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.21298v1",
+    "score": {
+      "total_score": 0.322,
+      "keyword_score": 0.045,
+      "recency_score": 0.967,
+      "matched_keywords": [
+        "tool use"
+      ],
+      "days_since_published": 1.0
+    },
+    "claim": "Designs a programming language tailored for agentic applications, facilitating modular handoffs and orchestration of LLM-driven agents.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.6641,
+      "supporting_excerpt": "An LLM agent is a loop: the model reasons about a goal, optionally calls a tool, observes the result, and repeats until done. Most of the interesting engineering isn't in the model \u2014 it's in what you let the agent touch, and where a human or a deterministic check sits before anything irreversible happens.",
+      "matched_source": "note_language_model_agents.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt merely describes an LLM agent\u2019s reasoning loop and engineering focus, without any mention of a purpose\u2011built programming language, modular handoffs, or orchestration, so it does not substantiate the claim."
+  },
+  {
+    "arxiv_id": "2611.20997v1",
+    "title": "OpenMAS-GApp: A Comprehensive Benchmark for Domain-Adaptive Multi-Agent Application Construction",
+    "authors": [
+      "Xunkai Li",
+      "Kairui Yang",
+      "Jiaxi Li",
+      "Yuecong Mao",
+      "Zekai Chen",
+      "Xinle Zhang",
+      "Rong-Hua Li",
+      "Guoren Wang"
+    ],
+    "abstract": "Constructing multi-agent system (MAS) applications across domains requires translating diverse requirements into executable systems, involving task decomposition, agent and tool selection, and execution organization. Existing studies have explored individual aspects of MAS construction, including agent generation, architecture design, workflow generation, and component selection. However, these methods are often developed and evaluated independently, using different task specifications, component resources, and execution settings. This makes it difficult to compare their construction capabilities or determine how they can be applied to different domains. To address this problem, we propose OpenMAS-GApp, a One-for-All benchmark for MAS application construction across diverse domains. It standardizes task inputs, component resources, construction interfaces, and execution environments to support MAS construction under consistent conditions. Within OpenMAS-GApp, we provide Graph Harness as a reference construction method that derives task dependencies, selects compatible agents and tools, and organizes their interactions into executable graphs. We evaluate construction methods across 19 benchmark datasets under 20 evaluation settings spanning four application types and four professional domains.",
+    "published_date": "2026-11-16T12:25:56Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.20997v1",
+    "score": {
+      "total_score": 0.321,
+      "keyword_score": 0.045,
+      "recency_score": 0.962,
+      "matched_keywords": [
+        "multi-agent systems"
+      ],
+      "days_since_published": 1.1
+    },
+    "claim": "Provides OpenMAS-GApp, a benchmark for constructing domain-adaptive MAS applications, supporting research on agent pipeline orchestration and modular handoffs.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.516,
       "supporting_excerpt": "Orchestrating multiple pipeline steps works best when each step's responsibility is narrow and handoffs are explicit \u2014 fetch, score, verify, summarize \u2014 rather than one large prompt trying to do everything in a single model call.",
       "matched_source": "note_agent_orchestration.md"
     },
     "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt discusses narrow, explicit pipeline steps but never mentions agents, mixture\u2011of\u2011relational\u2011experts, or heterogeneous database schemas, so it doesn\u2019t substantiate the claim."
+    "skeptic_objection": "The excerpt never references OpenMAS\u2011GApp or any benchmark, only describing a design principle, so it provides no evidence for the claimed benchmark."
+  },
+  {
+    "arxiv_id": "2611.21084v1",
+    "title": "CompCert4Lean: Porting a Verified C Compiler to Lean in Six Weeks with Parallel Coding Agents",
+    "authors": [
+      "Cong Wang",
+      "Zhiyang Chen",
+      "Fan Long",
+      "Martin Rinard"
+    ],
+    "abstract": "We present CompCert4Lean, a large-scale port of CompCert 3.17's verified compiler core from Rocq to Lean, completed in approximately six weeks by one expert directing parallel LLM agents. Our migration workflow partitions the development along its dependencies, audits translated definitions and theorem statements before large-scale proof reconstruction, and then reconstructs proofs in parallel against stable interfaces. The resulting compiler covers typed CompCert C through x86-64 assembly, discharges all 4,908 recorded proof obligations without project-specific axioms, and produces executable Linux binaries. The workflow enabled the expert to concentrate on organizing the work rather than supplying technical solutions. Of 1,071 human interactions, 88.8% concerned workflow and coordination, while only three supplied technical direction.\n  Optimization campaigns further demonstrate the benefit of the Lean port for agent-driven verified development. Under matched budgets of 24 active hours, GPT-6-astra produced a Lean candidate with 11.7% lower generated-program runtime across 29 small-tests programs, compared with 2.3% lower for its Rocq candidate, both relative to original CompCert 3.17 and while preserving the end-to-end correctness theorem. These results show that parallel LLM agents can support large-scale migration with limited human technical direction and subsequently improve the migrated compiler while retaining its formal guarantees.",
+    "published_date": "2026-11-16T13:32:37Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.21084v1",
+    "score": {
+      "total_score": 0.321,
+      "keyword_score": 0.045,
+      "recency_score": 0.964,
+      "matched_keywords": [
+        "LLM agents"
+      ],
+      "days_since_published": 1.1
+    },
+    "claim": "Documents a rapid parallel LLM-agent driven porting of CompCert, exemplifying coordinated agent pipelines and modular handoffs.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.515,
+      "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
+      "matched_source": "note_multi_agent_systems.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt only outlines abstract LLM\u2011agent coordination patterns and error\u2011propagation concerns and never mentions a rapid parallel LLM\u2011agent\u2011driven porting of CompCert, so the claim is unsupported."
+  },
+  {
+    "arxiv_id": "2611.20430v1",
+    "title": "TrainExplorer: Autonomous LLM Post-Training via Plan-and-Decouple Exploration",
+    "authors": [
+      "Xuannan Liu",
+      "Tian Lan",
+      "Zekun Li",
+      "Xing Cui",
+      "Zhengfeng Yu",
+      "Feihu Jiang",
+      "Qianghuai Jia",
+      "Longyue Wang",
+      "Zhao Xu",
+      "Weihua Luo",
+      "Peipei Li",
+      "Ran He"
+    ],
+    "abstract": "LLM-based agents can automate model post-training, accelerating progress toward recursive self-improvement. Despite their promise, existing approaches remain under-explored and face two main challenges: (1) strategy lock-in that limits exploration beyond the initial strategy; and (2) coupled execution that obscures the effects of individual modifications. To address these challanges, we propose TrainExplorer, a multi-agent framework for autonomous post-training, that incorporates strategy planning and execution decoupling, to achieve broaden strategy exploration. First, strategy planning draws on scientific literature to construct a candidate search space of training strategies. Then, decoupled execution enables single-component interventions and attribution to guide strategy exploration. Extensive experiments on PostTrainBench demonstrate that TrainExplorer achieves a weighted aggregate score of 39.02, outperforming Claude Code using the same LLM by 7.32 and surpassing GPT-5.6 Sol-powered Codex, which scores 36.23. Code will be available.",
+    "published_date": "2026-11-16T02:46:30Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.20430v1",
+    "score": {
+      "total_score": 0.316,
+      "keyword_score": 0.045,
+      "recency_score": 0.949,
+      "matched_keywords": [
+        "LLM-based agents"
+      ],
+      "days_since_published": 1.5
+    },
+    "claim": "Describes TrainExplorer, an autonomous LLM post-training loop that plans and decouples exploration, pertinent to deterministic safety and loop design.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.5075,
+      "supporting_excerpt": "# Ecdysis: Efficient and Effective Training of Runtime Harnesses for LLM Agents\n\n**arXiv ID**: 2609.11677v1\n\n**Published Date**: 2026-09-10T15:09:08Z\n\n**Authors**: Ruiqing Yue, Yu Cui, Zhuoyu Sun, Sicheng Pan, Xianhong Xue, Tingyu Li, Ting Li, Wenzhuo Zhu, Yi Chen, Yifei Liu, Baohan Huang, Zhe Cui, Haibin Zhang, Cong Zuo\n\n**PDF**: https://arxiv.org/pdf/2609.11677v1\n\n## Abstract\nSelf-evolving runtime harnesses can substantially improve the capabilities of large language model (LLM) agents and provide a promising paradigm for optimizing agent execution. Existing harness evolution methods typically rely on iterative search, repeatedly evaluating and revising candidate harnesses based on execution feedback from task instances. While this paradigm enables continuous harness optimization, it incurs substantial time overhead due to repeated agent executions and code modifications, and may overfit to observed tasks and specific failure patterns, resulting in degraded generalization to unseen tasks. We identify the lack of principled failure diagnosis as a key bottleneck in harness evolution: an observed failure can reflect either model-specific deficiencies or systematic harness deficiencies, and directly optimizing against individual failures can lead to unnecessary model-specific accommodation. We therefore propose Ecdysis, an efficient and effective framework that distinguishes model-specific accommodation from harness-level repair and biases adaptation toward systematic harness deficiencies by identifying recurring cross-task failure patterns. Ecdysis adopts a batch-level cross-instance failure aggregation paradigm to jointly analyze failure evidence from multiple task instances and further introduces Failure-Driven Collaborative Refinement to diagnose failure causes and iteratively refine harness modification specifications. By combining cross-instance failure analysis with multi-role diagnosis, Ecdysis enables more effective harness evolution with lower training time. Experiments show that Ecdysis achieves up to a 1.84x speedup in harness training compared with existing harness evolution methods, while improving the reasoning accuracy of the resulting harnesses by 18.56%.\n\n## Established Connection Claim\nDescribes Ecdysis, a method for training runtime harnesses that streamline LLM agent execution pipelines.\n",
+      "matched_source": "approved_2609_11677v1.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt details Ecdysis for training runtime harnesses and never mentions TrainExplorer or an autonomous post\u2011training loop, so the claim misattributes the described system."
   }
 ]
