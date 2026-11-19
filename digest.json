@@ -1,153 +1,527 @@
 [
   {
-    "arxiv_id": "2611.23219v1",
-    "title": "Do LLM Agents Still Need to Be Told How to Self-Improve?",
+    "arxiv_id": "2611.23844v1",
+    "title": "Weighing the Envelope: Component Weight and Arbitration in Envelope-Layer Defenses for a Single LLM Agent",
     "authors": [
-      "Shobhita Sundaram",
-      "Cansu Sancaktar",
-      "Phillip Isola"
+      "Yuelin Han"
     ],
-    "abstract": "LLM agents increasingly drive their own learning. Self-improvement methods delegate various components of model optimization to the models themselves. As models become more capable, this motivates a basic question: do these increasingly capable models still need us to specify how they should self-improve? In this paper we study an autonomous paradigm in which, given basic primitives, resources, and a general goal for self-improvement, agents construct their own self-learning algorithm for context-based optimization. Using the setting of gameplay as a testbed, a frozen LLM agent is given a compute budget and tools for collecting experience and updating text documents, and allowed to freely experiment without an externally imposed loop or access to real-world data. We find that sufficiently capable models do self-improve under these conditions, demonstrating strategies that align with classic cognitive frameworks for self-regulated learning and constructs from machine learning literature on self-generated curricula. Furthermore, we study the extent to which the learned text artifacts transfer to external benchmarks, observing improvement across different game horizons, mechanics, and 3D navigation.",
-    "published_date": "2026-11-17T18:57:10Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.23219v1",
+    "abstract": "The envelope layer is the channel through which malicious content enters an LLM agent. Prior work established label and memory effects on multi-agent A2A envelopes, but the weight structure when MCP tools and memory coexist in a single agent remains unclear. Our threat model assumes an attacker pre-plants a malicious tool and poisons long-term memory; a benign user request inadvertently triggers it, and the attacker never enters the conversation. Following GDA Measurement and A/B/C/D, we measure how labels, memory, tool roles, and the backend shape invocation decisions across label-memory conflict, tool roles, robustness, and tool generalization. A tool-side forced-verification label substantially reduces semantic breach, but strong success memory pulls it back; a memory-side downgrade statement returns the outcome to the level of the label alone. The label works through mandatory implementation inspection plus default denial, not length or format; memory authorization wording erodes it with dose, while position and multi-turn pressure do not change the defense direction. Tool roles divide label effects into substitution, suppression, and boundary failure: low penetration is not safety, local leakage is the main residual risk, and a second malicious tool shows the same direction. Envelope labels are not a switch but a measurable, reversible weight constrained by backend and tool role, acting as a soft gate and risk signal within a broader defense rather than a substitute for permissions, sandboxing, or human review.",
+    "published_date": "2026-11-18T04:50:08Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.23844v1",
+    "score": {
+      "total_score": 0.413,
+      "keyword_score": 0.182,
+      "recency_score": 0.952,
+      "matched_keywords": [
+        "LLM agents",
+        "MCP"
+      ],
+      "days_since_published": 1.4
+    },
+    "claim": "Examines envelope\u2011layer component weighting for single\u2011agent defenses, extending the tool\u2011use contract and safety framework.",
+    "claim_verified": {
+      "verified": false,
+      "best_match_score": 0.422,
+      "supporting_excerpt": null,
+      "matched_source": null
+    },
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
+  },
+  {
+    "arxiv_id": "2611.24839v1",
+    "title": "Kaer: Security-Aware Replanning for Multi-Agent Systems",
+    "authors": [
+      "Tushin Mallick",
+      "Evan Rose",
+      "Matthew Laws",
+      "Alina Oprea",
+      "Cristina Nita-Rotaru"
+    ],
+    "abstract": "One popular architecture for multi-agent systems (MAS) relies on an orchestrator that generates an initial plan, coordinates its execution, and dynamically revises the plan based on agent feedback when tasks cannot be fully specified in advance. This dynamic replanning introduces a critical vulnerability: malicious agents can embed instructions within their feedback to hijack the replanning process. Existing defenses focus exclusively on per-tool access control or static, pre-execution policy enforcement, leaving the replanning phase unsecured.\n  We introduce Kaer, a multi-agent framework featuring security-aware replanning. Kaer shields the planner from untrusted agent feedback by conveying diagnostics to the replanning procedure strictly through abstract templates. Plan revisions are restricted to a set of deterministic repair operators, and all modified plans must satisfy preset policies. We create Cintra, a benchmark of simulated user tasks requiring replanning paired with adversarial objectives targeting the replanning phase. Using Cintra, we evaluate both task completion rates and system vulnerability to replanning exploits by malicious agents. Evaluating Kaer on Cintra against Magentic-One (an undefended MAS) and ControlValve (the state-of-the-art defense) demonstrates that Kaer achieves higher robustness than both systems while maintaining comparable utility to ControlValve. Although abstract failure templates slightly constrain utility on select tasks, Kaer enables MAS to perform secure, dynamic plan revisions without exposing the orchestrator to untrusted agent feedback.",
+    "published_date": "2026-11-18T18:05:47Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.24839v1",
     "score": {
       "total_score": 0.387,
       "keyword_score": 0.136,
-      "recency_score": 0.972,
+      "recency_score": 0.971,
+      "matched_keywords": [
+        "multi-agent systems"
+      ],
+      "days_since_published": 0.9
+    },
+    "claim": "Analyzes security\u2011aware replanning in multi\u2011agent orchestration, directly addressing our theme of coordination and error propagation in MAS.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.6521,
+      "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
+      "matched_source": "note_multi_agent_systems.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt discusses coordination patterns and error propagation but never addresses security\u2011aware replanning, so the claim overstates the connection."
+  },
+  {
+    "arxiv_id": "2611.24313v1",
+    "title": "AutoPI: Taxonomy-Guided Adaptive Red Teaming for Prompt Injection in LLM Agents",
+    "authors": [
+      "Stavros Damianakis",
+      "Konstantinos Psounis"
+    ],
+    "abstract": "Prompt injection is the dominant unsolved security risk for LLM agents, and the community now agrees that robustness must be measured against adaptive attackers rather than fixed benchmark injections. Many adaptive red teamers exist, and most are built to maximize attack success rate (ASR). Yet ASR counts how often a target breaks, not in how many different ways. A red teamer can achieve a high ASR by reusing a few techniques that work, leaving the others untested and absent from the attacks used to harden models. We present AutoPI, an adaptive red teamer designed to find many different ways to break a target, not just to break it often. AutoPI uses PIAtlas, a taxonomy of prompt-injection techniques, both to guide its search and to measure coverage. For each scenario, an attacker LLM writes an injection for every sub-technique in the taxonomy and then reworks the ones that fail using feedback from an LLM judge. The method is black-box and training-free, it plugs into existing benchmarks in place of their fixed attack templates, and it stays up to date as the taxonomy evolves. We evaluate AutoPI on AgentDojo and IPI Arena against open-weight and proprietary target models. Alongside ASR, we report technique coverage, the fraction of taxonomy classes, techniques, and sub-techniques that yield at least one successful injection. On AgentDojo, AutoPI finds a successful injection against Qwen3.6-35B in all six classes of the taxonomy and for more than 90% of its techniques. Against Claude Haiku 5.5, the most robust target we evaluate, it achieves between 20% and 50% higher ASR and between 25% and 400% higher class-level coverage than recent state-of-the-art adaptive red teamers, while requiring no training. We release our code and the generated attacks to support reproducible, coverage-aware evaluation.",
+    "published_date": "2026-11-18T12:20:58Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.24313v1",
+    "score": {
+      "total_score": 0.384,
+      "keyword_score": 0.136,
+      "recency_score": 0.963,
       "matched_keywords": [
         "LLM agents"
       ],
-      "days_since_published": 0.8
+      "days_since_published": 1.1
     },
-    "claim": "Investigates whether highly capable LLM agents require explicit self\u2011improvement directives, directly engaging the theme of language\u2011model agent loops and deterministic safety checks.",
+    "claim": "Offers an adaptive red\u2011team taxonomy for prompt injection, advancing robust safety evaluation of LLM agents.",
+    "claim_verified": {
+      "verified": false,
+      "best_match_score": 0.4378,
+      "supporting_excerpt": null,
+      "matched_source": null
+    },
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
+  },
+  {
+    "arxiv_id": "2611.24049v1",
+    "title": "A Hybrid RAG Framework for Deceptive Review Detection: Integrating RoBERTa-LoRA, FAISS-Based Retrieval, and LLM Reasoning",
+    "authors": [
+      "Andrei Kostin",
+      "Jos\u00e9 \u00c1ngel Diaz-Garcia",
+      "Karel Guti\u00e9rrez-Batista"
+    ],
+    "abstract": "The growth of deceptive online opinions poses a critical risk of misinformation and fraud. This paper proposes a Retrieval-Augmented Generation (RAG) system to automatically distinguish spam reviews. The architecture integrates RoBERTa with Low-Rank Adaptation (LoRA) classification, FAISS semantic vector retrieval, and a Large Language Model (LLM) for final reasoning. The system was evaluated across balanced and severely imbalanced real-world scenarios. Results demonstrate that five epochs of fine-tuning enable robust domain transfer, achieving an F1-score of 0.90 in cross-domain evaluation, outperforming baselines (OpenAI Detector,F1 = 0.82) and demonstrating competitive performance against specialized in-domain SOTA models (fakeRoBERTa,F1 = 0.97). The proposed architecture provides evidence-backed explainability and statistically significant precision gains while maintaining comparable overall detection performance.",
+    "published_date": "2026-11-18T08:39:46Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.24049v1",
+    "score": {
+      "total_score": 0.383,
+      "keyword_score": 0.136,
+      "recency_score": 0.957,
+      "matched_keywords": [
+        "RAG"
+      ],
+      "days_since_published": 1.3
+    },
+    "claim": "Designs a hybrid Retrieval\u2011Augmented Generation system for deceptive review detection, directly relevant to RAG and claim verification.",
+    "claim_verified": {
+      "verified": false,
+      "best_match_score": 0.4415,
+      "supporting_excerpt": null,
+      "matched_source": null
+    },
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
+  },
+  {
+    "arxiv_id": "2611.24697v1",
+    "title": "Depth Before Breadth: Reverse-to-Forward Curriculum with Advantage Decomposition for LLM Agent",
+    "authors": [
+      "Siyuan Du",
+      "Yuxin Liu",
+      "Meng Tang",
+      "Haoran Li",
+      "Yechao Bai",
+      "Feiyang Pan",
+      "Jia He"
+    ],
+    "abstract": "Reinforcement learning (RL) has become a common approach for training large language model (LLM) agents on long-horizon tasks. However, learning from sparse terminal rewards makes credit assignment and exploration difficult. We approach these challenges through a policy-induced capability region, the set of states from which the current policy can reliably complete a task. Near its boundary, an agent may need only a few actions to reach a more solvable state, even when the goal remains distant. This reduces long-horizon learning to two coupled subproblems of reaching that state and completing the task from there. We address them with paired advantages and a progressive reverse-to-forward curriculum. The advantages provide separate signals for reaching more solvable states and completing the task from them, while the curriculum expands the capability region backward along successful reference trajectories and then into off-reference states through on-policy exploration. On ALFWorld and WebShop, our method outperforms competitive agentic RL methods at both model scales, achieving success rates of 90.1%/96.1% and 80.2%/82.6% with Qwen2.5-1.5B/7B-Instruct, respectively.",
+    "published_date": "2026-11-18T16:25:14Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.24697v1",
+    "score": {
+      "total_score": 0.354,
+      "keyword_score": 0.091,
+      "recency_score": 0.968,
+      "matched_keywords": [
+        "LLM agents"
+      ],
+      "days_since_published": 1.0
+    },
+    "claim": "Implements a reverse\u2011to\u2011forward curriculum with advantage decomposition to improve credit assignment in LLM agents, addressing safety\u2011oriented loop control.",
+    "claim_verified": {
+      "verified": false,
+      "best_match_score": 0.4366,
+      "supporting_excerpt": null,
+      "matched_source": null
+    },
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
+  },
+  {
+    "arxiv_id": "2611.24362v1",
+    "title": "PIPETTE: Prompt Injection Purple-Teaming for Robust LLM Agents",
+    "authors": [
+      "Lipeng He",
+      "Yihan Wang",
+      "Jiawen Zhang",
+      "N. Asokan"
+    ],
+    "abstract": "Large language model (LLM) agents routinely interact with untrusted external data, exposing them to indirect prompt injection (IPI) attacks that hijack agents into executing attacker-chosen tasks. To uncover these vulnerabilities at scale, automated red-teaming methods often leverage reinforcement learning (RL) to generate attacks that achieve high attack success rates (ASR). Model developers use the attacks discovered during internal red-teaming to harden agents through adversarial training before deployment, a collaborative offensive-defensive process known in cybersecurity as purple-teaming. However, we show that achieving high ASR during red-teaming does not guarantee robustness gains from subsequent adversarial training. Specifically, we find that two state-of-the-art RL-based red-teaming methods, RL-Hammer and PISmith, suffer from mode collapse, repeatedly discovering similar attack strategies whose additional successes add no additional robustness improvements to adversarial training. To address this gap, we introduce PIPETTE, a unified prompt injection purple-teaming framework that effectively converts red-teaming discoveries into defender robustness improvements. PIPETTE employs a dictionary learning-based reward that encourages broader coverage of attack strategies during red-teaming. It also integrates an on-policy adversarial training pipeline tailored to IPI defense, enabling agents to resist attacks while completing legitimate user tasks. Extensive evaluations across agentic benchmarks (AgentDojo and ASB) demonstrate that PIPETTE produces defenders that achieve near-zero attack success rates on static attacks and can withstand strong adaptive attacks, while maintaining benign task utility close to that of the undefended baseline.",
+    "published_date": "2026-11-18T12:56:06Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.24362v1",
+    "score": {
+      "total_score": 0.353,
+      "keyword_score": 0.091,
+      "recency_score": 0.963,
+      "matched_keywords": [
+        "LLM agents"
+      ],
+      "days_since_published": 1.1
+    },
+    "claim": "Creates a prompt\u2011injection purple\u2011team framework to expose and mitigate attacks on LLM agents, supporting deterministic safety\u2011check mechanisms.",
     "claim_verified": {
       "verified": true,
-      "best_match_score": 0.6646,
+      "best_match_score": 0.5128,
       "supporting_excerpt": "An LLM agent is a loop: the model reasons about a goal, optionally calls a tool, observes the result, and repeats until done. Most of the interesting engineering isn't in the model \u2014 it's in what you let the agent touch, and where a human or a deterministic check sits before anything irreversible happens.",
       "matched_source": "note_language_model_agents.md"
     },
     "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt discusses agent loops and safety checkpoints but never mentions or examines explicit self\u2011improvement directives, so the claim misreads the passage\u2019s focus."
+    "skeptic_objection": "The excerpt never mentions a prompt\u2011injection purple\u2011team framework or any specific mitigation strategy, so it provides no basis for the claim."
   },
   {
-    "arxiv_id": "2611.22511v1",
-    "title": "LMLineage: Content Lineage and Context Governance for LLM Agents",
+    "arxiv_id": "2611.24788v1",
+    "title": "Isabelle Pool Server: a pooled verification service for prover training and multi-agent proving",
     "authors": [
-      "Wei Hou",
-      "Jingxin Geng",
-      "Xin Chen",
-      "Zheqing Jiang"
+      "Xuanwei Ren",
+      "Wenda Li"
     ],
-    "abstract": "Interpretability for AI agents should not be confined to understanding the model's internal weights. It must also cover the agent's reasoning and decision-making process over multi-source context. We present LMLineage, an out-of-band system that attributes every output sentence of an agent session to its supporting input spans with calibrated confidences, without requiring white-box access to the model or any additional inference passes. On top of the lineage metadata, we build concept-drift micro compaction: instead of waiting for the context-length limit and summarizing everything, the system detects when previously used input documents have stopped being referenced (\"drifted\") and surgically compacts only those, preserving user instructions verbatim. We evaluate on a multi-tier corpus: 71 gold annotated sentences from 10 Chinese web-QA cases, plus 90 turns of independently collected multi-turn sessions across three generator models (gpt-4o-mini, qwen3.8-27b, deepseek-v4-flash). Results show that (i) window-level embedding similarity is far better aligned with LLM paraphrasing than whole document or lexical matching; (ii) the greedy-window fast path is both faster and more accurate on average than exhaustive line-matching (a multiple-comparisons bias in the latter inflates web recall at the cost of overall accuracy); (iii) per-turn attribution completes in 1s on a single GPU, remaining stable as context accumulates to 40 turns; and (iv) concept-drift detection is conservative (0% false compaction) with recall bounded by attribution accuracy. We further describe the concept-drift micro compaction design and an interactive incident-tracing/memory-cleaning case study. A companion patent application covers the lineage construction method.",
-    "published_date": "2026-11-17T10:05:59Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.22511v1",
-    "score": {
-      "total_score": 0.352,
-      "keyword_score": 0.091,
-      "recency_score": 0.96,
-      "matched_keywords": [
-        "LLM agents"
-      ],
-      "days_since_published": 1.2
-    },
-    "claim": "Presents LMLineage for tracking content lineage and governing context across LLM agent sessions, aligning with the Model Context Protocol (MCP) tool standard theme.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5966,
-      "supporting_excerpt": "The Model Context Protocol standardizes how an application exposes tools and context to a model, so a tool built once can be reused across different agent frameworks instead of rewritten for each one.",
-      "matched_source": "note_mcp.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt describes MCP as a standard for exposing reusable tools and context, not for tracking content lineage or governing context across sessions, so the claim mischaracterizes the protocol\u2019s purpose."
-  },
-  {
-    "arxiv_id": "2611.23119v1",
-    "title": "Dynamic Task Allocation with Dialogue",
-    "authors": [
-      "Matthew Groholski",
-      "Weiwei Gu",
-      "Nakul Gopalan"
-    ],
-    "abstract": "Effective multi-agent collaboration requires agents to adapt task allocation as goals and responsibilities evolve. Prior task-allocation frameworks often assume static goals, full observability, or rely on large language models (LLMs) without explicit, verifiable beliefs about task allocation or intent. These assumptions limit their applicability to real-world collaboration, where agents often lack full information about each other's actions, progress, or local environment. To support dynamic task allocation under partial observability, we introduce a communication-augmented Bayesian task-allocation framework. Our agent uses dialogue to reduce uncertainty about the environment and collaborators, while keeping decisions grounded in explicit probabilistic beliefs. We evaluate our framework in an Overcooked domain extended with dynamically arriving tasks under both full and partial object-space observability. Our communication agent consistently outperforms a vanilla LLM agent in both settings. Additionally, our framework performs comparably to a non-communicating task-allocation baseline under full observability, but substantially outperforms it under partial observability as task complexity increases by an average speed up of 0.585 and completes on average 18 timesteps faster. These results indicate that our agent is more efficient in dynamic task allocation than baselines in partially observable environments, and that communication is important as available information decreases.",
-    "published_date": "2026-11-17T17:37:17Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.23119v1",
+    "abstract": "Isabelle Pool Server (IPS), a verification service with a pool of warm headless Isabelle sessions behind an HTTP API, with session leasing and reclamation, memory-aware admission control, and a time budget on every call. Its verification interface spans single-step execution, block-level proof checking and whole-theory builds, with checkpoints for cheap branching and backtracking, and a build from scratch as the final arbiter. The service runs as a single container with monitoring and is accessible via a Python client, two MCP servers and a raw HTTP API. In our measurements IPS is level with PIDE MCP, a PIDE frontend for agents, at one worker and ahead of it at eight, at its commit of October 2026 (the tool is now PIDE AI). Once its sessions are up it scales to 32 concurrent workers on one host at 24 times the single-worker rate, and under memory pressure it refuses new sessions rather than losing existing ones. IPS is free software and publicly available at https://github.com/Deep-LCF/Isabelle-Pool-Server",
+    "published_date": "2026-11-18T17:35:47Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.24788v1",
     "score": {
       "total_score": 0.323,
       "keyword_score": 0.045,
       "recency_score": 0.97,
       "matched_keywords": [
-        "LLM agents"
+        "MCP"
       ],
       "days_since_published": 0.9
     },
-    "claim": "Proposes a dialogue\u2011driven dynamic task\u2011allocation framework for multi\u2011agent collaboration, addressing the multi\u2011agent systems coordination and error propagation theme.",
+    "claim": "Describes a pooled verification service enabling coordinated multi\u2011agent theorem proving, illustrating multi\u2011agent coordination and error propagation.",
     "claim_verified": {
       "verified": true,
-      "best_match_score": 0.597,
+      "best_match_score": 0.5654,
       "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
       "matched_source": "note_multi_agent_systems.md"
     },
     "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt merely outlines coordination patterns and an open error\u2011propagation question, without actually proposing a dialogue\u2011driven dynamic task\u2011allocation framework."
+    "skeptic_objection": "The excerpt discusses general LLM\u2011agent coordination and error propagation but never describes a pooled verification service or theorem\u2011proving system, so the claim extrapolates a specific application that isn\u2019t present."
   },
   {
-    "arxiv_id": "2611.22539v1",
-    "title": "JET: Just-Enough Exploration Tuning for Efficient Tool-Calling Agents in Repository-Level Question Answering",
+    "arxiv_id": "2611.24619v1",
+    "title": "GateWatch: Low-Overhead LLM Monitoring with Boolean Circuits",
     "authors": [
-      "Yoonho Choi",
-      "Taehyeon Han",
-      "Seonghyeon Lee"
+      "Firas Spanioli",
+      "Yaniv David"
     ],
-    "abstract": "In repository-level question answering (QA), an agent explores a code repository with tools and should answer a question once enough information is gathered. Nevertheless, we find that LLM agents often continue to invoke tools even after the gathered information is already sufficient to answer. We call this phenomenon over-exploration. Moreover, even though existing methods improve task performance through supervised fine-tuning (SFT) on expert trajectories, SFT also propagates the over-exploration in the trajectories to the agent. To mitigate over-exploration, we propose Just-Enough Exploration Tuning (JET), a fine-tuning method that trains the agent to answer once the gathered information is sufficient. JET truncates each training trajectory at the step where the gathered information becomes sufficient, inserts a rationale that explains why the agent can answer at that step, and fine-tunes the agent with a higher loss weight on the rationale. Experiments on two repository-level QA benchmarks with two open-weight 8B models demonstrate that JET reduces tool calls by 11 to 33% on self-generated trajectories while largely preserving the score. On expert trajectories, JET makes 18 to 28% fewer tool calls than SFT while retaining most of the score gain of SFT. In both cases, JET also lowers the inference cost.",
-    "published_date": "2026-11-17T10:30:14Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.22539v1",
+    "abstract": "As large language models (LLMs) and LLM-based agents are increasingly deployed, monitoring their behavior becomes important for detecting unsafe or unintended actions. Activation probes offer an efficient approach, but existing methods face trade-offs between accuracy, interpretability, and computational overhead. Probes on raw activations lack interpretable inputs, whereas sparse autoencoder (SAE) probes use interpretable features but often rely on additive classifiers and large SAE encoders, limiting interpretability and increasing memory overhead. We introduce GateWatch, a compact, interpretable classifier that expresses its entire decision rule as an explicit Boolean logic over a small number of binarized SAE features. We explore three approaches to constructing these circuits under a specified gate budget. For efficient deployment, GateWatchServe computes only selected SAE features, enables streaming of their binary values across layers during inference, and evaluates multiple GateWatch classifiers in parallel using compact lookup tables. Across 24 tasks on Gemma-2-9B, GateWatch achieves 80.49% mean test accuracy using only 3.8 SAE features and 3.5 logic gates per probe on average, just 1.17 percentage points below full 16K-feature SAE probes, while matching or outperforming them on 10 tasks and reducing probe memory by 99.98%. Inside vLLM, 1,000 concurrent multi-layer, multi-token GateWatch classifiers retain 97-98% of baseline throughput and 99.8% of KV-cache capacity.",
+    "published_date": "2026-11-18T15:37:04Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.24619v1",
     "score": {
-      "total_score": 0.32,
+      "total_score": 0.322,
       "keyword_score": 0.045,
-      "recency_score": 0.96,
+      "recency_score": 0.967,
+      "matched_keywords": [
+        "LLM-based agents"
+      ],
+      "days_since_published": 1.0
+    },
+    "claim": "Proposes GateWatch, a low\u2011overhead Boolean\u2011circuit monitor for LLM agents, contributing to deterministic safety checks.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.5577,
+      "supporting_excerpt": "An LLM agent is a loop: the model reasons about a goal, optionally calls a tool, observes the result, and repeats until done. Most of the interesting engineering isn't in the model \u2014 it's in what you let the agent touch, and where a human or a deterministic check sits before anything irreversible happens.",
+      "matched_source": "note_language_model_agents.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt only outlines a generic deterministic check in the agent loop and never mentions a Boolean\u2011circuit monitor or GateWatch, so it doesn\u2019t substantiate the claim of proposing such a specific low\u2011overhead monitor."
+  },
+  {
+    "arxiv_id": "2611.24357v1",
+    "title": "Semantic Context Handoff with On-Demand Evidence for Long-Horizon Agents",
+    "authors": [
+      "Guolong Zheng",
+      "Chen Hou",
+      "Xu Yang",
+      "Jianshan Zhang",
+      "Tao Huang"
+    ],
+    "abstract": "Traditional long-horizon LLM agents often hand off context through full-history prompting, retaining all previous action--observation interactions. As execution proceeds, this history keeps growing, increasing inference cost and potentially degrading accuracy. Existing methods control this growth by preserving compact conclusions while removing earlier observations, but doing so can discard evidence that later becomes relevant. We introduce Semantic Context Handoff (SCH), whose central abstraction is state--evidence separation: a compact semantic state carries the agent's current interpretation, while supporting action--observation evidence remains separately addressable and can re-enter context when later execution makes it relevant, without separate summarization or retrieval-model calls.\n  Empirically, SCH improves long-horizon agent performance while substantially reducing context cost. In a controlled 150-task SWE-bench study, SCH's evidence recovery improves Pass@1 from $80.0\\%$ to $86.9\\%$ at essentially unchanged token use and execution time. In the complete-system comparison, SCH achieves 86.9% Pass@1 while using 43% fewer tokens and 41% less wall-clock time than the strongest baseline by task performance. Across models and benchmarks, SCH consistently reduces token use relative to full-history prompting while remaining competitive with or improving upon the evaluated baselines. Trajectory analysis confirms that SCH recovers evidence from substantially earlier parts of the interaction history rather than merely preserving a recent context window.",
+    "published_date": "2026-11-18T12:49:41Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.24357v1",
+    "score": {
+      "total_score": 0.321,
+      "keyword_score": 0.045,
+      "recency_score": 0.963,
       "matched_keywords": [
         "LLM agents"
       ],
-      "days_since_published": 1.2
+      "days_since_published": 1.1
     },
-    "claim": "Introduces a tool\u2011calling strategy that stops exploration once sufficient information is gathered, linking to the tool use and interface contracts theme.",
+    "claim": "Introduces Semantic Context Handoff with on\u2011demand evidence to limit history growth, directly targeting modular handoff strategies in agent pipelines.",
     "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5402,
-      "supporting_excerpt": "Tool use lets an LLM extend its reasoning by calling external functions mid-generation. Key lesson: a tool's docstring is the interface contract \u2014 vague documentation causes far more wrong or missing arguments than the underlying model's raw capability would predict.",
-      "matched_source": "note_tool_use.md"
+      "verified": false,
+      "best_match_score": 0.4399,
+      "supporting_excerpt": null,
+      "matched_source": null
     },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt never mentions a strategy for halting exploration once enough information is gathered, only the importance of clear docstrings as interface contracts."
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
   },
   {
-    "arxiv_id": "2611.22432v1",
-    "title": "Think Once, Act Fast: Cost-Effective Recursive Self-Improvement for Decision Model Harness",
+    "arxiv_id": "2611.24422v1",
+    "title": "Resolution as Attention for Efficient Agent Memory Perception",
     "authors": [
-      "Siqi Lai",
-      "Haitao Li",
-      "Hao Liu"
+      "Siqi Xiang",
+      "Zhipeng Xu",
+      "Shengrui Liu",
+      "Zulong Chen",
+      "Chunyan Miao",
+      "Shijian Lu"
     ],
-    "abstract": "Fast System-1 models enable responsive actions but struggle with complex or unfamiliar tasks. Large language model (LLM)-based System-2 provides strong reasoning capabilities, yet repeated invocation incurs substantial latency and computational costs. To bridge this gap, we propose JevRSI, a System-1/System-2 collaboration framework that transforms LLM reasoning into transferable decision support through recursive harness improvement. A Jev-style System-1 model enables low-latency action selection, while an asynchronous System-2 LLM develops a modular harness. The harness integrates procedures, state memory, and world models to provide decision contexts spanning the past, present, and future. Utility-driven retrieval selects modules based on both contextual relevance and their utility on previous tasks. Environmental feedback guides targeted revisions and enables recursive self-improvement. Experiments across three datasets show that JevRSI consistently improves decision quality, matching or surpassing LLM agents in several settings. It preserves low-latency execution with favorable performance-cost trade-offs. Moreover, System-2 development interventions decrease as the harness evolves, amortizing System-2 costs through continuous improvement. Our project is available at https://github.com/usail-hkust/JevRSI.",
-    "published_date": "2026-11-17T09:06:14Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.22432v1",
+    "abstract": "LLM-based agents accumulate extensive interaction histories when solving complex, long-horizon tasks, making efficient memory management critical to their performance and scalability. While existing memory management methods primarily focus on what to retain or retrieve, they often overlook how much perceptual detail should be allocated to individual past interactions. We posit that effective agent memory depends not only on the information preserved, but also on the granularity at which each past interaction is perceived. Motivated by this insight, we propose Resolution as Attention (RAA), a memory perception mechanism that uses visual resolution as a means of attention allocation across interaction histories. RAA renders past interactions as images and dynamically adjusts their resolution at every step according to their relevance to the agent's upcoming decision, preserving fine-grained information for critical interactions while reducing visual-token consumption for less relevant ones. To adaptively determine the perceptual fidelity of each interaction, we train a lightweight relevance estimator with teacher-model guidance and further optimize it to preserve the agent's decision consistency at a reduced visual-token cost. Experiments across multiple tasks and backbones show that RAA reduces token consumption by over 50% without compromising task performance. Moreover, RAA can be integrated as a plug-in perception layer with existing memory management methods, yielding further token savings and revealing adaptive perception as a complementary dimension of agent memory.",
+    "published_date": "2026-11-18T13:43:16Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.24422v1",
+    "score": {
+      "total_score": 0.321,
+      "keyword_score": 0.045,
+      "recency_score": 0.964,
+      "matched_keywords": [
+        "LLM-based agents"
+      ],
+      "days_since_published": 1.1
+    },
+    "claim": "Frames resolution as attention to manage agent memory perception efficiently, aligning with memory\u2011centric pipeline orchestration.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.5866,
+      "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
+      "matched_source": "note_multi_agent_systems.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt never mentions \u201cframes resolution\u201d or \u201cattention\u201d as mechanisms for managing memory perception, so the claim invents concepts not supported by the provided text."
+  },
+  {
+    "arxiv_id": "2611.24221v1",
+    "title": "Learning to Coordinate: LLM-Guided Workflow Evolution for Token-Efficient Red Teaming",
+    "authors": [
+      "Xiaoyang Xing",
+      "Wenyu Dai",
+      "Xiaoliang Gong",
+      "Asoke K Nandi",
+      "Anthony Cohn"
+    ],
+    "abstract": "Automated red teaming is essential for identifying safety failures in large language models (LLMs), but its practical scalability depends on the resources required to discover those failures. Multi-agent systems can combine complementary capabilities, yet repeated planning, redundant exchanges, and ineffective information routing can make their coordination expensive. Moreover, a target model's response indicates the outcome of a test without identifying which collaboration decision should change. We present Learning to Coordinate (L2C), an LLM-guided framework that evolves an executable multi-agent workflow for each red-teaming case. L2C represents agent responsibilities, execution dependencies, and input bindings in a versioned graph, and associates each graph with records of the information actually delivered and produced. A controller trained through supervised fine-tuning integrates these records with target responses, evaluator verdicts, and remaining budget to retain the workflow, refine instructions, restructure collaboration, or lock further editing. This design connects feedback to explicit changes in subsequent execution while allowing a useful organization to continue without repeated controller intervention. The evaluation protocol covers HarmBench with three execution backbones and two target models, together with component ablations, dataset transfer, and evaluator checks. Across the six executor-target configurations, L2C improves ASR over EvoSynth by 1.4 to 4.5 percentage points while reducing mean online tokens by 35.6% to 37.3%. L2C connects adaptive collaboration to the resource requirements of automated security evaluation.",
+    "published_date": "2026-11-18T10:58:44Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.24221v1",
+    "score": {
+      "total_score": 0.32,
+      "keyword_score": 0.045,
+      "recency_score": 0.961,
+      "matched_keywords": [
+        "multi-agent systems"
+      ],
+      "days_since_published": 1.2
+    },
+    "claim": "Proposes an LLM\u2011guided workflow evolution to improve coordination among agents, linking to the theme of multi\u2011agent system coordination.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.6955,
+      "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
+      "matched_source": "note_multi_agent_systems.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt merely describes research themes and open questions in multi\u2011agent coordination, without actually proposing an LLM\u2011guided workflow evolution, so the claim overstates the connection."
+  },
+  {
+    "arxiv_id": "2611.24056v1",
+    "title": "Action-Dependent Policies for Multi-Agent Linear Quadratic Regulation",
+    "authors": [
+      "Yongjie Liu",
+      "Gangshan Jing",
+      "Long Wang"
+    ],
+    "abstract": "The linear quadratic regulation (LQR) problem over a multi-agent system usually requires a distributed feedback gain that is structurally constrained by the network topology, incurring an inevitable suboptimality gap. Existing studies either identify conditions on the system and topology that enable convex relaxation or seek a stationary point via policy gradient algorithms. In this paper, we reduce the suboptimality gap by adopting action-dependent policies (ADPs), where the control input of each agent depends on not only states of neighbor agents, but also control inputs of some other agents. We show that although exhibiting a distributed structure, ADP can enlarge the feasible set of feedback gains and even represent centralized optimal policies under suitable conditions. However, this comes at the price of losing coercivity of the cost function and possible failure of convergence for the projected gradient flow (PGF). To overcome this difficulty, we propose a partially regularized formulation, which guarantees convergence of PGFs, and forges a connection between standard multi-agent LQR and its action-dependent counterpart. Sufficient conditions for local convergence to globally optimal policies under PGFs regardless of regularization are also established. Finally, numerical examples are presented to validate the performance of ADP.",
+    "published_date": "2026-11-18T08:47:25Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.24056v1",
     "score": {
       "total_score": 0.319,
       "keyword_score": 0.045,
       "recency_score": 0.958,
       "matched_keywords": [
+        "multi-agent systems"
+      ],
+      "days_since_published": 1.3
+    },
+    "claim": "Studies action\u2011dependent policies for distributed LQR, tackling structural constraints and suboptimality in coordinated multi\u2011agent control, aligning with the coordination theme.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.5079,
+      "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
+      "matched_source": "note_multi_agent_systems.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt discusses coordination of LLM-driven agents and error propagation, not action\u2011dependent policies, structural constraints, or suboptimality in distributed LQR control, so it fails to substantiate the claim."
+  },
+  {
+    "arxiv_id": "2611.24025v1",
+    "title": "Intent Contracts: Taking Tools Away from Agents",
+    "authors": [
+      "Ziyuan Wang",
+      "Genliang Zhu",
+      "Xiaobo Chen",
+      "Chu Wang"
+    ],
+    "abstract": "Intent contracts are an authorization interface for tool-using LLM agents in which the planning model holds no tools. For each step it submits a short logged contract: a goal, a verbatim quotation of the user, and scope fields. Code validates the contract, and a small trusted model checks it against the user's words and writes the tool call itself. Provided the validation and dispatch code is correct, every executed call is written by the trusted model, the planner's influence on a call is confined to a contract logged before it, and the trusted side decides how much of a request to carry out. We compare contracts with two reviewers of planner-written commands: one sees only the user's words and the command, the information boundary of a reasoning-blind permission classifier, and one also sees the planner's goal and a checked quotation. With gpt-6.1-terra as planner and GLM-5.3-Flash as the trusted model on three AmPermBench task families, every object changed under contracts is named in the goal of the contract that produced the change; under review the planner names objects in its commands and rarely in its goals. When the planner adds work the user never asked for, contracts complete the user's task in 27/30 runs and the intent-visible reviewer in 16/30, because a reviewer can only refuse a whole command. Contracts do not reduce unauthorized actions. They are indistinguishable from blind review, and once the benchmark's environment terms are clarified, every condition that changes state hits a wrong target in 40-49% of those runs. That error is the planner's choice of objects for an ambiguous reference, which no trusted model here can see the environment to check; telling the executor to decline when unsure does not change it. We evaluate benign over-reach with one pair of models, not adversarial planners. We release the plugin and run records.",
+    "published_date": "2026-11-18T08:14:22Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.24025v1",
+    "score": {
+      "total_score": 0.319,
+      "keyword_score": 0.045,
+      "recency_score": 0.957,
+      "matched_keywords": [
         "LLM agents"
       ],
       "days_since_published": 1.3
     },
-    "claim": "Develops a recursive self\u2011improvement architecture that balances fast System\u20111 actions with deeper System\u20112 reasoning, exemplifying language\u2011model agent loops and deterministic safety checks.",
+    "claim": "Introduces Intent Contracts as an authorization interface for tool\u2011using LLM agents, matching the tool\u2011use and interface contracts theme.",
     "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.533,
-      "supporting_excerpt": "# Ecdysis: Efficient and Effective Training of Runtime Harnesses for LLM Agents\n\n**arXiv ID**: 2609.11677v1\n\n**Published Date**: 2026-09-10T15:09:08Z\n\n**Authors**: Ruiqing Yue, Yu Cui, Zhuoyu Sun, Sicheng Pan, Xianhong Xue, Tingyu Li, Ting Li, Wenzhuo Zhu, Yi Chen, Yifei Liu, Baohan Huang, Zhe Cui, Haibin Zhang, Cong Zuo\n\n**PDF**: https://arxiv.org/pdf/2609.11677v1\n\n## Abstract\nSelf-evolving runtime harnesses can substantially improve the capabilities of large language model (LLM) agents and provide a promising paradigm for optimizing agent execution. Existing harness evolution methods typically rely on iterative search, repeatedly evaluating and revising candidate harnesses based on execution feedback from task instances. While this paradigm enables continuous harness optimization, it incurs substantial time overhead due to repeated agent executions and code modifications, and may overfit to observed tasks and specific failure patterns, resulting in degraded generalization to unseen tasks. We identify the lack of principled failure diagnosis as a key bottleneck in harness evolution: an observed failure can reflect either model-specific deficiencies or systematic harness deficiencies, and directly optimizing against individual failures can lead to unnecessary model-specific accommodation. We therefore propose Ecdysis, an efficient and effective framework that distinguishes model-specific accommodation from harness-level repair and biases adaptation toward systematic harness deficiencies by identifying recurring cross-task failure patterns. Ecdysis adopts a batch-level cross-instance failure aggregation paradigm to jointly analyze failure evidence from multiple task instances and further introduces Failure-Driven Collaborative Refinement to diagnose failure causes and iteratively refine harness modification specifications. By combining cross-instance failure analysis with multi-role diagnosis, Ecdysis enables more effective harness evolution with lower training time. Experiments show that Ecdysis achieves up to a 1.84x speedup in harness training compared with existing harness evolution methods, while improving the reasoning accuracy of the resulting harnesses by 18.56%.\n\n## Established Connection Claim\nDescribes Ecdysis, a method for training runtime harnesses that streamline LLM agent execution pipelines.\n",
-      "matched_source": "approved_2609_11677v1.md"
+      "verified": false,
+      "best_match_score": 0.4879,
+      "supporting_excerpt": null,
+      "matched_source": null
     },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt never describes a recursive self\u2011improvement architecture or a System\u20111/System\u20112 dual\u2011process design, only a batch\u2011level failure\u2011driven method for training runtime harnesses."
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
+  },
+  {
+    "arxiv_id": "2611.24039v1",
+    "title": "A Capability Framework for Evaluating Agentic AI Platforms in Regulated Enterprises",
+    "authors": [
+      "Abbas Raza Ali",
+      "Muhammad Ajmal Siddiqui",
+      "Moona Zahid"
+    ],
+    "abstract": "Agentic AI platforms-systems in which LLM agents plan, invoke tools, retain memory and coordinate to change the state of enterprise systems-are being procured faster than they can be measured. Public agent benchmarks score models in fixed harnesses; enterprises buy integrated platforms whose orchestration, memory, governance and tooling layers dominate outcomes, and they buy them largely on the strength of vendor demonstrations. We report an industrial evaluation programme (\"bakeoff\") run by the innovation laboratory of a global bank in which ten platforms-spanning open-source frameworks, proprietary products and hyperscaler ecosystems-were assessed by a cross-functional panel on nine capability dimensions across three financial-services workloads: counterparty credit risk, retrieval-augmented generation and process automation. Scores separate the field into three tiers that are stable under alternative weightings, and surface workload-specific strengths that aggregates hide. A secondary analysis, however, finds Cronbach's alpha = 0.98 across nominally distinct dimensions and rank correlations >= 0.93 with the total for eight of nine: a halo effect indicating that demonstration-based scoring measures presentation as much as capability. From these lessons we propose a gate-then-score evaluation protocol with four layers (capability, execution reliability, governance gates, business value), trace-level reliability metrics estimated over repeated runs, an autonomy-readiness scale and a reproducibility protocol. We state precisely what the present evidence supports, and what a controlled harness must add to turn enterprise platform evaluation from structured judgement into measurement.",
+    "published_date": "2026-11-18T08:28:02Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.24039v1",
+    "score": {
+      "total_score": 0.319,
+      "keyword_score": 0.045,
+      "recency_score": 0.957,
+      "matched_keywords": [
+        "LLM agents"
+      ],
+      "days_since_published": 1.3
+    },
+    "claim": "Presents a capability framework to evaluate agentic AI platforms in regulated contexts, focusing on pipeline orchestration and modular handoffs.",
+    "claim_verified": {
+      "verified": false,
+      "best_match_score": 0.4886,
+      "supporting_excerpt": null,
+      "matched_source": null
+    },
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
+  },
+  {
+    "arxiv_id": "2611.23872v1",
+    "title": "Keep the Image in Mind: A Visual Board for Multimodal Agents",
+    "authors": [
+      "Haiming Zhu",
+      "Zhiwei Chen",
+      "Ding Cao",
+      "Tianxiang Zhao"
+    ],
+    "abstract": "Multi-step visual reasoning suffers when early visual misinterpretations persist as incorrect premises in subsequent reasoning. We argue that how visual evidence is represented during reasoning matters as much as how much of it is gathered. Rather than appending observations and inferences to an ever-growing dialogue, we introduce a Visual Board-centered harness that separates visual observations, uncertain interpretations, and derived reasoning within a structured, capacity-bounded, and revisable workspace. This separation makes each premise explicit and auditable, so that conflicts between what is seen and what is derived become detectable even by a text-only critic and can trigger targeted reinspection of the original image. Without task-specific training, our harness consistently outperforms standalone models across 4B, 8B, Qwen3-VL-Flash, and 32B configurations on Euclid30K, SolidGeo, and ChartQA bar charts, with gains of up to 11.68, 18.42, and 24.82 percentage points, respectively. Under identical tools, critic, and interaction limits, the structured Board outperforms shared free-form notes by 6.67 to 13.00 points and no-Board retries by 7.35 to 18.80 points while using 7.9\\% to 38.2\\% fewer tokens. Supervised fine-tuning on harness trajectories further improves direct answering and critic-free tool use, with positive transfer to chart reasoning.",
+    "published_date": "2026-11-18T05:24:37Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.23872v1",
+    "score": {
+      "total_score": 0.318,
+      "keyword_score": 0.045,
+      "recency_score": 0.953,
+      "matched_keywords": [
+        "tool use"
+      ],
+      "days_since_published": 1.4
+    },
+    "claim": "Presents a visual board that preserves early observations for multimodal agents, exemplifying modular handoffs and pipeline orchestration.",
+    "claim_verified": {
+      "verified": false,
+      "best_match_score": 0.4845,
+      "supporting_excerpt": null,
+      "matched_source": null
+    },
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
+  },
+  {
+    "arxiv_id": "2611.23931v1",
+    "title": "Quantifying the Intrusiveness of Retrofitting Retrieval-Augmented Generation onto Legacy Software Systems",
+    "authors": [
+      "K. M. Tahlil Mahfuz Faruk",
+      "Rakib Abdullah"
+    ],
+    "abstract": "Enterprises increasingly add retrieval-augmented generation (RAG) to existing REST and monolithic systems, usually by writing an ad hoc HTTP call into a handler, and have no way to quantify how intrusive that choice is. We present (1) a taxonomy of three retrofit patterns, sidecar, SDK-embed and naive-invasive; (2) the Legacy Intrusion Score (LIS), three code sub-metrics (churn, breadth, coupling), and an extension, LIS-X, with three operational sub-metrics measured on a live system (run-time overhead, fault propagation and silent feature degradation); (3) a static evaluation on five legacy systems, two of them real open-source codebases fetched from their repositories at pinned commits; and (4) a live case study that deploys all three patterns as separate OS processes. The code-level ranking sidecar < SDK-embed < naive-invasive holds in all five systems and under 2,000 random weightings, but it follows from component-wise dominance of the sub-metrics, so it validates the metric rather than testing a hypothesis. In the live study, outcomes are not fixed by definition. The sidecar adds no detectable latency to the legacy endpoint (0.07 ms, 95% CI [-0.10, 0.24]), whereas SDK-embed and naive-invasive add 569 and 475 ms and are not distinguishable from each other (p=0.62). Both pass a 2 s dependency delay on to legacy requests, and when the RAG layer fails fast they keep returning successful responses that no longer contain the AI field. Load on the RAG layer slows the legacy service by 1.51-1.57x on a shared host, and sidecar staleness averages 911 ms with a 2 s polling interval. Retrieval hit@1 is 0.95; three hosted LLMs answer all 12 test questions correctly and a local model 9/12, and the four backends are swapped by changing one request field. All dynamic results come from one host and one system.",
+    "published_date": "2026-11-18T06:22:21Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.23931v1",
+    "score": {
+      "total_score": 0.318,
+      "keyword_score": 0.045,
+      "recency_score": 0.954,
+      "matched_keywords": [
+        "RAG"
+      ],
+      "days_since_published": 1.4
+    },
+    "claim": "Quantifies intrusion of retrofitting RAG onto legacy software, addressing the RAG integration theme.",
+    "claim_verified": {
+      "verified": false,
+      "best_match_score": 0.3571,
+      "supporting_excerpt": null,
+      "matched_source": null
+    },
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
+  },
+  {
+    "arxiv_id": "2611.23824v1",
+    "title": "Evidence-Based Credit Assignment for Search-Augmented Language Models",
+    "authors": [
+      "Wen Wang",
+      "Jindong Wang",
+      "Jiahua Bao",
+      "Tu Yongsiqi",
+      "Yihao Liu",
+      "Junwei He",
+      "Wenkui Fan"
+    ],
+    "abstract": "Reinforcement learning from terminal answer rewards enables search-augmented language models to interleave reasoning and retrieval without step-level annotations, yet outcome supervision assigns identical credit to every search in a trajectory regardless of whether it retrieved useful information. This limitation is especially severe when all sampled rollouts for a question fail, collapsing group-centered outcome advantages to zero even when trajectories gather markedly different evidence. We present Evidence-based Credit Assignment (ECA), which augments terminal outcome rewards with a training-only auxiliary signal measuring how retrieved documents improve the likelihood of a reference answer. Rather than scoring the full dialogue prefix, ECA queries a frozen snapshot of the current policy under an evidence-only prompt containing solely the question and the deduplicated documents observed so far, isolating the utility of retrieved passages from surface variations in generated thoughts or search queries. Within this framework, we compare two return formulations, ECA-Step (which accumulates step-clipped potential increments) and ECA-Horizon (which preserves the telescoping horizon gain in potential), paired with cross-fold group normalization, novelty gating, and search-local token assignment. Across seven Search QA benchmarks, ECA-Horizon improves strict macro exact match over an outcome-only GRPO baseline by 1.03 and 4.80 percentage points on Qwen2.5-3B- and 7B-Instruct, respectively, outperforming both RLOO and GiGPO. Zero-shot evaluation on MultiHop-RAG further demonstrates strong transfer to multi-hop inference queries.",
+    "published_date": "2026-11-18T04:24:51Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.23824v1",
+    "score": {
+      "total_score": 0.317,
+      "keyword_score": 0.045,
+      "recency_score": 0.952,
+      "matched_keywords": [
+        "RAG"
+      ],
+      "days_since_published": 1.5
+    },
+    "claim": "Introduces evidence\u2011based credit assignment for search\u2011augmented language models, linking to RAG and claim verification.",
+    "claim_verified": {
+      "verified": false,
+      "best_match_score": 0.4263,
+      "supporting_excerpt": null,
+      "matched_source": null
+    },
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
   }
 ]
