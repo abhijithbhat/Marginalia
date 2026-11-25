@@ -1,168 +1,29 @@
 [
   {
-    "arxiv_id": "2611.30624v1",
-    "title": "Oops!... I Parsed It Again: Tool-Call Smuggling Against LLM Agents",
+    "arxiv_id": "2611.32938v1",
+    "title": "Efficient Video Retrieval Augmented Generation via Token Allocation",
     "authors": [
-      "Igor Santos-Grueiro",
-      "Daniel Romero-Ruiz"
+      "Ayush Barik",
+      "Fan Lai",
+      "Francis Y. Yan"
     ],
-    "abstract": "LLM agents act through tool calls: the model writes the arguments of a call as JSON, a guard decides whether the call may run, and an executor runs it. The same bytes are parsed several times, by the provider, gateways, SDKs, frameworks, the guard, and the executor. JSON leaves some choices to each parser, such as which copy of a repeated key counts. When the guard and the executor choose differently, the guard approves one call, the executor runs another, and the audit log records the approved one. We introduce this attack, tool-call smuggling, and study it across the stack. We describe six ways in which the same bytes yield different calls and build a differential testing harness that gives identical bytes to 17 pinned parser and validator configurations; most pairs disagree on some inputs, and even two official MCP SDKs accept different inputs. On tasks from $\u03c4$-bench and AgentDojo, an attacker who can rewrite the bytes in transit cancels another customer's reservation and creates a file that the guard blocks by name, while the audit log names only the approved call. Content the model reads splits guard and executor only inside a string: ten models we test write no repeated or disguised key into the call itself where we see it, but copy one verbatim into JSON text in an argument, which a Python guard and a Go executor read differently. A malicious server copying a legitimate tool's public schema and adding one field, which a note explains, gets the model to fill it, unseen by the guard, with user data. Parsing each call once, JSON text included, keeping only the fields of the approved schema, and handing it to the executor, sealed with its call ID in transit, stops all 7,412 crafted inputs and every attack we built.",
-    "published_date": "2026-11-23T12:56:26Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.30624v1",
-    "score": {
-      "total_score": 0.416,
-      "keyword_score": 0.182,
-      "recency_score": 0.961,
-      "matched_keywords": [
-        "LLM agents",
-        "MCP"
-      ],
-      "days_since_published": 1.2
-    },
-    "claim": "Exposes tool\u2011call smuggling attacks across multiple parsers, underscoring the need for robust tool\u2011call contracts and safety checks.",
-    "claim_verified": {
-      "verified": false,
-      "best_match_score": 0.4721,
-      "supporting_excerpt": null,
-      "matched_source": null
-    },
-    "confidence_tier": "rejected",
-    "skeptic_objection": null
-  },
-  {
-    "arxiv_id": "2611.31088v1",
-    "title": "MAASAI: A Tool-Augmented Multi-Agent System for Astronomical Data Analysis",
-    "authors": [
-      "S. Riggi",
-      "A. Ingallinera",
-      "C. Bordiu",
-      "C. Buemi",
-      "F. Bufano",
-      "M. Burgay",
-      "F. Cavallaro",
-      "P. Leto",
-      "S. Loru",
-      "S. E. Motta",
-      "M. Pilia",
-      "T. Sbarrato"
-    ],
-    "abstract": "Modern astronomical workflows require the coordinated use of specialised software, scientific archives, heterogeneous data, and domain-specific knowledge. Advances in large language models and multimodal foundation models enable natural-language interaction with scientific data and tools. Realising this potential requires integrating these models with established scientific capabilities.\n  We present MAASAI (Multi-agent Astronomy Assistant for Scientific Analysis and Inference), a modular multi-agent system combining foundation-model reasoning, retrieval-augmented knowledge, and specialised astronomical tools within a graph-based execution framework. MAASAI coordinates request preparation, planning, execution, and response synthesis via specialised workers. Its architecture supports native and external applications, artefact and provenance management, optional human approval, and configurable inference backends, including fully local deployment with open-weight models. Motivated by SKA-era data-analysis challenges, MAASAI is also designed to support other astronomical domains.\n  We evaluate MAASAI through radio-image benchmarks, single- and multi-step workflow demonstrations, and literature-grounded reasoning. Compared with a commercial-model baseline, MAASAI improves macro-averaged F1 scores from 0.53 to 0.72 for extended/diffuse emission classification and from 0.37 to 0.88 for source morphology classification. Workflow demonstrations show the coordination of measurements, source extraction, archive queries, and catalogue processing. A 94-question literature benchmark yielded generally favourable automated assessments, with comparable ratings from a pilot expert evaluation of 59 answers. These results highlight how tool-augmented multi-agent systems extend foundation-model reasoning to specialised astronomical analyses through established scientific software.",
-    "published_date": "2026-11-23T17:35:44Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.31088v1",
-    "score": {
-      "total_score": 0.386,
-      "keyword_score": 0.136,
-      "recency_score": 0.967,
-      "matched_keywords": [
-        "multi-agent systems"
-      ],
-      "days_since_published": 1.0
-    },
-    "claim": "Introduces a tool-augmented multi\u2011agent framework for astronomical analysis, directly addressing tool\u2011use contracts and multi\u2011agent coordination.",
-    "claim_verified": {
-      "verified": false,
-      "best_match_score": 0.4161,
-      "supporting_excerpt": null,
-      "matched_source": null
-    },
-    "confidence_tier": "rejected",
-    "skeptic_objection": null
-  },
-  {
-    "arxiv_id": "2611.31118v1",
-    "title": "TideSand: Performance-Accurate Sandbox Multiplexing for LLM Agents",
-    "authors": [
-      "Shulu Li",
-      "Hanchen Li",
-      "Xiaokun Chen",
-      "Qiuyang Mang",
-      "Hanfei Chen",
-      "Jacky Kwok",
-      "Hanfei Yu",
-      "Alvin Cheung",
-      "Edward A. Lee",
-      "Joseph E. Gonzalez",
-      "Ion Stoica"
-    ],
-    "abstract": "We propose TideSand, a sandbox system that intelligently multiplexes resources for performance-sensitive LLM agents, such as auto research agents working on system measurement tasks. TideSand combines three key ideas: agent-aware scheduling, which schedules sandbox execution intelligently at the tool call level to avoid resource contention; speculative swapping, which offloads the memory of sandboxes waiting on inference and restores it before their next tool call; and selective rollback, which checkpoints selected sandboxes when contention occurs and restores them when machines are idle. We evaluate TideSand across six model-workload pairs on AlgoTune, Terminal-Bench 4.0, and Terminal-Bench Science. TideSand achieves 3.8-10x higher throughput than strict reservation while maintaining tool-call fidelity, or 7-44% higher fidelity than overcommit baselines at similar throughput. Moreover, TideSand reduces the evaluation error on Algotune by 19x through improved tool-call fidelity. We hope the work motivates future research to maintain tool call fidelity while keeping resource utilization high through statistical multiplexing.",
-    "published_date": "2026-11-23T17:54:22Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.31118v1",
-    "score": {
-      "total_score": 0.386,
-      "keyword_score": 0.136,
-      "recency_score": 0.968,
-      "matched_keywords": [
-        "LLM agents"
-      ],
-      "days_since_published": 1.0
-    },
-    "claim": "Describes TideSand, a sandbox that multiplexes resources for LLM agents, embodying deterministic safety and performance isolation.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.557,
-      "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
-      "matched_source": "note_multi_agent_systems.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt never mentions TideSand, a sandbox, resource multiplexing, or deterministic safety, so it provides no basis for the claim."
-  },
-  {
-    "arxiv_id": "2611.31105v1",
-    "title": "LiveLoRA: Exact KV Cache Migration Across LoRA Updates for LLM Agents",
-    "authors": [
-      "Tianyi Huang",
-      "Samuel Xu",
-      "Ivy Gu",
-      "Nathan Huang",
-      "Siqi Zhang"
-    ],
-    "abstract": "Updating an LLM adapter should not require replaying the full interaction history of every active session. Yet reusing key-value (KV) cache entries computed under an earlier version mixes model versions, while full-history re-prefill becomes increasingly costly as histories and session fleets grow. We introduce LiveLora, a model-runtime co-design for exact final-block KV cache migration. Frozen lower decoder blocks and fixed K/V adapter down-projections preserve each token's base projections and low-rank coordinates across adapter versions. The runtime reconstructs candidate K/V, reevaluates the latest token through the final block, and commits the adapter, cache, and next-token logits together. We prove continuation equivalence to full-history re-prefill in exact arithmetic under the stated model assumptions. On Qwen2.5-3B-Instruct, median paired publication speedups over full-history re-prefill average $68.98\\times$ across five runs for 32 active sessions with 8K tokens each. Serving benchmarks show approximately 4.8% decoding overhead relative to native cached decoding. Compared with retained-boundary replay, compact retention gives a $3.42\\times$ reduction in additional session storage at 8K, with similar measured publication-plus-decoding cost. LiveLora allows persistent LLM agents to adopt new adapter versions without replaying their full interaction histories.",
-    "published_date": "2026-11-23T17:43:16Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.31105v1",
-    "score": {
-      "total_score": 0.386,
-      "keyword_score": 0.136,
-      "recency_score": 0.968,
-      "matched_keywords": [
-        "LLM agents"
-      ],
-      "days_since_published": 1.0
-    },
-    "claim": "Presents LiveLoRA for KV\u2011cache migration across LoRA updates, facilitating seamless modular handoffs in LLM agent pipelines.",
-    "claim_verified": {
-      "verified": false,
-      "best_match_score": 0.3607,
-      "supporting_excerpt": null,
-      "matched_source": null
-    },
-    "confidence_tier": "rejected",
-    "skeptic_objection": null
-  },
-  {
-    "arxiv_id": "2611.30932v1",
-    "title": "Carried-Over and Agent-Native Threats in the Supply Chain of LLM Agent Skills",
-    "authors": [
-      "Kaixuan Li",
-      "Wenbo Guo",
-      "Sen Chen",
-      "Yang Liu"
-    ],
-    "abstract": "Agent skills are reusable packages that extend a large language model (LLM) agent with scripts, third-party dependencies, and natural-language instructions. An agent builds a skill's arguments from user requests and untrusted external content, so a flaw left by a benign author can escalate a prompt injection to code execution. Existing studies target malicious skills or a single attack vector, and none tests whether an agent can reach such flaws. We present the first registry-scale empirical study of the supply chain attack surface arising from unintentional vulnerabilities in agent skills, over all 48,682 skills in ClawHub. The study covers two carried-over risks, dependencies and first-party code, and two agent-native ones, install instructions and credentials printed to stdout. We screen all skills by static analysis, manually review all 3,428 cases flagged by the four main detectors, and test reachability by running sampled flagged skills in a sandbox and with a live LLM agent under indirect prompt injection. First, dependency risk carries over in a different form: 49.6% of the skills with resolvable dependencies depend on a version with a known CVE, and unlike npm packages, which mostly become vulnerable after release, 78.3% of them are born vulnerable, already exposed at publication. Second, few of these CVEs are reachable: agent input reaches the vulnerable function in only 3.0% of the affected skills, whereas 21 of 22 sampled first-party flaws are exploited end to end in the sandbox. Third, a live agent executes the injected payload in 48.5% of the sampled flagged skills, but almost always in its own shell before the skill runs, and the payload reaches a flaw in the skill itself in only 5.0%. Hence, registries should prioritize first-party flaws over dependency alerts, and agent runtimes should not pass skill arguments through a shell.",
-    "published_date": "2026-11-23T16:20:29Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.30932v1",
+    "abstract": "Efficient long-video understanding requires identifying relevant evidence while minimizing the tokens processed by vision-language models (VLMs). Existing video retrieval-augmented generation (RAG) methods rely on frame selection and token compression, but overlook how much each additional token is worth. We introduce Lembas, a plug-and-play framework that formulates video RAG as a token allocation problem over frames and subtitles under a shared budget. Our key insight is that the value of a token diminishes within each item and decreases further as similar evidence receives more tokens. Lembas captures both effects in a single objective and solves it with an efficient iterative water-filling algorithm that has a provable convergence guarantee. For multi-turn conversations, Lembas reuses the tokens processed in earlier turns and refines relevance with the VLM's attention at no extra cost. Our evaluations show that Lembas improves accuracy by up to 7.2 percentage points over state-of-the-art baselines at comparable compute. On multi-turn video understanding, Lembas achieves up to 1.5 percentage points higher accuracy with 1.7-17.3x fewer TFLOPs.",
+    "published_date": "2026-11-24T16:43:31Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.32938v1",
     "score": {
       "total_score": 0.385,
       "keyword_score": 0.136,
       "recency_score": 0.966,
       "matched_keywords": [
-        "LLM agents"
+        "retrieval augmented generation",
+        "RAG"
       ],
       "days_since_published": 1.0
     },
-    "claim": "Analyzes supply\u2011chain threats in reusable agent skills, highlighting tool\u2011use security and contract integrity concerns.",
+    "claim": "Proposes a token-allocation strategy for video retrieval-augmented generation, advancing RAG efficiency and claim verification.",
     "claim_verified": {
       "verified": false,
-      "best_match_score": 0.3697,
+      "best_match_score": 0.451,
       "supporting_excerpt": null,
       "matched_source": null
     },
@@ -170,80 +31,22 @@
     "skeptic_objection": null
   },
   {
-    "arxiv_id": "2611.30745v1",
-    "title": "Intent-Conditioned Argument Mediation for Tool-Using LLM Agents: Blocking Trusted-but-Unauthorized Arguments",
+    "arxiv_id": "2611.32266v1",
+    "title": "Unjamming Deferrals: Supporting Students Through JAMN Bot, a Mobile RAG-Grounded Policy Assistant",
     "authors": [
-      "Yulliwas Ameur",
-      "Miqeas Pedro Mendes",
-      "Samia Bouzefrane"
+      "Mark Farinas",
+      "Alesandra Garcia",
+      "Maria Reyes",
+      "Jethro Nueva",
+      "Nawaf Qureshi",
+      "Mahmoud Elsaadany",
+      "Shokry Shamseldin"
     ],
-    "abstract": "LLM agents turn a user's request and retrieved content into tool calls, and a call can reach the wrong recipient, endpoint, file or participant. Argument-level provenance blocks such values when they come from untrusted content, but accepts a trusted value that the user never requested. IntentFlow, a mediation layer between an unmodified planner and its tools, checks each authority-bearing argument against an intent contract and a provenance policy. On a synthetic benchmark of 200 attacks (oracle intent and injection labels, declared roles), attack success falls from 50.5% with provenance alone to 12.0% [8.2-17.2%]; every remaining success alters a content or payload field. IntentFlow wrongly blocks none of 200 paired benign tasks and 4 of 50 hard ones. On 50 trusted-but-unauthorized attacks, provenance-only mediation executes all 50 and IntentFlow none; a CaMeL-style check also blocks all 50 but rejects 16 of 50 benign tasks. On an offline AgentDojo-derived replay, IntentFlow blocks all 20 attacks at 75% benign success, as does a CaMeL-style check; a Progent-style allowlist blocks 19 and keeps all benign tasks. With one live planner and the same oracles, the mediator blocked all 17 corrupted calls proposed in 110 attacks.",
-    "published_date": "2026-11-23T14:22:21Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.30745v1",
+    "abstract": "In some educational institutions, workflows such as the exam deferral process can be slow, inconvenient, and inconsistent, which creates the need to implement novel digital systems. This paper presents Schedulater, a mobile app for managing university exam deferrals. JAMN Bot is a Large Language Model (LLM)-powered chatbot integrated into Schedulater that provides context-aware support to help users understand the deferral process. The system features a Retrieval-Augmented Generation (RAG) pipeline using Ollama (Llama 3.2 3B) for self-hosted inference which enables policy-grounded responses without sacrificing privacy. We evaluate the system using a 43-item benchmark spanning Exam Deferral, Privacy, Scheduling, Cross-Policy, and Adversarial & Out-of-Scope questions, and report inter-rater agreement among our human evaluators alongside retrieval hit-rate metrics. Subsequently, we utilize an LLM-as-a-judge approach with GPT-5.4, revealing slight-to-moderate alignment with our raters that improves with answer quality, and check the ranking against a panel including Gemini 3.5 Flash and Qwen3.5 397B. The results of our study display trade-offs between open-weight and frontier models, as well as LLM-human evaluation alignment with answer quality. Schedulater demonstrates the feasibility of integrating lightweight LLMs into university administrative workflows with structured retrieval.",
+    "published_date": "2026-11-24T09:37:55Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.32266v1",
     "score": {
-      "total_score": 0.384,
-      "keyword_score": 0.136,
-      "recency_score": 0.963,
-      "matched_keywords": [
-        "LLM agents"
-      ],
-      "days_since_published": 1.1
-    },
-    "claim": "Proposes intent\u2011conditioned argument mediation to block unauthorized tool arguments, exemplifying interface contract enforcement for LLM agents.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5032,
-      "supporting_excerpt": "Tool use lets an LLM extend its reasoning by calling external functions mid-generation. Key lesson: a tool's docstring is the interface contract \u2014 vague documentation causes far more wrong or missing arguments than the underlying model's raw capability would predict.",
-      "matched_source": "note_tool_use.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt only points out that vague docstrings cause argument errors, never describing any intent\u2011conditioned mediation or blocking of unauthorized tool arguments, so the claim adds unsupported details."
-  },
-  {
-    "arxiv_id": "2611.30588v1",
-    "title": "SuSi-RAG: A Hybrid Graph RAG for Equipment Maintenance",
-    "authors": [
-      "Hansi Zhang+",
-      "Wilma Johanna Schmidt+",
-      "Wanlin Yang",
-      "Xiaozhi Shen",
-      "Adrian Paschke",
-      "Evgeny Kharlamov"
-    ],
-    "abstract": "In the manufacturing domain, equipment maintenance tasks depend on expert knowledge. Their documentation is often stored in heterogeneous formats and sources. The enhancement of LLMs with Retrieval-Augmented Generation (RAG) is promising for bridging the scattered knowledge, but traditional vector-based RAG shows weaknesses with two characteristics which are common in real maintenance queries: complex causal chains and cross-domain synthesis. To address this, we propose SuSi-RAG, a hybrid Graph RAG solution, that matches a user query and each maintenance record using subgraph similarity. This work shows an in-use system: SuSi-RAG has run on an active Bosch production line for more than eight months, handling 10,664 question-answer interactions and demonstrates upper bound answer accuracy of 96.25% (confirmed error rate 3.75%). In a proof-of-concept, SuSi-RAG improves top-1 retrieval accuracy from 61.5% to 96.2% and expert-rated answer quality from 44.9% to 84.1% against a vector-based baseline. We present an integrated operational feedback loop to update SuSi-RAG.",
-    "published_date": "2026-11-23T12:27:46Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.30588v1",
-    "score": {
-      "total_score": 0.384,
-      "keyword_score": 0.136,
-      "recency_score": 0.96,
-      "matched_keywords": [
-        "RAG"
-      ],
-      "days_since_published": 1.2
-    },
-    "claim": "Combines graph\u2011based RAG with domain knowledge for equipment maintenance, aligning with RAG integration and verification.",
-    "claim_verified": {
-      "verified": false,
-      "best_match_score": 0.3818,
-      "supporting_excerpt": null,
-      "matched_source": null
-    },
-    "confidence_tier": "rejected",
-    "skeptic_objection": null
-  },
-  {
-    "arxiv_id": "2611.30423v1",
-    "title": "Automated Call for Action: RAG-Based Environmental Law Enforcement Screening System",
-    "authors": [
-      "Matas Jurkevicius",
-      "Yen-Chia Hsu"
-    ],
-    "abstract": "Environmental law inspectors face a structural issue in identifying potential violations from data: they often do not have the capacity to deal with large volume of data present in the emission events. This paper examines to what extent an LLM-based system can support evidence assembly and permit-based screening of such events, using the coke plants of a steel producer and a regional environmental service as a case. A simple puff-trajectory model aligns air quality measurements, weather and citizen complaints with each emission event. A retrieval-augmented generation (RAG) pipeline then retrieves facility-specific permit conditions and generates event reports and a period report with an investigation recommendation. Across 74 events from March 2025, plant-aware re-ranking reduced reports citing the other plant's conditions from 58.1% (hybrid retrieval) to 0% by rule-based plant labels, while maintaining high RAGAS and LLM-judge metrics. GPT-5-mini performed comparably to GPT-5.1, whereas GPT-5-nano scored lower on legal grounding and legal faithfulness. In an evidence ablation, removing air quality (AQ) data changed judge scores and period recommendations most; citation overlap changed only slightly under any removal, and removing complaint details had no measurable effect. This suggests a need for rules and guidelines that link complaints to incidents and permit conditions, so that community reports can count as evidence. The results support screening of events that may need further investigation. Design implications for involving environmental service experts are derived.",
-    "published_date": "2026-11-23T10:18:39Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.30423v1",
-    "score": {
-      "total_score": 0.383,
+      "total_score": 0.382,
       "keyword_score": 0.136,
       "recency_score": 0.957,
       "matched_keywords": [
@@ -251,10 +54,10 @@
       ],
       "days_since_published": 1.3
     },
-    "claim": "Builds a RAG\u2011based system for environmental law enforcement screening, showcasing RAG for evidence assembly and claim checking.",
+    "claim": "Describes a mobile RAG-grounded policy assistant (JAMN Bot) for exam deferral workflows, showcasing RAG integration in agent-driven decision support.",
     "claim_verified": {
       "verified": false,
-      "best_match_score": 0.3571,
+      "best_match_score": 0.3951,
       "supporting_excerpt": null,
       "matched_source": null
     },
@@ -262,158 +65,212 @@
     "skeptic_objection": null
   },
   {
-    "arxiv_id": "2611.30360v1",
-    "title": "ArguShield: Enforcing Minimum-Necessary Disclosure in Tool-Calling LLM Agents",
+    "arxiv_id": "2611.32046v1",
+    "title": "From Rule-based to Agentic: LLM Agent based Real-time Control of Urban Drainage Systems for Flooding and Sewer Overflow Mitigation",
     "authors": [
-      "Ying Fu",
-      "Yulong Fu"
+      "Wenchong Tian",
+      "Shixun Li",
+      "Ruozhou Lin",
+      "Peng Ye",
+      "Zhiyu Zhang",
+      "Shi Tao",
+      "Yu-Qi Wang",
+      "Ling Shi",
+      "Mingfu Guan",
+      "Haoran Duan",
+      "Zhiguo Yuan"
     ],
-    "abstract": "Large language model agents increasingly use third-party tools to complete user tasks. Even without malicious intent, they may fill broad or weakly constrained fields with private information that is unnecessary or inappropriate for the receiving tool. Such calls can satisfy the tool schema and complete the task, yet still violate minimum-necessary disclosure. We introduce ArguShield, a mediation layer that intercepts proposed tool calls before execution. It evaluates each candidate value using three signals: Value Provenance, Task Relevance, and Disclosure Boundary. ArguShield releases justified values, defers values that need user confirmation, and withholds those outside the permitted scope. We evaluate ArguShield with four tool-calling models on ArgPrivBench, a benchmark of 120 tasks across Travel, Shopping, and Healthcare. Unprotected agents frequently over-disclose private information despite high task success. Prompt-only protection reduces unauthorized disclosure but substantially lowers task success. ArguShield reduces unauthorized silent release to 9% on Standard tasks and 6% on High-risk tasks while preserving recoverable task success under simulated user confirmation.",
-    "published_date": "2026-11-23T09:30:55Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.30360v1",
+    "abstract": "Real-time control (RTC) for urban drainage systems (UDS) remains hampered by sparse in-network sensing. While heterogeneous multi-modal meteorological early warnings often contain decision-critical information for UDS RTC, none of the existing approaches can exploit such externally-sourced information within the control workflow. Here we introduce AgenticAI-Control, an agentic artificial intelligence framework able to assimilate multi-source meteorological early warnings in RTC. Two coupled large language model agents are integrated to generate control strategies by retrieving meteorological early-warnings and fusing them with domain engineering expertise. Validated via simulation studies of a combined sewer catchment in eastern China across 10 real-world rainfall events, the AgenticAI-Control achieved 69.1-90.6% reduction in aggregated flood and overflow volumes compared to the rule-based baseline control. Rigorously standardized prompt engineering and modular workflow constraints substantially compress performance disparities among four distinct LLMs. Our work establishes AgenticAI as a viable tool to unify multi-source meteorological monitoring and practitioner domain knowledge, surmounting longstanding monitoring limitations of UDS RTC and delivering cost-efficient, robust intelligent control solutions for sensor-sparse sewer infrastructures.",
+    "published_date": "2026-11-24T06:31:14Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.32046v1",
     "score": {
-      "total_score": 0.382,
+      "total_score": 0.381,
       "keyword_score": 0.136,
-      "recency_score": 0.956,
+      "recency_score": 0.952,
       "matched_keywords": [
         "language model agents",
         "LLM agents"
       ],
-      "days_since_published": 1.3
+      "days_since_published": 1.4
     },
-    "claim": "Introduces ArguShield to enforce minimum\u2011necessary disclosure in tool calls, reinforcing safety and contract compliance for LLM agents.",
+    "claim": "Demonstrates an LLM-driven pipeline that ingests external meteorological alerts and orchestrates real-time control actions for urban drainage, illustrating modular handoffs in agent pipeline orchestration.",
     "claim_verified": {
-      "verified": false,
-      "best_match_score": 0.4596,
-      "supporting_excerpt": null,
-      "matched_source": null
+      "verified": true,
+      "best_match_score": 0.5048,
+      "supporting_excerpt": "Orchestrating multiple pipeline steps works best when each step's responsibility is narrow and handoffs are explicit \u2014 fetch, score, verify, summarize \u2014 rather than one large prompt trying to do everything in a single model call.",
+      "matched_source": "note_agent_orchestration.md"
     },
-    "confidence_tier": "rejected",
-    "skeptic_objection": null
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt merely advises using narrow, explicit handoffs in pipelines and never mentions ingesting meteorological alerts, real\u2011time urban drainage control, or an LLM\u2011driven system, so it does not substantiate the claim\u2019s specific demonstration."
   },
   {
-    "arxiv_id": "2611.30335v1",
-    "title": "MH-RAG-DIVE: Dynamic and Cost-Efficient Multi-Hop RAG Evaluation via Tree-Cached Dialogue Simulation",
+    "arxiv_id": "2611.32545v1",
+    "title": "RePrism: Joint Request and Representation Scheduling for LLM Agent Serving",
     "authors": [
-      "Lorenz Brehme",
-      "Daniel Hillebrand",
-      "Thomas Str\u00f6hle",
-      "Ruth Breu"
+      "Xijiang Shen",
+      "Aoli Zhu",
+      "Yanbo Tan",
+      "Xiyuan Hu",
+      "Huailiang Tan"
     ],
-    "abstract": "Quality assessment is essential for determining whether changes to a Retrieval-Augmented Generation system improve or maintain its performance. However, existing evaluation approaches often rely on single-turn or single-hop interactions and therefore do not capture the complexity of multi-hop, multi-turn conversations. We introduce MH-RAG-DIVE, a dynamic interactive user simulation framework designed to evaluate RAG systems in more complex multi-hop and multi-turn settings. The framework extends RAG-DIVE with a Context Discoverer, which identifies documents that can be combined to generate multi-hop questions within an ongoing conversation. To address the high computational cost of dynamic user simulation, we further introduce a Conversation Cacher, which reuses turns from previous evaluation runs while preserving the dynamic nature of the evaluation. We evaluate the framework across six distinct RAG configurations and compare its results with the original RAG-DIVE evaluation and the static, human-created CLAPNQ dataset. Our experiments show consistent performance trends across the evaluation approaches, while the more complex multi-hop and multi-turn setting exposes additional challenges for RAG systems. Furthermore, the Conversation Cacher substantially reduces token consumption, demonstrating its potential to make dynamic evaluation more cost-efficient. Finally, we apply MH-RAG-DIVE to an industrial RAG system with domain-specific data, demonstrating its applicability to real-world evaluation scenarios. Overall, our results show that the proposed approach provides a more complex and cost-efficient framework for evaluating RAG systems. All code and experimental data are publicly available in our GitHub repository (https://github.com/Daniel-Innsbruck/MH-RAG-DIVE).",
-    "published_date": "2026-11-23T09:13:07Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.30335v1",
+    "abstract": "Agentic workflows often invoke large language models multiple times. When the dependencies are visible to the serving system, it can use them to schedule requests and cache reusable content, improving workflow execution efficiency. Prior work has largely focused on ordering requests or managing shared resources under a fixed caching scheme. A reusable prompt that specifies model behavior, however, can have multiple representations. We present RePrism, a serving system that jointly selects which ready request to serve and which eligible representation of its prompt to use. Its goal is to improve throughput and shorten session completion time (SCT). The scheduler ranks pairs of requests and representations by combining each pair's immediate value with an estimate of its future value based on the visible workflow. The resource manager allocates GPU memory to both LoRA adapters and cached key-value states. It also coordinates their admission and eviction as memory pressure changes. We compare RePrism with S-LoRA on a dynamic workload with an arrival rate of 1.8 sessions per second, and it achieves 1.37 times the request throughput and reduces P95 SCT by a factor of 4.10. Under controlled load, RePrism reduces mean time to first token by a factor of 5.26 relative to S-LoRA. On a controlled workload, RePrism's joint scoring achieves 2.7% higher request throughput and 12.3% lower mean SCT than a policy that ranks requests before selecting their representations.",
+    "published_date": "2026-11-24T13:02:57Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.32545v1",
     "score": {
-      "total_score": 0.382,
-      "keyword_score": 0.136,
-      "recency_score": 0.956,
-      "matched_keywords": [
-        "RAG"
-      ],
-      "days_since_published": 1.3
-    },
-    "claim": "Introduces MH\u2011RAG\u2011DIVE, a multi\u2011hop RAG evaluation framework, directly addressing RAG quality assessment in agentic contexts.",
-    "claim_verified": {
-      "verified": false,
-      "best_match_score": 0.4422,
-      "supporting_excerpt": null,
-      "matched_source": null
-    },
-    "confidence_tier": "rejected",
-    "skeptic_objection": null
-  },
-  {
-    "arxiv_id": "2611.31063v1",
-    "title": "From Local Errors to System Failures: Modeling and Benchmarking Error Propagation in Multi-Agent LLM Systems",
-    "authors": [
-      "Wenlong Yu",
-      "Bingxu Lu",
-      "Qilong Wang",
-      "Qinghua Hu",
-      "Qianru Sun"
-    ],
-    "abstract": "In multi-agent systems (MAS) built on large language models (LLMs), errors can propagate through intermediate messages and compromise final answers. However, outcome-based evaluation obscures how agents amplify, attenuate, or correct these errors. We propose Response-Aware Error Propagation among Agents (REPA), a structural model that connects measured local responses to system-level error propagation. REPA separately estimates input assembly and agent processing across multiple error channels, while theoretical analysis relates local modeling errors to endpoint prediction error. Experiments span three Qwen base models, six MAS workflows, and ten knowledge and reasoning settings in ErrPropBench-10. REPA achieves a mean condition-level Spearman correlation of 0.84 across base models, compared with 0.47 for direct regression. Controlled experiments also demonstrate its utility for targeted recovery. REPA-guided retrieval-augmented generation (RAG) improves accuracy over no retrieval by an average of 19 percentage points with 16% additional tokens. By linking local agent behavior to system susceptibility, REPA provides an interpretable foundation for studying error propagation and developing targeted optimization in MAS.",
-    "published_date": "2026-11-23T17:20:43Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.31063v1",
-    "score": {
-      "total_score": 0.354,
+      "total_score": 0.352,
       "keyword_score": 0.091,
+      "recency_score": 0.961,
+      "matched_keywords": [
+        "LLM agents"
+      ],
+      "days_since_published": 1.2
+    },
+    "claim": "Develops RePrism, a request-and-representation scheduler that exploits dependency graphs to cache and order LLM calls, directly targeting agent pipeline orchestration and modular handoffs.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.5043,
+      "supporting_excerpt": "Orchestrating multiple pipeline steps works best when each step's responsibility is narrow and handoffs are explicit \u2014 fetch, score, verify, summarize \u2014 rather than one large prompt trying to do everything in a single model call.",
+      "matched_source": "note_agent_orchestration.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt merely advises using narrow, explicit pipeline steps and does not mention a request\u2011and\u2011representation scheduler, dependency graphs, caching, or a system named RePrism."
+  },
+  {
+    "arxiv_id": "2611.32966v1",
+    "title": "Multi-Agent Coordination Through Stigmergy for Canal Network Formation on Real Terrain",
+    "authors": [
+      "Jordan Kennedy",
+      "Federico Oliva",
+      "Amir Degani",
+      "Karen-Lee Bar Sinai",
+      "Nare Karapetyan"
+    ],
+    "abstract": "Terrain-modifying robot swarms operating in unstructured outdoor environments must coordinate under uncertain dynamics despite unreliable communication and incomplete global information. Stigmergy offers a decentralized alternative by allowing agents to coordinate indirectly through persistent environmental modifications, yet its application to large-scale terrain construction on real landscapes remains largely unexplored. Inspired by beaver canal construction, we present a minimal stigmergic framework for multi-agent systems in which decentralized agents follow local wetness cues, excavate terrain, and interact through a closed agent--environmental feedback loop. The framework couples agents with seasonal hydrology on a real digital elevation model (DEM). Across 110 simulations on an 862m x 1167m region spanning agent count and hydrological recession rate, the model produces emergent canal-like networks whose morphology varies predictably with environmental constraints. An alignment-invariant morphological evaluation against a field-annotated reference network identifies parameter regimes that reproduce key canal characteristics, while failure cases reveal over-canalization and fragmentation. These results demonstrate that simple local terrain-modifying behaviors can generate plausible landscape-scale structures through environmental feedback, providing a minimal framework for studying decentralized terrain construction and bio-inspired swarm coordination.",
+    "published_date": "2026-11-24T17:03:33Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.32966v1",
+    "score": {
+      "total_score": 0.322,
+      "keyword_score": 0.045,
       "recency_score": 0.967,
       "matched_keywords": [
-        "multi-agent systems",
-        "RAG"
+        "multi-agent systems"
       ],
       "days_since_published": 1.0
     },
-    "claim": "Presents a benchmark for error propagation in LLM\u2011based multi\u2011agent systems, aligning with the theme of coordination and error amplification.",
+    "claim": "Explores stigmergic coordination among terrain-modifying robot swarms, directly relating to the theme of multi-agent systems coordination and error propagation.",
     "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.74,
-      "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
-      "matched_source": "note_multi_agent_systems.md"
+      "verified": false,
+      "best_match_score": 0.4781,
+      "supporting_excerpt": null,
+      "matched_source": null
     },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt raises an open question about error propagation but never introduces or describes an actual benchmark, so the claim that it \u201cpresents a benchmark\u201d overstretches the provided text."
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
   },
   {
-    "arxiv_id": "2611.30750v1",
-    "title": "SchemaCaps: When a Compatible Tool Update Silently Widens an AI Agent's Authority",
+    "arxiv_id": "2611.32660v1",
+    "title": "Bathys: Advancing Deep Search Agents",
     "authors": [
-      "Yulliwas Ameur",
-      "Samia Bouzefrane",
-      "Soumya Banerjee"
+      "Zixuan Chen",
+      "Shengyou Yuan",
+      "Nang Yuan",
+      "Ming Ma",
+      "Zelin Xiao",
+      "Lin Zhou",
+      "Siyuan Luo",
+      "Jiaqi Su",
+      "Chengrui Wu",
+      "Tiankuo Yao",
+      "Nairong Zheng",
+      "Cong Pang",
+      "Jiapeng Luo"
     ],
-    "abstract": "The tools users approve for their AI agents keep changing their JSON input schemas. Of 8 surveyed MCP clients and scanners, none is observed or documented to re-approve a tool whose input schema widens (two not determinable). We define non-amplification over the coordinates visible in the schema (declared arguments and undeclared fields, on effective values) and a re-binding rule decided by subschema inclusion, trusting no field labels by default and conservative up to its checker and tested case analysis. Evidence: a Coq proof of composition; 48 regression tests; an exact-reference benchmark, where the reviewed version of the rule silently re-bound 27 amplifying changes, now fixed; and a pilot on 604 releases of 39 public MCP servers. There, 412 of 580 compatible schema changes widen some coordinate, yet compatibility re-binds them silently. The authors' adjudicated double annotation finds at least 76 that add or widen an authority-bearing argument (66 of the 84 a name-based labeller flags, plus 10 it misses). On existing tools, the rule asks 645 re-approvals, against 1,197 for pinning the input schema (2,004 with descriptions) and 617 for compatibility. Behaviour change behind an identical schema remains out of reach.",
-    "published_date": "2026-11-23T14:24:36Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.30750v1",
+    "abstract": "Deep search is a critical capability for agents tackling complex, open-ended tasks, where solving a problem requires iterative information gathering, query reformulation, and evidence-based verification rather than a single retrieval step. To address these requirements, we present Bathys 9B and 27B deep search agents built around a training framework that spans verifiable question synthesis, post-training, and online reinforcement learning (RL) under context compression. Our high-quality data construction ensures both search depth and reliability: each clue is reformulated as an indirect reference requiring independent retrieval, and retained evidence chains enable verification that the clues jointly determine a unique answer. Curated trajectories underpin a pipeline of supervised fine-tuning (SFT), Kahneman-Tversky Optimization (KTO), and Compaction-Managed Group Sequence Policy Optimization (CM-GSPO): SFT provides a stable foundation for tool use over long horizons and query reformulation; KTO uses binary feedback on trajectories to improve the selection of answers grounded in evidence; CM-GSPO optimizes execution sub-trajectories with length-normalized likelihood ratios on the recorded rollout contexts and reweights sub-trajectory advantages to correct the extra weighting introduced by independently averaging sub-trajectory losses. Bathys 9B and 27B attain 66.51% and 80.49% on BrowseComp, respectively, under an evaluation protocol with trajectory self-verification and conditional retries.",
+    "published_date": "2026-11-24T14:12:23Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.32660v1",
     "score": {
       "total_score": 0.321,
       "keyword_score": 0.045,
       "recency_score": 0.963,
       "matched_keywords": [
-        "MCP"
+        "tool use"
       ],
       "days_since_published": 1.1
     },
-    "claim": "Identifies silent authority expansion via tool schema updates, directly relevant to the Model Context Protocol (MCP) standard.",
+    "claim": "Introduces deep-search agents that perform iterative query reformulation and evidence verification, exemplifying the theme of language-model agents with looped reasoning and deterministic safety checks.",
     "claim_verified": {
       "verified": true,
-      "best_match_score": 0.5284,
-      "supporting_excerpt": "The Model Context Protocol standardizes how an application exposes tools and context to a model, so a tool built once can be reused across different agent frameworks instead of rewritten for each one.",
-      "matched_source": "note_mcp.md"
+      "best_match_score": 0.5414,
+      "supporting_excerpt": "# Ecdysis: Efficient and Effective Training of Runtime Harnesses for LLM Agents\n\n**arXiv ID**: 2609.11677v1\n\n**Published Date**: 2026-09-10T15:09:08Z\n\n**Authors**: Ruiqing Yue, Yu Cui, Zhuoyu Sun, Sicheng Pan, Xianhong Xue, Tingyu Li, Ting Li, Wenzhuo Zhu, Yi Chen, Yifei Liu, Baohan Huang, Zhe Cui, Haibin Zhang, Cong Zuo\n\n**PDF**: https://arxiv.org/pdf/2609.11677v1\n\n## Abstract\nSelf-evolving runtime harnesses can substantially improve the capabilities of large language model (LLM) agents and provide a promising paradigm for optimizing agent execution. Existing harness evolution methods typically rely on iterative search, repeatedly evaluating and revising candidate harnesses based on execution feedback from task instances. While this paradigm enables continuous harness optimization, it incurs substantial time overhead due to repeated agent executions and code modifications, and may overfit to observed tasks and specific failure patterns, resulting in degraded generalization to unseen tasks. We identify the lack of principled failure diagnosis as a key bottleneck in harness evolution: an observed failure can reflect either model-specific deficiencies or systematic harness deficiencies, and directly optimizing against individual failures can lead to unnecessary model-specific accommodation. We therefore propose Ecdysis, an efficient and effective framework that distinguishes model-specific accommodation from harness-level repair and biases adaptation toward systematic harness deficiencies by identifying recurring cross-task failure patterns. Ecdysis adopts a batch-level cross-instance failure aggregation paradigm to jointly analyze failure evidence from multiple task instances and further introduces Failure-Driven Collaborative Refinement to diagnose failure causes and iteratively refine harness modification specifications. By combining cross-instance failure analysis with multi-role diagnosis, Ecdysis enables more effective harness evolution with lower training time. Experiments show that Ecdysis achieves up to a 1.84x speedup in harness training compared with existing harness evolution methods, while improving the reasoning accuracy of the resulting harnesses by 18.56%.\n\n## Established Connection Claim\nDescribes Ecdysis, a method for training runtime harnesses that streamline LLM agent execution pipelines.\n",
+      "matched_source": "approved_2609_11677v1.md"
     },
     "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt only describes MCP\u2019s role in standardizing tool exposure and reuse, never mentioning any \u201csilent authority expansion\u201d from schema updates, so the claim reads an unsupported implication into the text."
+    "skeptic_objection": "The excerpt describes a harness\u2011training framework for optimizing LLM agents, but never introduces \u201cdeep\u2011search agents,\u201d iterative query reformulation, evidence verification, or deterministic safety checks, so the claim misreads the paper\u2019s content."
   },
   {
-    "arxiv_id": "2611.30559v1",
-    "title": "Learning What to Change: State-Verified Reinforcement Learning for Educational Agents",
+    "arxiv_id": "2611.32480v1",
+    "title": "VISE: Verifier-Independent Skill Self-Evolution with Feedback from Tool Implementations",
     "authors": [
-      "Shengyao Wang",
-      "Siyuan Su",
-      "Siyu Song",
-      "Mengsong Wu",
-      "Yiming Luo",
-      "Wenbo Wu",
-      "Hao Hao",
-      "Aimin Zhou"
+      "Yuxuan Liu",
+      "Chongyang Du",
+      "Yuhao Zhang",
+      "Jiahe Guo",
+      "Kawai Chung",
+      "Wenbin Hu",
+      "Huihao Jing",
+      "Hongyu Luo",
+      "Qing Zong",
+      "Haochen Shi",
+      "Haoran Li",
+      "Yangqiu Song"
     ],
-    "abstract": "Persistent tutoring agents do more than answer questions: they manage course files, practice records, and learner profiles that govern future lessons. In such stateful settings, knowing what to teach does not guarantee knowing what to change. We identify a pervasive failure mode, content-state decoupling, where agents deliver pedagogically sound responses while silently corrupting workspace state through unwarranted updates, missed prerequisites, or unintended side effects. Text-level judges overlook these state errors, whereas isolated tool-call checks break down because whether a write action is valid depends jointly on the learner request, prior state, and execution order. We propose State-Verified Reinforcement Learning, which supervises online policy optimization directly through verifiable workspace transitions. Within isolated sandboxes that snapshot state around every tool call, a deterministic verifier audits tool effects, workflow ordering, and native auto-sync side effects, pairing graded partial credit with a hard gate that zeroes episode reward upon any critical violation. Whenever no critical violation occurs, an evidence-grounded judge scores actual saved artifacts rather than agent claims. We pair 1,000 verifiable training instances with an independently authored, human-reviewed evaluation benchmark of 60 tasks spanning 11 educational categories and 16 native tools. After online GRPO training, Qwen3.8-27B raises category-weighted strict success on our benchmark from 51.47% to 80.74% (+29.27 points), cutting content-pass-only execution failures from 45.6% to 13.7% and required state-check failures from 63 to 1 across 180 trials. The resulting policy outperforms seven reference baselines by over 20 points while reducing output tokens by 17-39% across seven of eight external benchmarks without regressing on general reasoning or tool use.",
-    "published_date": "2026-11-23T12:04:31Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.30559v1",
+    "abstract": "Agent skills provide reusable workflows that guide LLM agents in using tools. Refining these workflows requires feedback on missing or incorrect instructions, but task-specific verifiers are not always available. We propose VISE (Verifier-Independent Skill Evolution), a scripts-first approach that uses tool implementations to guide skill revision. It extracts tool capabilities, input requirements, usage conditions, and output formats from source code. Using the task request and execution trace, it compares this information with current workflow instructions to identify missing or conflicting steps. It then recommends specific edits to SKILL.md, linking each change to the relevant implementation and usage conditions. We evaluate VISE as an additional revision stage for four evolution methods on SkillsBench and SkillLearnBench. Compared with the corresponding No-verifier conditions, it improves overall average task success by 9.14-13.35 percentage points. The proportion of tasks solved in all three runs increases by 12.36-18.29 points. A case study shows how revised instructions connect tool outputs to later steps. These results support tool implementations as a practical feedback source for skill self-evolution.",
+    "published_date": "2026-11-24T12:08:40Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.32480v1",
     "score": {
       "total_score": 0.32,
       "keyword_score": 0.045,
       "recency_score": 0.96,
       "matched_keywords": [
-        "tool use"
+        "LLM agents"
       ],
       "days_since_published": 1.2
     },
-    "claim": "Develops state\u2011verified reinforcement learning for educational agents, contributing to deterministic safety checks in language model agents.",
+    "claim": "Introduces VISE, which evolves agent skills using feedback from tool implementations without task-specific verifiers, emphasizing tool-use contracts and self-validation.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.5207,
+      "supporting_excerpt": "# Ecdysis: Efficient and Effective Training of Runtime Harnesses for LLM Agents\n\n**arXiv ID**: 2609.11677v1\n\n**Published Date**: 2026-09-10T15:09:08Z\n\n**Authors**: Ruiqing Yue, Yu Cui, Zhuoyu Sun, Sicheng Pan, Xianhong Xue, Tingyu Li, Ting Li, Wenzhuo Zhu, Yi Chen, Yifei Liu, Baohan Huang, Zhe Cui, Haibin Zhang, Cong Zuo\n\n**PDF**: https://arxiv.org/pdf/2609.11677v1\n\n## Abstract\nSelf-evolving runtime harnesses can substantially improve the capabilities of large language model (LLM) agents and provide a promising paradigm for optimizing agent execution. Existing harness evolution methods typically rely on iterative search, repeatedly evaluating and revising candidate harnesses based on execution feedback from task instances. While this paradigm enables continuous harness optimization, it incurs substantial time overhead due to repeated agent executions and code modifications, and may overfit to observed tasks and specific failure patterns, resulting in degraded generalization to unseen tasks. We identify the lack of principled failure diagnosis as a key bottleneck in harness evolution: an observed failure can reflect either model-specific deficiencies or systematic harness deficiencies, and directly optimizing against individual failures can lead to unnecessary model-specific accommodation. We therefore propose Ecdysis, an efficient and effective framework that distinguishes model-specific accommodation from harness-level repair and biases adaptation toward systematic harness deficiencies by identifying recurring cross-task failure patterns. Ecdysis adopts a batch-level cross-instance failure aggregation paradigm to jointly analyze failure evidence from multiple task instances and further introduces Failure-Driven Collaborative Refinement to diagnose failure causes and iteratively refine harness modification specifications. By combining cross-instance failure analysis with multi-role diagnosis, Ecdysis enables more effective harness evolution with lower training time. Experiments show that Ecdysis achieves up to a 1.84x speedup in harness training compared with existing harness evolution methods, while improving the reasoning accuracy of the resulting harnesses by 18.56%.\n\n## Established Connection Claim\nDescribes Ecdysis, a method for training runtime harnesses that streamline LLM agent execution pipelines.\n",
+      "matched_source": "approved_2609_11677v1.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt describes Ecdysis\u2019s batch\u2011level failure\u2011driven harness evolution, never mentioning VISE, tool\u2011use contracts, or self\u2011validation, so it provides no basis for the claim."
+  },
+  {
+    "arxiv_id": "2611.32374v1",
+    "title": "Validating Multi-Model AI-Generated Acceptance Criteria in Requirements Engineering",
+    "authors": [
+      "Mateen Ahmed Abbasi",
+      "Petri Ihantola",
+      "Tommi Mikkonen",
+      "Niko M\u00e4kitalo"
+    ],
+    "abstract": "Large language models (LLMs) are increasingly used in software engineering to generate artifacts such as requirements, user stories, acceptance criteria, documentation, and code. Their use in requirements engineering raises important questions about correctness, traceability, and hallucination, especially because flawed specifications can affect later design, implementation, and verification activities. While much recent work on AI-assisted software engineering has focused on code generation and code-level validation, the validation of AI-generated specifications has received less attention. This paper addresses this gap by presenting a validation-oriented approach for AI-generated acceptance criteria. The approach combines retrieval-augmented generation (RAG), multi-model generation, and an explicitly structured human-in-the-loop workflow. We describe a working prototype that allows users to prepare or enter user stories, generate acceptance criteria using several LLMs, optionally augment generation with retrieved requirements-related examples, compare outputs side by side, inspect retrieved context, and select, edit, or regenerate candidate criteria before explicitly submitting a reviewer-finalized version. The system also records model outputs, user interventions, retrieval settings, and final criteria as part of a logged decision process. Rather than claiming that generation accuracy is already improved, the contribution of this work is to operationalize validation as an explicit, inspectable, and accountable process for AI-generated requirements artifacts.",
+    "published_date": "2026-11-24T10:41:13Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.32374v1",
+    "score": {
+      "total_score": 0.319,
+      "keyword_score": 0.045,
+      "recency_score": 0.958,
+      "matched_keywords": [
+        "RAG"
+      ],
+      "days_since_published": 1.3
+    },
+    "claim": "Evaluates AI-generated acceptance criteria against multi-model ground truth, contributing to retrieval-augmented generation and claim verification practices.",
     "claim_verified": {
       "verified": false,
-      "best_match_score": 0.4328,
+      "best_match_score": 0.4614,
       "supporting_excerpt": null,
       "matched_source": null
     },
@@ -421,138 +278,124 @@
     "skeptic_objection": null
   },
   {
-    "arxiv_id": "2611.30230v1",
-    "title": "Composing Independently Distilled Memory and Retrieval Policies for Long-Term Agents",
+    "arxiv_id": "2611.31804v1",
+    "title": "Federated Policy Gradient for Dynamic Consensus: Gradient Dominance and Topological Bounds",
     "authors": [
-      "Grigorii Davydenko",
-      "Artem Sakhno",
-      "Igor Pavlov",
-      "Julia Belikova",
-      "Andrey Savchenko",
-      "Maksim Makarenko"
+      "Maryam Babazadeh"
     ],
-    "abstract": "Long-lived Web assistants require effective memory and retrieval mechanisms to access information from past user interactions. While these capabilities can be learned through specialized policies, it remains unclear whether specialists trained independently in different environments can be effectively composed without joint optimization. This paper investigates compositional transfer through policy distillation. Memory-writing and sequential retrieval policies are independently distilled from frontier-model action trajectories into 3B models and combined with a fixed answer generator without downstream training. On a LongMemEval-based benchmark, the distilled composition achieves 73.1% accuracy, compared with 36.2% for a composition of existing RL-trained specialists, and also outperforms the evaluated RL-trained compositions on PersonaMem-v2. Component ablations reveal that improvements in individual policies depend on their composition, highlighting the importance of cross-specialist compatibility. Further task-specific adaptation improves accuracy to 75.2% on LongMemEval through RL and 48.9% on PersonaMem-v2 through supervised distillation. These findings demonstrate the effectiveness of independent specialist distillation for modular multi-agent systems. Source code and datasets of teacher-generated memory-editing and retrieval trajectories are released to facilitate reproducibility and further research.",
-    "published_date": "2026-11-23T08:01:29Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.30230v1",
+    "abstract": "This paper presents a federated optimization framework for dynamic consensus in homogeneous multi-agent systems. The underlying problem is challenged by the communication graph's spectral properties, which induce spatial heterogeneity and complicate decentralized control even when the dynamics of the agents are completely known. The problem is addressed in this paper by bridging distributed control theory with federated policy gradients. Accordingly, a comprehensive optimization landscape for dynamic consensus is established through a modal decomposition formulation. Specifically, a parameterized suboptimality bound is characterized that explicitly decouples the true aggregate policy gradient from the network covariance mismatch. Building on this formulation, sufficient conditions based on the graph's Laplacian spectrum are derived to recover exact gradient dominance, which guarantees convergence to the global consensus policy and establishes a lower bound on the achievable dominance coefficient. Furthermore, a Federated model-free consensus algorithm is proposed that utilizes zeroth-order exploration alongside a bisection-based discount factor annealing mechanism, successfully eliminating the need for an initial stabilizing policy. This approach achieves linear global convergence for policy optimization subroutines while maintaining strictly bounded outer iterations until dynamic consensus is achieved. Through extensive simulation studies and comparative feasibility analyses across diverse network topologies, it is demonstrated that the proposed federated approach consistently outperforms existing model-based and data-driven separation-based techniques.",
+    "published_date": "2026-11-24T01:56:36Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.31804v1",
     "score": {
-      "total_score": 0.318,
+      "total_score": 0.316,
       "keyword_score": 0.045,
-      "recency_score": 0.954,
+      "recency_score": 0.946,
       "matched_keywords": [
         "multi-agent systems"
       ],
-      "days_since_published": 1.4
+      "days_since_published": 1.6
     },
-    "claim": "Explores independent memory and retrieval policies for long\u2011term agents, informing modular handoff and RAG\u2011style retrieval in agent pipelines.",
+    "claim": "Presents a federated policy-gradient framework for dynamic consensus in multi-agent networks, addressing challenges of coordination and error propagation across graph topologies.",
     "claim_verified": {
       "verified": true,
-      "best_match_score": 0.562,
-      "supporting_excerpt": "# Q2D-Web: A Large-Scale Benchmark for Retrieval in Agentic RAG Systems\n\n**arXiv ID**: 2609.08887v1\n\n**Published Date**: 2026-09-08T15:26:05Z\n\n**Authors**: Maximilian Schall, Sedigheh Eslami, Markus Krimmel, Antoine Chaffin, Louis Milliken, Bo Wang, Denis Bykov\n\n**PDF**: https://arxiv.org/pdf/2609.08887v1\n\n## Abstract\nEvaluating first-stage retrievers in large-scale production RAG requires a benchmark that pairs a large-scale corpus with a large set of agent-reformulated search queries based on real user queries and their conversation threads, and that labels many relevant documents per query. No existing public benchmark evaluates this setting: large-scale collections typically provide only a small number of evaluation queries, whereas benchmarks with many queries generally contain only millions of documents. Moreover, most benchmarks assess human-written queries, while the first-stage retrievers in agentic RAG pipelines serve machine-written reformulations whose distribution differs from human search behavior. To overcome these evaluation gaps, we introduce Q2D-Web (Query2Doc-Web), a large-scale agentic retrieval benchmark consisting of a 190M-document web corpus and 70k agentic search queries in ten languages, reformulated from real-world user queries in production systems. Q2D-Web provides three sets of fixed relevance judgments: agent citations, production rankings, and a combined set that unions both signals and adds LLM-based judgments of unlabeled pooled documents to reduce false negatives. We benchmark 13 retrievers including lexical, dense, and late-interaction models and find that their relative ordering is largely insensitive to the choice of judgment set, while diverging substantially across topical domains, query languages, and query types. To enable fast evaluation, we also study subcorpus sampling as an approximation to full-corpus evaluations. Retaining a third of the corpus, selected by reciprocal rank fusion over pooled retriever runs, preserves the full-corpus model ranking under the combined judgments while raising absolute Recall@1000 only by 3 to 7 points. The public leaderboard is accessible under: https://huggingface.co/spaces/perplexity-ai/q2d-web-leaderboard\n\n## Established Connection Claim\nProvides a large\u2011scale benchmark of agent\u2011reformulated queries for RAG systems, supporting evaluation of claim verification pipelines.\n",
-      "matched_source": "approved_2609_08887v1.md"
-    },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The paper only introduces a retrieval benchmark and evaluates retrievers, without discussing independent memory architectures, long\u2011term agent policies, or modular handoff mechanisms."
-  },
-  {
-    "arxiv_id": "2611.30310v1",
-    "title": "Seeing Together, Acting Apart: Shared Environmental Understanding for Multi-Robot Navigation",
-    "authors": [
-      "Haihong Hao",
-      "Lei Chen",
-      "Mingfei Han",
-      "Chenglong Yan",
-      "Dong An",
-      "Yuqiang Yang",
-      "Changlin Li",
-      "Minghao Guo",
-      "Salman Khan",
-      "Xiaojun Chang"
-    ],
-    "abstract": "Multi-robot embodied systems are typically designed to collaborate by coordinating actions, sharing trajectories, or learning joint policies. We ask a complementary question: can collaboration emerge before decision-making, by first building a shared understanding of the environment? We introduce Shared Environmental Understanding, a policy-agnostic representation that aggregates partial egocentric observations from multiple robots into a shared latent world model. This shifts collaboration from the policy space to the representation space, enabling decentralized decision-making with shared environmental context. To this end, we propose Shared Environment Encoding and Retrieval (SEER), a framework that organizes multi-robot observations into a shared memory, retrieves relevant context via spatio-temporal similarity, and encodes it using a predictive latent world model. The resulting representations are injected into downstream navigation agents as tokens. Experimental results demonstrate that SEER captures action-relevant environmental structure and consistently improves navigation performance across both specialized VLN agents and general vision-language model agents, while preserving single-agent capabilities.",
-    "published_date": "2026-11-23T08:58:12Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.30310v1",
-    "score": {
-      "total_score": 0.318,
-      "keyword_score": 0.045,
-      "recency_score": 0.955,
-      "matched_keywords": [
-        "language model agents"
-      ],
-      "days_since_published": 1.3
-    },
-    "claim": "Demonstrates shared environmental understanding as a precursor to coordination in multi\u2011robot agents, relating to multi\u2011agent coordination without explicit communication.",
-    "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5285,
+      "best_match_score": 0.5338,
       "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
       "matched_source": "note_multi_agent_systems.md"
     },
     "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt never discusses shared environmental understanding or coordination without explicit communication, only describing hierarchical, negotiation, and shared\u2011memory mechanisms."
+    "skeptic_objection": "The excerpt discusses generic coordination patterns and error\u2011propagation concerns but never mentions a federated policy\u2011gradient framework, dynamic consensus, or graph\u2011topology specifics, so it does not substantiate the claim."
   },
   {
-    "arxiv_id": "2611.30247v1",
-    "title": "Software-Engineering-as-an-Artifact: From Engines to Systems That Build Themselves",
+    "arxiv_id": "2611.31744v1",
+    "title": "Mixed-Initiative Mining of Root-Cause Analyses into Audit Priors for C/C++ Vulnerability Hunting",
     "authors": [
-      "Julian Frattini",
-      "Robert Feldt",
-      "Per Lenberg"
+      "Yuhei Kawakoya",
+      "Eitaro Shioji",
+      "Yuto Otsuki",
+      "Makoto Iwamura"
     ],
-    "abstract": "Software engineering (SE) is evolving rapidly as generative AI and LLM-based agents grow more capable. Yet, as a community, we risk using these new tools to solve problems that a changing SE process may no longer pose. We consider how AI may transform, and in part already is transforming, both the SE process and the systems it produces. Drawing on scenario planning methods from futures studies, we extrapolate from observed trends to a deliberately extreme scenario in which the SE process fully materializes in artifacts (like context documentation and executable skills). Such a process would culminate in SE engines that autonomously produce and update systems directly from requirements and user requests. The work of human engineers would then shift from the product to the process: they would maintain the artifacts of these engines, while the engines produce and evolve the software. We probe this scenario in scenario-validation interviews with four SE industry practitioners. The interviewees found the scenario largely plausible and desirable, and two reported that parts of industry are already moving this way; one questioned whether tacit engineering knowledge can ever be fully captured in artifacts. Even if this end state is reached only in part, we argue that reasoning about it can inform the intermediate stages. SE research should therefore take such futures into account when choosing its research directions.",
-    "published_date": "2026-11-23T08:15:45Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.30247v1",
+    "abstract": "Vulnerability auditing of large C/C++ codebases is constrained by limited review attention. Human auditors and LLM-based agents need operational priors that indicate where to look first and what to suspect, but such priors are rarely available in directly usable form. Rather than proposing a new vulnerability detector, we derive audit-steering artifacts from evidence-backed root-cause analysis (RCA) reports.\n  We introduce two complementary representations: Occurrence Context (OC), a location prior based on file role, function role, and data-structure class; and Vulnerability-Inducing Structural Patterns (VISP), reusable failure-mechanism priors. OC guides where to inspect, while VISP guides what to suspect.\n  On 108 CVEs from Vul4C, OC's parser-based priority ranking, without LLM inference, outperforms generic prioritization baselines with moderate-to-large effect sizes. Packaged as executable SKILLs, OC and VISP form a dual-SKILL workflow that improves audit-relevant broad coverage, defined as match-or-partial findings within ground-truth functions that share the patch's failure mechanism, as assessed by three LLM judges. Across the 108-CVE cohort, dual-SKILL improves function-level broad matches by 5.3 percentage points; gains reach 7.2 points on mid-size projects and 15.0 points on large (1500-4999-line) vulnerable files. These results suggest that RCA-derived priors help direct limited audit attention toward vulnerable code. The agent-coverage evaluation is a single-run operational probe, with one run per commit, characterizing the direction and scale of the effect rather than its precise magnitude.",
+    "published_date": "2026-11-24T00:56:32Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.31744v1",
     "score": {
-      "total_score": 0.318,
+      "total_score": 0.315,
       "keyword_score": 0.045,
-      "recency_score": 0.954,
+      "recency_score": 0.945,
       "matched_keywords": [
         "LLM-based agents"
       ],
-      "days_since_published": 1.4
+      "days_since_published": 1.7
     },
-    "claim": "Discusses AI\u2011driven software\u2011engineering systems that generate themselves, touching on agent pipeline orchestration and modularity.",
+    "claim": "Presents a mixed-initiative system that combines human auditors with LLM agents to generate vulnerability-hunting priors, highlighting tool-use policies and interface contracts.",
     "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5454,
-      "supporting_excerpt": "# Agentic AI-enabled Semantic Commissioning of a Cognitive Digital Twin for Reconfigurable Manufacturing\n\n**arXiv ID**: 2609.09503v1\n\n**Published Date**: 2026-09-08T22:34:38Z\n\n**Authors**: Yangyang Liu, Xun Xu, Jan Polzer\n\n**PDF**: https://arxiv.org/pdf/2609.09503v1\n\n## Abstract\nRapid bespoke commissioning of the Cognitive Digital Twin (CDT) is a major challenge in reconfigurable manufacturing. Traditional digital twin (DT) construction methods primarily focus on geometric reconstruction, often neglecting the deep semantic integration and functional interoperability necessary for autonomous reasoning. This paper proposes an agent-based, AI-driven workflow to automate end-to-end CDT debugging. The system utilises LangGraph as a multi-agent orchestration engine to achieve dual-path synthesis: the semantic path extracts technical specifications from unstructured documents using Retrieval Augmented Generation (RAG), while the functional path autonomously discovers and binds to real-time industrial telemetry data using Model Context Protocol (MCP). Experimental validation in a robotic machining cell demonstrates that the system achieves a mean average accuracy (mAP) of 97.2% in perception and reduces the deployment cycle from several weeks to an average of 2 hours, marking a paradigm shift from manual scripting to autonomous orchestration.\n\n## Established Connection Claim\nPresents an agentic AI framework for semantic commissioning of digital twins, illustrating pipeline orchestration in reconfigurable manufacturing.\n",
-      "matched_source": "approved_2609_09503v1.md"
+      "verified": false,
+      "best_match_score": 0.4464,
+      "supporting_excerpt": null,
+      "matched_source": null
     },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt describes an agentic workflow for automating digital\u2011twin commissioning, not AI\u2011driven software\u2011engineering tools that self\u2011generate code or emphasize modular software architecture."
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
   },
   {
-    "arxiv_id": "2611.30181v1",
-    "title": "Retrieval-Augmented Generation in the Agentic Era: Tradition, Present, and Prospect",
+    "arxiv_id": "2611.31727v1",
+    "title": "fork() for Agents: Agent Kernel for Non-blocking LLM Orchestration",
     "authors": [
-      "Chenming Tang",
-      "Haolin Li",
-      "Yiran Li",
-      "Zixian Yang",
-      "Lizhu Zhai",
-      "Rui Sun",
-      "Qizhou Huang",
-      "Yunfang Wu"
+      "Ankit Chadha",
+      "Pratyay Banerjee"
     ],
-    "abstract": "Retrieval-augmented generation (RAG) couples frozen language models with external, updatable knowledge, so that generation is grounded in retrieved evidence rather than in parametric memory alone. This work maps RAG in the agentic era by joining them on a single lifecycle axis, from offline indexing through pre-retrieval, retrieval, post-retrieval, and orchestration over these stages. It treats indexing and orchestration as first-class components and agentic workflows as a paradigm of their own, and it covers the agentic work that has appeared since those reviews. Beyond these components, it covers evaluation, applications, and the questions that remain open for future exploration. From tradition to present and beyond, this work systematically reviews RAG from a perspective of the agentic era.",
-    "published_date": "2026-11-23T07:25:50Z",
-    "pdf_url": "https://arxiv.org/pdf/2611.30181v1",
+    "abstract": "LLM-based agents typically execute tool calls synchronously and discard completed work upon failure. Subgraph-selective recovery, re-executing only a failed node's transitive descendants, is a well-established pattern in distributed systems (Spark, Erlang/OTP, Dryad), and recent agent runtimes (Sherlock, AgentGit, Atomix) preserve completed work through verifiers, version control, or transactional tool boundaries. We present \\textbf{Agent-Kernel}, a non-blocking runtime that ports this pattern to the LLM \\emph{content plane}: its primitive, \\textbf{Sub-Graph Recovery (SGR)}, fires on a raw exception with no trained verifier or planner, resets a failed node's descendants while preserving completed siblings, and composes each parent's text into its children's prompts (context inheritance), all on a durable substrate with a formal state-preservation guarantee. Across 14{,}434 runs on synthetic and standard benchmarks (tau-bench, Gaia2, AutomationBench, InterruptBench), SGR reaches full recovery within budget=3 where whole-trajectory replay exhausts (100\\% vs.\\ 55\\%), and is roughly 10$\\times$ faster than an adapted Sherlock rollback that also recovers. It matches ReAct-serial accuracy within noise on linear workloads while adding recovery and parallelism (up to 12.7$\\times$ speedup) where structure permits. Ablation isolates SGR: removing it collapses success to 39.4\\%.",
+    "published_date": "2026-11-24T00:33:20Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.31727v1",
     "score": {
-      "total_score": 0.318,
+      "total_score": 0.315,
       "keyword_score": 0.045,
-      "recency_score": 0.953,
+      "recency_score": 0.944,
+      "matched_keywords": [
+        "LLM-based agents"
+      ],
+      "days_since_published": 1.7
+    },
+    "claim": "Introduces fork() for Agents, an agent kernel enabling non-blocking, subgraph-selective recovery, exemplifying advanced agent pipeline orchestration and error handling.",
+    "claim_verified": {
+      "verified": true,
+      "best_match_score": 0.5254,
+      "supporting_excerpt": "Multi-agent systems research explores how multiple LLM-driven agents coordinate to solve tasks no single agent handles well alone. Patterns worth tracking: hierarchical orchestration where a manager agent delegates to specialists, peer-to-peer negotiation, and shared-memory coordination. Open question: how do you stop one agent's error from silently propagating through the others?",
+      "matched_source": "note_multi_agent_systems.md"
+    },
+    "confidence_tier": "verified_flagged",
+    "skeptic_objection": "The excerpt discusses general coordination patterns and error\u2011propagation concerns but never mentions a \u201cfork()\u201d function, an agent kernel, or non\u2011blocking subgraph\u2011selective recovery, so the claim adds unsupported specifics."
+  },
+  {
+    "arxiv_id": "2611.31771v1",
+    "title": "SPARQL-Planned Single-Hop Traversal over a Live Knowledge Graph for Multi-Hop Question Answering",
+    "authors": [
+      "Priyesh Vakharia",
+      "Masud Moshtaghi",
+      "Pratyay Banerjee",
+      "Nicholas Jedema",
+      "Amita Misra",
+      "Ankit Chadha"
+    ],
+    "abstract": "Semantic retrieval struggles with multi-hop question answering on both recall and precision: gold passages are buried among distractors that degrade the reader's answer, and retrieving them requires reasoning over the query rather than matching it. GraphRAG techniques expand semantic retrieval by connecting passages to graph nodes and performing one or more hops of expansion after initial retrieval. This improves recall, but multi-hop expansion becomes expensive and brings additional noise into the retrieved set. We break this tradeoff by \\emph{interleaving} dense retrieval with knowledge-graph traversal for complex multi-hop questions. Dense retrieval locates the first relevant regions of the search space at good recall, while traversal of a pre-existing external KG (Wikidata) restores precision and improves recall by confirming retrieved passages against a reasoning path through the KG. To keep traversal both question-adaptive and reliable, we have an LLM plan it as code generation task for graph traversal in SPARQL format but \\emph{parse rather than execute} the query. On full 1{,}000-question splits under a shared corpus and reader, and with a single configuration applied identically to every dataset, we reach \\textbf{62.5 / 75.1} EM/F1 on HotpotQA, \\textbf{73.5 / 81.0} on 2WikiMultiHopQA, and \\textbf{37.1 / 50.0} on MuSiQue, ahead of reproduced HippoRAG2, T\\textsuperscript{2}RAG, and IRCoT on all three benchmarks. A second, token-matched setting stays ahead of T\\textsuperscript{2}RAG on HotpotQA and 2Wiki while spending roughly its per-query budget. Executing the generated SPARQL instead of parsing it costs up to 11.4 EM, mostly because raw queries return empty results, not because of syntax errors.",
+    "published_date": "2026-11-24T01:24:00Z",
+    "pdf_url": "https://arxiv.org/pdf/2611.31771v1",
+    "score": {
+      "total_score": 0.315,
+      "keyword_score": 0.045,
+      "recency_score": 0.945,
       "matched_keywords": [
         "RAG"
       ],
-      "days_since_published": 1.4
+      "days_since_published": 1.6
     },
-    "claim": "Maps the evolution of RAG in the agentic era, connecting retrieval\u2011augmented generation to modular agent pipelines.",
+    "claim": "Implements SPARQL-planned traversal over live knowledge graphs to improve multi-hop QA retrieval, aligning with retrieval-augmented generation techniques.",
     "claim_verified": {
-      "verified": true,
-      "best_match_score": 0.5028,
-      "supporting_excerpt": "# Q2D-Web: A Large-Scale Benchmark for Retrieval in Agentic RAG Systems\n\n**arXiv ID**: 2609.08887v1\n\n**Published Date**: 2026-09-08T15:26:05Z\n\n**Authors**: Maximilian Schall, Sedigheh Eslami, Markus Krimmel, Antoine Chaffin, Louis Milliken, Bo Wang, Denis Bykov\n\n**PDF**: https://arxiv.org/pdf/2609.08887v1\n\n## Abstract\nEvaluating first-stage retrievers in large-scale production RAG requires a benchmark that pairs a large-scale corpus with a large set of agent-reformulated search queries based on real user queries and their conversation threads, and that labels many relevant documents per query. No existing public benchmark evaluates this setting: large-scale collections typically provide only a small number of evaluation queries, whereas benchmarks with many queries generally contain only millions of documents. Moreover, most benchmarks assess human-written queries, while the first-stage retrievers in agentic RAG pipelines serve machine-written reformulations whose distribution differs from human search behavior. To overcome these evaluation gaps, we introduce Q2D-Web (Query2Doc-Web), a large-scale agentic retrieval benchmark consisting of a 190M-document web corpus and 70k agentic search queries in ten languages, reformulated from real-world user queries in production systems. Q2D-Web provides three sets of fixed relevance judgments: agent citations, production rankings, and a combined set that unions both signals and adds LLM-based judgments of unlabeled pooled documents to reduce false negatives. We benchmark 13 retrievers including lexical, dense, and late-interaction models and find that their relative ordering is largely insensitive to the choice of judgment set, while diverging substantially across topical domains, query languages, and query types. To enable fast evaluation, we also study subcorpus sampling as an approximation to full-corpus evaluations. Retaining a third of the corpus, selected by reciprocal rank fusion over pooled retriever runs, preserves the full-corpus model ranking under the combined judgments while raising absolute Recall@1000 only by 3 to 7 points. The public leaderboard is accessible under: https://huggingface.co/spaces/perplexity-ai/q2d-web-leaderboard\n\n## Established Connection Claim\nProvides a large\u2011scale benchmark of agent\u2011reformulated queries for RAG systems, supporting evaluation of claim verification pipelines.\n",
-      "matched_source": "approved_2609_08887v1.md"
+      "verified": false,
+      "best_match_score": 0.4899,
+      "supporting_excerpt": null,
+      "matched_source": null
     },
-    "confidence_tier": "verified_flagged",
-    "skeptic_objection": "The excerpt only introduces a large\u2011scale benchmark for evaluating first\u2011stage retrievers in agentic RAG, without any discussion of the historical evolution of RAG or how it links to modular agent pipelines."
+    "confidence_tier": "rejected",
+    "skeptic_objection": null
   }
 ]
